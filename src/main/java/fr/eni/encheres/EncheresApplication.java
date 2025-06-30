@@ -10,6 +10,7 @@ public class EncheresApplication {
 		SpringApplication.run(EncheresApplication.class, args);
 	}
 		//test2
+	//testEric
 
 	// test Pierre
 
