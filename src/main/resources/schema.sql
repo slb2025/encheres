@@ -1,0 +1,53 @@
+CREATE TABLE Utilisateur	
+(
+    id INT PRIMARY KEY NOT NULL,
+    pseudo VARCHAR(100) NOT NULL,
+    nom VARCHAR(100) NOT NULL,
+    prenom VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+	tel VARCHAR(10) NOT NULL,
+	rue VARCHAR(255) NOT NULL,
+	codePostal VARCHAR(255) NOT NULL,
+	ville VARCHAR(255) NOT NULL,
+	motDePasse VARCHAR(255) NOT NULL,
+	credit int NOT NULL DEFAULT 100,
+	isAdmin BIT NOT NULL DEFAULT 0
+)
+
+CREATE TABLE Categorie	
+(
+    id INT PRIMARY KEY NOT NULL,
+    libelle VARCHAR(100) NOT NULL
+)
+
+CREATE TABLE Enchere	
+(
+    id INT PRIMARY KEY NOT NULL,
+    idUtilisateur INT FOREIGN KEY REFERENCES Utilisateur(id) NOT NULL,
+	dateEnchere DATE NOT NULL,
+	montantEnchere int NOT NULL
+)
+
+CREATE TABLE Article	
+(
+    id INT PRIMARY KEY NOT NULL,
+    idUtilisateur INT FOREIGN KEY REFERENCES Utilisateur(id) NOT NULL,
+	idEnchere INT FOREIGN KEY REFERENCES Enchere(id),
+	idCategorie INT FOREIGN KEY REFERENCES Categorie(id),
+	nom VARCHAR(100) NOT NULL,
+	descriptionArticle VARCHAR(255) NOT NULL,
+	dateDebut DATE NOT NULL,
+	dateFin DATE NOT NULL,
+	miseAPrix INT NOT NULL,
+	prixVente INT NOT NULL,
+	etatVente VARCHAR(255)
+)
+
+CREATE TABLE Retrait	
+(
+    id INT PRIMARY KEY NOT NULL,
+    idArticle INT FOREIGN KEY REFERENCES Article(id) NOT NULL,
+	rue VARCHAR(255) NOT NULL,
+	codePostal VARCHAR(6) NOT NULL,
+	ville VARCHAR(255) NOT NULL
+)
