@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Enchères.org</title>
+<link rel="stylesheet" th:href="@{/css/general.css}" />
+</head>
+<body>
+	<header>
+		<div id="titrenav">
+			<a th:href="@{/}">ENI-Encheres</a>
+		</div>
+
+		<nav>
+			<ul>
+				<li><a th:href="@{/}">Enchères</a></li>
+				<li><a th:href="@{/}">Vendre un article</a></li>
+				<li><a th:href="@{/}">Mon profil</a></li>
+				<li><a th:href="@{/}">Déconnexion</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<main>
+
+		<section>
+			<h1>Liste des enchères</h1>
+
+			<div class="container">
+				<div class="filtres-container">
+					<h2>Filtres :</h2>
+					<input type="search" name="nomArticle" size="30"
+						placeholder="Le nom de l'article contient"> <!--<label
+						for="listeCategorie">Catégorie :</label> --><select
+						name="listeCategorie">
+						<option>Informatique</option>
+						<option>Ameublement</option>
+						<option>Vêtement</option>
+						<option>Sports&Loisirs</option>
+						<!-- 
+				<option th:each="categorie : ${categories}"
+                    th:value="${categorie.libelle}"
+                    th:text="${categorie.libelle}">
+            	</option>
+            	 -->
+
+
+					</select>
+
+				</div>
+				<button id="submitSearch" type="submit">Rechercher</button>
+
+
+				<div class="Article-container">
+
+					<img alt="PC Gamer" src="/images/logoENI.png">
+
+
+				</div>
+			</div>
+		</section>
+	</main>
