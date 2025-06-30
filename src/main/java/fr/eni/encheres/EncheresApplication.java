@@ -6,12 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class EncheresApplication {
 
+
 	public static void main(String[] args) {
 		SpringApplication.run(EncheresApplication.class, args);
 	}
-		//test2
-	//testEric
 
-	// test Pierre
 
 }
