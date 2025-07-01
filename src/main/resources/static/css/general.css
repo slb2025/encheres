@@ -101,7 +101,6 @@ select {
 
 /* Résultats de vente */
 .detailVente-container {
-	display: in-line-block;
 	max-width: 250px;
 	border: 1px solid #ddd;
 	padding: 1rem;
