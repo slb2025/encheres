@@ -1,4 +1,4 @@
-package fr.eni.encheres;
+package fr.eni.dal;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
