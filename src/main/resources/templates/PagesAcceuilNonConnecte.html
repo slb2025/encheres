@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Enchères.org</title>
+
+<link href="/css/general.css" rel="stylesheet" />
+<!-- <link rel="stylesheet" th:href="@{/css/general.css}" /> -->
+</head>
+<body>
+	<header>
+		<div id="titrenav">
+			<a th:href="@{/}">ENI-Encheres</a>
+		</div>
+
+
+		<nav>
+			<ul>
+				<li><a th:href="@{/PageConnexion}">S'inscrire - Se
+						connecter</a></li>
+			</ul>
+		</nav>
+
+	</header>
+
+	<h1>Liste des enchères</h1>
+
+	<main>
+
+
+		<div class="container">
+			<div class="filtres-container">
+				<h2>Filtres :</h2>
+				<form th:action="" method="post"></form>
+				<!-- "@{/filtres}" -->
+				<input type="search" name="nomArticle" size="30"
+					placeholder="Le nom de l'article contient"> <!-- <label
+					for="listeCategorie">Catégorie :</label>--> <select
+					name="listeCategorie">
+					<option>Informatique</option>
+					<option>Ameublement</option>
+					<option>Vêtement</option>
+					<option>Sports&Loisirs</option>
+					<!-- 
+				<option th:each="categorie : ${categories}"
+                    th:value="${categorie.libelle}"
+                    th:text="${categorie.libelle}">
+            	</option>
+            	 -->
+				</select>
+			</div>
+
+
+			<div class="detailVente-container">
+				<img alt="PC Gamer" src="/images/logoENI.png">
+				<div class="img-placeholder">X</div>
+
+				<div class="Article-vente-container" th:each="">
+					<!--article : ${articles}  -->
+
+					<ul>
+						<li th:text="">Nom Article</li>
+						<!--${article.nomArticle}  -->
+						<li th:text="">Prix Article</li>
+						<!--${article.prixArticle}  -->
+						<li th:text="">Fin Enchères</li>
+						<!--${encheres.finEnchere}  -->
+						<li th:text="">Vendeur</li>
+						<!--${article.vendeur}  -->
+						<!-- <a href="#">NineJea</a> -->
+					</ul>
+				</div>
+			</div>
+			<button id="submitSearch" type="submit">Rechercher</button>
+		</div>
+	</main>
+</body>
+</html>
+
+
+
+</body>
+</html>
