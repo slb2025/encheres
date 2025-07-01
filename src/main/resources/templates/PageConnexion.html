@@ -1,30 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="../../../../../../../../Desktop/Projet%20Spring/Front/font_encheres/style-profil-connexion.css">
+    <title>Encheres</title>
 </head>
 <body>
+    <div class="container">
+        <header>
+            <nav>
+                <div class="titre-entete">ENI-Enchères</div>
+                <div class="buttons-nav">
+                    <div class="button-nav"><a href="">Enchères</a></div>
+                    <div class="button-nav"><a href="">Vente article</a></div>
+                    <div class="button-nav"><a href="">Mon profil</a></div>
+                    <div class="button-nav"><a href="">Deconnexion</a></div>
+                </div> 
+            </nav>
+        </header>
+        <main>
+            <div class="formulaire">
+                <form class="form-connexion" action="">
+                    <div class="field">
+                        <label for="pseudo">Identifiant</label>
+                        <input type="text" name="pseudo" id="pseudo" size="40">
+                    </div>
+                    <div class="field">
+                        <label for="prenom">Mot de passe</label>
+                        <input type="text" name="prenom" id="prenom" size="40">
+                    </div>
+                    <div class="connect-souvenir">
+                        <div class="button-form">
+                            <button type="submit">Connexion</button>
+                        </div>
+                        <div>
+                            <div class="checkbox-connect">
+                                <input type="checkbox" name="souvenir" id="souvenir" />
+                                <label for="souvenir">Se souvenir de moi</label>
+                            </div>
+                            <div>
+                                <a href="">Mot de passe oublié</a>
+                            </div>  
+                        </div>
+                    </div>
+                    <div class="creer-compte">
+                        <button type="submit">Créer un compte</button>
+                    </div>
+                </form>
+            </div>
 
-	<h1>ENI-Enchères</h1>
-
-	<h2>Avec mon Email</h2>
-	<form action="/" method="post">
-		<ul>
-
-			<li><label>Identifiant</label> <input type="text" id="name"
-				name="login" required></li>
-			<li><label>Mot de passe</label> <input type="text"
-				id="motDePasse" name="motDePasse" required></li>
-		</ul>
-
-		<div>
-			<button type="submit">Connexion</button>
-
-			<input type="Checkbox"> Se souvenir de moi <br><a href="">Mot
-				de passe oublié</a>
-		</div>
-	</form>
-
+        </main>
+    </div>
+    
 </body>
 </html>

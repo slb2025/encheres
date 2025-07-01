@@ -9,10 +9,7 @@ public class IndexController {
 
     public String AfficherAccueil() {
         System.out.println("Appel de la méthode index");
-
-        return "index2";
+        return "PagesListeEncheresMesVentes";
 
     }
-
-
 }
