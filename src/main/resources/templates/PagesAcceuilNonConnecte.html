@@ -1,83 +1,90 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Enchères.org</title>
-
-<link href="/css/general.css" rel="stylesheet" />
-<!-- <link rel="stylesheet" th:href="@{/css/general.css}" /> -->
+	<meta charset="UTF-8">
+	<title>Enchères.org</title>
+	<link rel="stylesheet" th:href="@{/css/general.css}" />
 </head>
 <body>
-	<header>
-		<div id="titrenav">
-			<a th:href="@{/}">ENI-Encheres</a>
-		</div>
+<header>
+	<div id="titrenav">
+		<a th:href="@{/}">ENI-Encheres</a>
+	</div>
 
 
-		<nav>
-			<ul>
-				<li><a th:href="@{/PageConnexion}">S'inscrire - Se
-						connecter</a></li>
-			</ul>
-		</nav>
+	<nav>
+		<ul>
+			<li><a th:href="@{/PageConnexion}">S'inscrire - Se
 
-	</header>
+				connecter</a></li>
+		</ul>
+	</nav>
 
-	<h1>Liste des enchères</h1>
+</header>
 
-	<main>
+<h1>Liste des enchères</h1>
+
+<main>
 
 
-		<div class="container">
-			<div class="filtres-container">
-				<h2>Filtres :</h2>
-				<form th:action="" method="post"></form>
+	<div class="container">
+		<div class="filtres-container">
+			<h2>Filtres :</h2>
+			<!-- PROBLÈME CORRIGÉ : th:action était vide -->
+			<form method="post">
+				<!-- <form th:action="" method="post"></form> -->
 				<!-- "@{/filtres}" -->
 				<input type="search" name="nomArticle" size="30"
-					placeholder="Le nom de l'article contient"> <!-- <label
-					for="listeCategorie">Catégorie :</label>--> <select
+
+					   placeholder="Le nom de l'article contient"> <!-- <label
+
+                for="listeCategorie">Catégorie :</label>--> <select
+
 					name="listeCategorie">
-					<option>Informatique</option>
-					<option>Ameublement</option>
-					<option>Vêtement</option>
-					<option>Sports&Loisirs</option>
-					<!-- 
-				<option th:each="categorie : ${categories}"
-                    th:value="${categorie.libelle}"
-                    th:text="${categorie.libelle}">
-            	</option>
-            	 -->
-				</select>
-			</div>
+				<option>Informatique</option>
+				<option>Ameublement</option>
+				<option>Vêtement</option>
+				<option>Sports&Loisirs</option>
+				<!--
+                <option th:each="categorie : ${categories}"
 
+                                    th:value="${categorie.libelle}"
 
-			<div class="detailVente-container">
-				<img alt="PC Gamer" src="/images/logoENI.png">
-				<div class="img-placeholder">X</div>
+                                    th:text="${categorie.libelle}">
+                </option>
 
-				<div class="Article-vente-container" th:each="">
-					<!--article : ${articles}  -->
-
-					<ul>
-						<li th:text="">Nom Article</li>
-						<!--${article.nomArticle}  -->
-						<li th:text="">Prix Article</li>
-						<!--${article.prixArticle}  -->
-						<li th:text="">Fin Enchères</li>
-						<!--${encheres.finEnchere}  -->
-						<li th:text="">Vendeur</li>
-						<!--${article.vendeur}  -->
-						<!-- <a href="#">NineJea</a> -->
-					</ul>
-				</div>
-			</div>
-			<button id="submitSearch" type="submit">Rechercher</button>
+                                 -->
+			</select>
 		</div>
-	</main>
-</body>
-</html>
+		<div class="detailVente-container">
+			<img alt="PC Gamer" src="/images/logoENI.png">
+			<div class="img-placeholder">X</div>
 
+			<!-- PROBLÈME CORRIGÉ : th:each était vide -->
+			<div class="Article-vente-container">
+				<!-- <div class="Article-vente-container" th:each=""> -->
+				<!--article : ${articles}  -->
 
-
+				<ul>
+					<!-- PROBLÈMES CORRIGÉS : th:text étaient vides -->
+					<li>Nom Article</li>
+					<!-- <li th:text="">Nom Article</li> -->
+					<!--${article.nomArticle}  -->
+					<li>Prix Article</li>
+					<!-- <li th:text="">Prix Article</li> -->
+					<!--${article.prixArticle}  -->
+					<li>Fin Enchères</li>
+					<!-- <li th:text="">Fin Enchères</li> -->
+					<!--${encheres.finEnchere}  -->
+					<li>Vendeur</li>
+					<!-- <li th:text="">Vendeur</li> -->
+					<!--${article.vendeur}  -->
+					<!-- <a href="#">NineJea</a> -->
+				</ul>
+			</div>
+		</div>
+		<button id="submitSearch" type="submit">Rechercher</button>
+	</div>
+</main>
 </body>
 </html>
