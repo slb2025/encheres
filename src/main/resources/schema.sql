@@ -1,98 +1,173 @@
-IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = 'Enchere')
-BEGIN
-    CREATE DATABASE Enchere;
-END;
-GO
+-- Création de la base de données
 
-USE Enchere;
-GO
+-- IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = 'Enchere')
+--
+-- CREATE DATABASE Enchere;
+--
+-- GO
+--
+-- USE Enchere;
+--
+-- GO
+--
+-- -- Table Utilisateur
 
--- Table Utilisateur
-IF NOT EXISTS (SELECT * FROM sysobjects WHERE name = 'Utilisateur' AND xtype = 'U')
-BEGIN
-    CREATE TABLE Utilisateur (
-        id INT PRIMARY KEY NOT NULL,
-        pseudo VARCHAR(100) NOT NULL,
-        nom VARCHAR(100) NOT NULL,
-        prenom VARCHAR(100) NOT NULL,
-        email VARCHAR(255) NOT NULL,
-        tel VARCHAR(10) NOT NULL,
-        rue VARCHAR(255) NOT NULL,
-        codePostal VARCHAR(255) NOT NULL,
-        ville VARCHAR(255) NOT NULL,
-        motDePasse VARCHAR(255) NOT NULL,
-        credit INT NOT NULL DEFAULT 100,
-        isAdmin BIT NOT NULL DEFAULT 0
-    );
-END;
-GO
+DROP TABLE IF EXISTS RetraitArticle;
+DROP TABLE IF EXISTS Retrait;
+DROP TABLE IF EXISTS Enchere;
+DROP TABLE IF EXISTS Article;
+DROP TABLE IF EXISTS Categorie;
+DROP TABLE IF EXISTS Utilisateur;
+
+CREATE TABLE Utilisateur (
+
+                             id INT IDENTITY(1,1) PRIMARY KEY,
+
+                             pseudo VARCHAR(100) NOT NULL UNIQUE,
+
+                             nom VARCHAR(100) NOT NULL,
+
+                             prenom VARCHAR(100) NOT NULL,
+
+                             email VARCHAR(255) NOT NULL UNIQUE,
+
+                             tel VARCHAR(20) NOT NULL,
+
+                             rue VARCHAR(255) NOT NULL,
+
+                             codePostal VARCHAR(10) NOT NULL,
+
+                             ville VARCHAR(255) NOT NULL,
+
+                             motDePasse VARCHAR(255) NOT NULL,
+
+                             credit DECIMAL(10,2) NOT NULL DEFAULT 100.00,
+
+                             isAdmin BIT NOT NULL DEFAULT 0,
+
+                             dateCreation DATETIME NOT NULL DEFAULT GETDATE(),
+
+                             CONSTRAINT CK_Utilisateur_Credit CHECK (credit >= 0)
+
+);
+
+
 
 -- Table Categorie
-IF NOT EXISTS (SELECT * FROM sysobjects WHERE name = 'Categorie' AND xtype = 'U')
-BEGIN
-    CREATE TABLE Categorie (
-        id INT PRIMARY KEY NOT NULL,
-        libelle VARCHAR(100) NOT NULL
-    );
-END;
-GO
+
+
+CREATE TABLE Categorie (
+
+                           id INT IDENTITY(1,1) PRIMARY KEY,
+
+                           libelle VARCHAR(100) NOT NULL UNIQUE
+
+);
+
+
 
 -- Table Article
-IF NOT EXISTS (SELECT * FROM sysobjects WHERE name = 'Article' AND xtype = 'U')
-BEGIN
+
+
     CREATE TABLE Article (
-        id INT PRIMARY KEY NOT NULL,
-        idUtilisateur INT NOT NULL,
-        idCategorie INT,
-        nom VARCHAR(100) NOT NULL,
-        descriptionArticle VARCHAR(255) NOT NULL,
-        dateDebut DATE NOT NULL,
-        dateFin DATE NOT NULL,
-        miseAPrix INT NOT NULL,
-        prixVente INT NOT NULL,
-        etatVente VARCHAR(255),
-        CONSTRAINT FK_Article_Utilisateur FOREIGN KEY (idUtilisateur) REFERENCES Utilisateur(id),
-        CONSTRAINT FK_Article_Categorie FOREIGN KEY (idCategorie) REFERENCES Categorie(id)
-    );
-END;
-GO
+
+                         id INT IDENTITY(1,1) PRIMARY KEY,
+
+                         idUtilisateur INT NOT NULL,
+
+                         idCategorie INT,
+
+                         nom VARCHAR(100) NOT NULL,
+
+                         descriptionArticle VARCHAR(1000) NOT NULL,
+
+                         dateDebut DATETIME NOT NULL,
+
+                         dateFin DATETIME NOT NULL,
+
+                         miseAPrix DECIMAL(10,2) NOT NULL,
+
+                         prixVente DECIMAL(10,2),
+
+                         etatVente VARCHAR(50) DEFAULT 'EN_COURS',
+
+                         dateCreation DATETIME NOT NULL DEFAULT GETDATE(),
+
+                         CONSTRAINT FK_Article_Utilisateur FOREIGN KEY (idUtilisateur) REFERENCES Utilisateur(id),
+
+                         CONSTRAINT FK_Article_Categorie FOREIGN KEY (idCategorie) REFERENCES Categorie(id),
+
+                         CONSTRAINT CK_Article_Dates CHECK (dateFin > dateDebut),
+
+                         CONSTRAINT CK_Article_Prix CHECK (miseAPrix > 0),
+
+                         CONSTRAINT CK_Article_Etat CHECK (etatVente IN ('EN_COURS', 'TERMINEE', 'ANNULEE'))
+
+);
+
+
 
 -- Table Enchere
-IF NOT EXISTS (SELECT * FROM sysobjects WHERE name = 'Enchere' AND xtype = 'U')
-BEGIN
+
+
+
     CREATE TABLE Enchere (
-        id INT PRIMARY KEY NOT NULL,
-        idUtilisateur INT NOT NULL,
-		idArticle INT NOT NULL,
-        dateEnchere DATE NOT NULL,
-        montantEnchere INT NOT NULL,
-		CONSTRAINT FK_Enchere_Article FOREIGN KEY (idArticle) REFERENCES Article(id),
-        CONSTRAINT FK_Enchere_Utilisateur FOREIGN KEY (idUtilisateur) REFERENCES Utilisateur(id)
-    );
-END;
-GO
+
+                         id INT IDENTITY(1,1) PRIMARY KEY,
+
+                         idUtilisateur INT NOT NULL,
+
+                         idArticle INT NOT NULL,
+
+                         dateEnchere DATETIME NOT NULL DEFAULT GETDATE(),
+
+                         montantEnchere DECIMAL(10,2) NOT NULL,
+
+                         CONSTRAINT FK_Enchere_Article FOREIGN KEY (idArticle) REFERENCES Article(id),
+
+                         CONSTRAINT FK_Enchere_Utilisateur FOREIGN KEY (idUtilisateur) REFERENCES Utilisateur(id),
+
+                         CONSTRAINT CK_Enchere_Montant CHECK (montantEnchere > 0)
+
+);
+
+
 
 -- Table Retrait
-IF NOT EXISTS (SELECT * FROM sysobjects WHERE name = 'Retrait' AND xtype = 'U')
-BEGIN
+
+
+
     CREATE TABLE Retrait (
-        id INT PRIMARY KEY NOT NULL,
-        rue VARCHAR(255) NOT NULL,
-        codePostal VARCHAR(6) NOT NULL,
-        ville VARCHAR(255) NOT NULL,
-    );
-END;
-GO
+
+                         id INT IDENTITY(1,1) PRIMARY KEY,
+
+                         rue VARCHAR(255) NOT NULL,
+
+                         codePostal VARCHAR(10) NOT NULL,
+
+                         ville VARCHAR(255) NOT NULL
+
+);
+
+
 
 -- Table RetraitArticle
-IF NOT EXISTS (SELECT * FROM sysobjects WHERE name = 'RetraitArticle' AND xtype = 'U')
-BEGIN
+
+
     CREATE TABLE RetraitArticle (
-        id INT PRIMARY KEY NOT NULL,
-        idArticle INT NOT NULL,
-        idRetrait INT NOT NULL,
-        CONSTRAINT FK_Retrait_Article FOREIGN KEY (idArticle) REFERENCES Article(id),
-        CONSTRAINT FK_Article_Retrait FOREIGN KEY (idRetrait) REFERENCES Retrait(id)
-    );
-END;
-GO
+
+                                id INT IDENTITY(1,1) PRIMARY KEY,
+
+                                idArticle INT NOT NULL,
+
+                                idRetrait INT NOT NULL,
+
+                                CONSTRAINT FK_RetraitArticle_Article FOREIGN KEY (idArticle) REFERENCES Article(id),
+
+                                CONSTRAINT FK_RetraitArticle_Retrait FOREIGN KEY (idRetrait) REFERENCES Retrait(id),
+
+                                CONSTRAINT UK_RetraitArticle UNIQUE (idArticle, idRetrait)
+
+);
+
+
