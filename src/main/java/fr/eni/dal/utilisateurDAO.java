@@ -1,4 +1,9 @@
 package fr.eni.dal;
 
-public class utilisateurDAO {
+import fr.eni.bo.Utilisateur;
+
+public interface utilisateurDAO {
+
+    void create(Utilisateur utilisateur);
+
 }
