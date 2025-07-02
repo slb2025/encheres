@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class EnchereController {
 
+    private EnchereService enchereService;
 
     @Controller
     public class VenteController {
@@ -24,7 +25,7 @@ public class EnchereController {
 
         @PostMapping("/creer")
         public String creerVente(@Valid @ModelAttribute("ArticleVendu") ArticleVendu articleVendu) {
-            EnchereService.creerVente(articleVendu);
+            enchereService.creerVente(articleVendu);
             return "redirect:/films";
         }
     }
