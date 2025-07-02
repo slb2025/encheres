@@ -39,7 +39,7 @@ public class UtilisateurController {
         boolean success = utilisateurService.login(pseudo, password);
 
         if (success) {
-            return "redirect:/PageProfil";
+            return "redirect:/PagesListeEncheresConnecte";
         } else {
             model.addAttribute("error", "Identifiant ou mot de passe incorrect.");
             return "PageConnexion";
