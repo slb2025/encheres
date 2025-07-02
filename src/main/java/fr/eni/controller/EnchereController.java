@@ -12,10 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class EnchereController {
 
-
-    @Controller
-    public class VenteController {
-
         @GetMapping("/creer")
         public String creerVente(Model model) {
             model.addAttribute("ArticleVendu", new ArticleVendu());
