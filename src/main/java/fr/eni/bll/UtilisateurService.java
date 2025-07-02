@@ -7,4 +7,7 @@ import java.sql.SQLException;
 
 public interface UtilisateurService {
     void creer(Utilisateur utilisateur);
+
+    boolean login(String pseudo, String password);
+
 }

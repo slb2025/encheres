@@ -5,6 +5,8 @@ import fr.eni.bo.Enchere;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UtilisateurController {
@@ -23,6 +25,24 @@ public class UtilisateurController {
         return "PagesListeEncheresMesVentes";
     }
 
+    @GetMapping("/PageConnexion")
+    public String afficherLogin() {
+        return "PageConnexion";
+    }
 
+    @PostMapping("/login")
+    public String login(
+            @RequestParam String pseudo,
+            @RequestParam String password,
+            Model model) {
 
+        boolean success = utilisateurService.login(pseudo, password);
+
+        if (success) {
+            return "redirect:/PageProfil";
+        } else {
+            model.addAttribute("error", "Identifiant ou mot de passe incorrect.");
+            return "PageConnexion";
+        }
+    }
 }
