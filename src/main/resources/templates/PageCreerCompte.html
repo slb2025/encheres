@@ -1,84 +1,98 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
-        href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="/css/style-profil-connexion.css">
+      href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style-profil-connexion.css" />
     <title>Encheres</title>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <header>
-            <nav>
-                <div class="titre-entete">ENI-Enchères</div>
-                <div class="buttons-nav">
-                    <div class="button-nav"><a href="">Enchères</a></div>
-                    <div class="button-nav"><a href="">Vente article</a></div>
-                    <div class="button-nav"><a href="">Mon profil</a></div>
-                    <div class="button-nav"><a href="">Deconnexion</a></div>
-                </div> 
-            </nav>
-        </header>
-        <main>
-            <h1 class="titre">Mon profil</h1>
+      <header>
+        <nav>
+          <div class="titre-entete">ENI-Enchères</div>
+          <div class="buttons-nav">
+            <div class="button-nav"><a href="">Enchères</a></div>
+            <div class="button-nav"><a href="">Vente article</a></div>
+            <div class="button-nav"><a href="">Mon profil</a></div>
+            <div class="button-nav"><a href="">Deconnexion</a></div>
+          </div>
+        </nav>
+      </header>
+      <main>
+        <h1 class="titre">Mon profil</h1>
 
-            <form class="form-profil" action="">
-                    <div>
-                        <div class="field">
-                            <label for="pseudo">Pseudo</label>
-                            <input type="text" name="pseudo" id="pseudo" size="30">
-                        </div>
-                        <div class="field">  
-                            <label for="prenom">Prénom</label>
-                            <input type="text" name="prenom" id="prenom" size="30">
-                        </div>
-                        <div class="field">
-                            <label for="prenom">Téléphone</label>
-                            <input type="text" name="telephone" id="telephone" size="30">
-                        </div>
-                        <div class="field">    
-                            <label for="code-postale">Code postale</label>
-                            <input type="text" name="code-postale" id="code-postale" size="30">
-                        </div>
-                        <div class="field">
-                            <label for="mot-de-passe">Mode de passe</label>
-                            <input type="text" name="mot-de-passe" id="mot-de-passe" size="30">
-                        </div>
-                        <div class="button-form">
-                            <button type="submit">Créer</button>
-                        </div>
-                    </div>
+        <form class="form-profil" action="">
+          <div>
+            <div class="field">
+              <label for="pseudo">Pseudo</label>
+              <input type="text" name="pseudo" id="pseudo" size="30" />
+            </div>
+            <div class="field">
+              <label for="prenom">Prénom</label>
+              <input type="text" name="prenom" id="prenom" size="30" />
+            </div>
+            <div class="field">
+              <label for="prenom">Téléphone</label>
+              <input type="text" name="telephone" id="telephone" size="30" />
+            </div>
+            <div class="field">
+              <label for="code-postale">Code postale</label>
+              <input
+                type="text"
+                name="code-postale"
+                id="code-postale"
+                size="30"
+              />
+            </div>
+            <div class="field">
+              <label for="mot-de-passe">Mode de passe</label>
+              <input
+                type="text"
+                name="mot-de-passe"
+                id="mot-de-passe"
+                size="30"
+              />
+            </div>
+          </div>
 
-                    <div>
-                        <div class="field">
-                            <label for="nom">Nom</label>
-                            <input type="text" name="nom" id="nom" size="30">
-                        </div>
-                        <div class="field">
-                            <label for="email">Email</label>
-                            <input type="text" name="email" id="email" size="30">
-                        </div>
-                        <div class="field">
-                            <label for="rue">Rue</label>
-                            <input type="text" name="rue" id="rue" size="30">
-                        </div>
-                        <div class="field">
-                            <label for="ville">Ville</label>
-                            <input type="text" name="ville" id="ville" size="30">
-                        </div>
-                        <div class="field">
-                            <label for="confirmation">Confirmation</label>
-                            <input type="text" name="confirmation" id="confirmation" size="30">
-                        </div>
-                        <div class="button-form">
-                            <button type="submit">Annuler</button>
-                        </div>
-                    </div>         
-            </form>
-        </main>
+          <div>
+            <div class="field">
+              <label for="nom">Nom</label>
+              <input type="text" name="nom" id="nom" size="30" />
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input type="text" name="email" id="email" size="30" />
+            </div>
+            <div class="field">
+              <label for="rue">Rue</label>
+              <input type="text" name="rue" id="rue" size="30" />
+            </div>
+            <div class="field">
+              <label for="ville">Ville</label>
+              <input type="text" name="ville" id="ville" size="30" />
+            </div>
+            <div class="field">
+              <label for="confirmation">Confirmation</label>
+              <input
+                type="text"
+                name="confirmation"
+                id="confirmation"
+                size="30"
+              />
+            </div>
+          </div>
+        </form>
+        <div class="button-form">
+          <button type="submit">Créer</button>
+          <button type="submit">Annuler</button>
+        </div>
+      </main>
     </div>
-    
-</body>
+  </body>
 </html>
