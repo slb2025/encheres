@@ -1,6 +1,6 @@
 package fr.eni.controller;
 
-import fr.eni.bll.EnchereService;
+//import fr.eni.bll.EnchereService;
 import fr.eni.bo.ArticleVendu;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -20,8 +20,7 @@ public class EnchereController {
 
         @PostMapping("/creer")
         public String creerVente(@Valid @ModelAttribute("ArticleVendu") ArticleVendu articleVendu) {
-            EnchereService.creerVente(articleVendu);
+            //EnchereService.creerVente(articleVendu);
             return "redirect:/films";
         }
     }
-}

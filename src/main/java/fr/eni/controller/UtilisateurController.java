@@ -45,4 +45,8 @@ public class UtilisateurController {
             return "PageConnexion";
         }
     }
+    @GetMapping("PageInscription")
+    public String afficherInscription() {
+        return "PageCreerCompte";
+    }
 }
