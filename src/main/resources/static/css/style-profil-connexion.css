@@ -73,7 +73,7 @@ nav {
 }
 
 /* Body */
-/* Profil */
+/* Creer compte */
 .titre {
     text-align: center;
     font-size: 30px;
@@ -87,7 +87,7 @@ nav {
 .form-profil{
     display: flex;
     justify-content: space-between;
-    max-width: 700px;
+    max-width: 550px;
     margin: auto;
 }
 
@@ -149,9 +149,31 @@ button:hover {
 .creer-compte {
     padding-top: 30px;
     text-align: center;
-
 }
 
 
+/* Mon Profil*/
+.info-profil {
+    padding-top: 20px;
+    margin: auto;
+}
 
+.info-profil td {
+    padding-bottom: 10px;
+}
+
+.contenu-profil {
+    padding-left: 20px;
+}
+
+.button-profil {
+    padding-top: 20px;
+}
+
+/* Modifier Profil*/
+.credit {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 20px;
+}
 
