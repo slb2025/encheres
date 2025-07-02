@@ -12,6 +12,10 @@ public class Enchere {
 
     //constructeur
 
+    public Enchere(){
+
+    }
+
     public Enchere(LocalDateTime dateEnchere, long montantEnchere, ArticleVendu articleVendu, Utilisateur encherisseur) {
         this.dateEnchere = dateEnchere;
         this.montantEnchere = montantEnchere;
