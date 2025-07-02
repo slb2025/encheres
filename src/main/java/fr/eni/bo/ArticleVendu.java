@@ -22,6 +22,9 @@ public class ArticleVendu {
 
     //constructeur
 
+    public ArticleVendu() {
+    }
+
     public ArticleVendu(int idArticle, String nomArticle, String description, LocalDateTime dateDebutEncheres, LocalDateTime dateFinEncheres, int miseAPrix, int prixVente, String etatVente, Categorie categorieArticle, Utilisateur vendeur, Retrait lieuRetrait, List<Enchere> encheres) {
         this.idArticle = idArticle;
         this.nomArticle = nomArticle;
