@@ -23,14 +23,14 @@
         </header>
         <main>
             <div class="formulaire">
-                <form class="form-connexion" action="">
+                <form class="form-connexion" th:action="@{/login}" method="post">
                     <div class="field">
                         <label for="pseudo">Identifiant</label>
                         <input type="text" name="pseudo" id="pseudo" size="40">
                     </div>
                     <div class="field">
-                        <label for="prenom">Mot de passe</label>
-                        <input type="text" name="prenom" id="prenom" size="40">
+                        <label for="password">Mot de passe</label>
+                        <input type="text" name="password" id="password" size="40">
                     </div>
                     <div class="connect-souvenir">
                         <div class="button-form">
