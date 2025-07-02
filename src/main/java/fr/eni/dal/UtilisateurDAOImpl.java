@@ -2,6 +2,9 @@ package fr.eni.dal;
 
 import fr.eni.bo.Utilisateur;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -60,5 +63,18 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 //            return rs.getInt(1) > 0;
 //        }
         return  false;
+    }
+
+    @Override
+    public Utilisateur findByPseudo(String pseudo) {
+        String sql = "SELECT * FROM Utilisateur WHERE pseudo = :pseudo";
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("pseudo", pseudo);
+
+        try {
+            return namedParameterJdbcTemplate.queryForObject(sql, params, new BeanPropertyRowMapper<>(Utilisateur.class));
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 }

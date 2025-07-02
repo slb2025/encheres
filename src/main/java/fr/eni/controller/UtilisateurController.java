@@ -25,6 +25,11 @@ public class UtilisateurController {
         return "PagesListeEncheresMesVentes";
     }
 
+    @GetMapping("/PageConnexion")
+    public String afficherLogin() {
+        return "PageConnexion";
+    }
+
     @PostMapping("/login")
     public String login(
             @RequestParam String pseudo,
@@ -34,7 +39,7 @@ public class UtilisateurController {
         boolean success = utilisateurService.login(pseudo, password);
 
         if (success) {
-            return "redirect:/PagesListeEncheresConnecté";
+            return "redirect:/PageProfil";
         } else {
             model.addAttribute("error", "Identifiant ou mot de passe incorrect.");
             return "PageConnexion";
