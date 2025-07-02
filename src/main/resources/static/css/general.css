@@ -11,37 +11,40 @@ body {
 }
 
 nav {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 50px;
-    align-items: center;
-    border-bottom: 1px solid #333;
-    padding-bottom: 15px;
+	display: flex;
+	justify-content: space-between;
+	margin-top: 50px;
+	align-items: center;
+	border-bottom: 1px solid #333;
+	padding-bottom: 15px;
 }
- 
+
 .titre-entete {
-    font-size: 25px;
-    font-weight: 600;
+	font-size: 25px;
+	font-weight: 600;
 }
- 
+
 .buttons-nav {
-    display: flex;
-    flex-direction: row;
-    gap: 25px;
+	display: flex;
+	flex-direction: row;
+	gap: 25px;
 }
- 
-.bouton, a {
-    text-decoration: none;
-    color: #368539;
+
+.bouton,
+a {
+	text-decoration: none;
+	color: #368539;
 }
- 
-.bouton, a:hover {
-    color: #295c2c;
-    font-weight: 400;
+
+.bouton,
+a:hover {
+	color: #295c2c;
+	font-weight: 400;
 }
- 
-.titre-entete, .button-nav {
-    text-align: center;
+
+.titre-entete,
+.button-nav {
+	text-align: center;
 }
 
 h1 {
@@ -50,67 +53,42 @@ h1 {
 	justify-content: center;
 }
 
-.container {
+.main-wrapper {
+
 	display: flex;
-	align-items: center;
-	width: 50%;
+	flex-direction: column;
+	max-width: 800px;
+	width: 100%;
+	gap: 1rem;
 }
+
 
 .filtres-container {
-	display: flex;
-	align-items: flex-start;
-	flex-wrap: wrap;
-	flex-direction: column;
-	margin: 0 2rem 2rem 2rem;
-	gap: 1rem;
-	max-width: 300px;
-}
-
-/* Container global */
-.container {
-	display: flex;
-	flex-direction: column;
-	gap: 1.5rem;
-}
-
-/* Filtres */
-.filtres-container, .radio-group, .checkbox-group {
-	display: flex;
-	flex-direction: column;
-	gap: 0.5rem;
-}
-
-input[type="search"] {
-	padding: 0.5rem;
-	font-size: 1rem;
-	border: 1px solid #ccc;
-	border-radius: 4px;
+	max-width: 400px;
 	width: 100%;
 }
 
 select {
-	padding: 0.5rem;
 	font-size: 1rem;
 	border-radius: 4px;
 	width: fit-content;
 }
 
-.radio-group label, .checkbox-group label {
-	font-size: 0.95rem;
+input[type="search"] {
+	font-size: 1rem;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	width: 100%;
+	margin-bottom: 2 rem;
 }
 
-/* Résultats de vente */
-.detailVente-container {
-	max-width: 250px;
-	border: 1px solid #ddd;
-	padding: 1rem;
-	border-radius: 8px;
-	gap: 1rem;
+.radio-group label,
+.checkbox-group label {
+	font-size: 0.95rem;
 }
 
 .Article-vente-container ul {
 	list-style: none;
-	padding: 0;
 }
 
 .Article-vente-container li {
@@ -119,33 +97,50 @@ select {
 
 .AchatVente {
 	display: flex;
-	gap: 2rem;
 	flex-wrap: wrap;
-	margin: 0 2rem 2rem 2rem;
 	font-size: 0.95rem;
 }
 
-.CB-achat label, .CB-Vente label {
+.CB-achat label,
+.CB-Vente label {
 	display: block;
 	margin-bottom: 0.5rem;
 }
 
+
 .RG-AchatVente label {
-	margin: 0 2rem 2rem 2rem;
+	margin: 0 2rem;
 	display: inline-block;
 }
+
 button {
-    background-color: #368539;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-   
+	background-color: #368539;
+	color: white;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 5px;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
 }
- 
+
 button:hover {
-    background-color: #295c2c;
+	background-color: #295c2c;
+}
+
+.detailVente-container {
+	border: solid;
+	display: flex;
+	justify-content: space-around;
+	align-items: flex-start;
+	width: 100%;
+	max-width: 300px;
+}
+
+.Article-vente-container {
+	max-width: 50%;
+}
+
+.img-placeholder {
+	max-width: 50%;
 }
