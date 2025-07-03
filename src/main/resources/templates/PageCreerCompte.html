@@ -26,72 +26,61 @@
       <main>
         <h1 class="titre">Mon profil</h1>
 
-        <form class="form-profil" action="">
+        <form action="/inscription" method="post" th:object="${utilisateur}" class="form-profil">
           <div>
             <div class="field">
               <label for="pseudo">Pseudo</label>
-              <input type="text" name="pseudo" id="pseudo" size="30" />
+              <input type="text" th:field="*{pseudo}" id="pseudo" size="30" />
             </div>
             <div class="field">
               <label for="prenom">Prénom</label>
-              <input type="text" name="prenom" id="prenom" size="30" />
+              <input type="text" th:field="*{prenom}" id="prenom" size="30" />
             </div>
             <div class="field">
               <label for="prenom">Téléphone</label>
-              <input type="text" name="telephone" id="telephone" size="30" />
+              <input type="text" th:field="*{telephone}" id="telephone" size="30" />
             </div>
             <div class="field">
               <label for="code-postale">Code postale</label>
-              <input
-                type="text"
-                name="code-postale"
-                id="code-postale"
-                size="30"
-              />
+              <input type="text" th:field="*{codePostal}" id="code-postale" size="30"/>
             </div>
             <div class="field">
               <label for="mot-de-passe">Mode de passe</label>
-              <input
-                type="text"
-                name="mot-de-passe"
-                id="mot-de-passe"
-                size="30"
-              />
+              <input type="text" th:field="*{motDePasse}" id="mot-de-passe" size="30"/>
+            </div>
+            <div class="button-form">
+              <button type="submit">Créer</button>
             </div>
           </div>
 
           <div>
             <div class="field">
               <label for="nom">Nom</label>
-              <input type="text" name="nom" id="nom" size="30" />
+              <input type="text" th:field="*{nom}" id="nom" size="30" />
             </div>
             <div class="field">
               <label for="email">Email</label>
-              <input type="text" name="email" id="email" size="30" />
+              <input type="text" th:field="*{email}" id="email" size="30" />
             </div>
             <div class="field">
               <label for="rue">Rue</label>
-              <input type="text" name="rue" id="rue" size="30" />
+              <input type="text" th:field="*{rue}" id="rue" size="30" />
             </div>
             <div class="field">
               <label for="ville">Ville</label>
-              <input type="text" name="ville" id="ville" size="30" />
+              <input type="text" th:field="*{ville}" id="ville" size="30" />
             </div>
             <div class="field">
               <label for="confirmation">Confirmation</label>
-              <input
-                type="text"
-                name="confirmation"
-                id="confirmation"
-                size="30"
-              />
+              <input type="text" th:field="*{motDePasse}" id="confirmation" size="30"/>
+            </div>
+            <div class="button-form">
+              <button type="submit">Annuler</button>
             </div>
           </div>
+
         </form>
-        <div class="button-form">
-          <button type="submit">Créer</button>
-          <button type="submit">Annuler</button>
-        </div>
+
       </main>
     </div>
   </body>
