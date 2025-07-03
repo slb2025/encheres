@@ -9,4 +9,8 @@ public interface UtilisateurDAO {
     Utilisateur findByPseudo(String pseudo);
 
     void createUser(Utilisateur utilisateur);
+
+    //Ajout SLB :
+    Utilisateur findById(int Id);
+    //Fin ajout SLB
 }

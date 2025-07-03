@@ -32,5 +32,14 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
         // Ici, comparer le password reçu avec celui stocké
         // ATTENTION EN CLAIR POUR LE MOMENT
-        return utilisateur.getMotDePasse().equals(password);    }
+        return utilisateur.getMotDePasse().equals(password);
+    }
+
+    //Ajout SLB
+    @Override
+    public Utilisateur afficherProfil(int id) {
+        return utilisateurDAO.findById(id);
+    }
+    //Fin ajout SLB
+
 }

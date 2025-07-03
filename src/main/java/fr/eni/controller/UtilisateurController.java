@@ -32,6 +32,13 @@ public class UtilisateurController {
         return "PageConnexion";
     }
 
+    //Ajout SLB
+    @GetMapping("/PageProfilUtilisateur")
+    public String afficherProfilUtilisateur() {
+        return "PageProfil";
+    }
+    //Fin ajout SLB
+
     @GetMapping("/PagesListeEncheresConnecte")
     public String afficherPagesListeEncheresConnecte() {
         return "PagesListeEncheresConnecte";
