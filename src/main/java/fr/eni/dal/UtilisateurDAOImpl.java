@@ -15,29 +15,15 @@ import java.sql.SQLException;
 
 @Repository
 public class UtilisateurDAOImpl implements UtilisateurDAO {
-    private final DataSource dataSource;
 
-    //constructor
 
-    public UtilisateurDAOImpl(DataSource dataSource) {
-        this.dataSource = dataSource;
+    // Injection via constructeur
+    public UtilisateurDAOImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-
-    @Override
-    public void creer(Utilisateur utilisateur) throws SQLException {
-        String sql = "INSERT INTO utilisateurs (pseudo, nom, prenom, email, tel, rue, ville, motDePasse) VALUES (:pseudo, :nom, :prenom, :email, :tel, :rue, :ville, :motDePasse)";
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, utilisateur.getPseudo());
-            stmt.setString(2, utilisateur.getEmail());
-            stmt.setString(3, utilisateur.getMotDePasse());
-            stmt.setInt(4, utilisateur.getCredit());
-            stmt.executeUpdate();
-        }
-    }
 
     @Override
     public boolean pseudoExiste(String pseudo) throws SQLException {
