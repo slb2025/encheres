@@ -10,4 +10,6 @@ public interface UtilisateurService {
 
     boolean login(String pseudo, String password);
 
+    boolean pseudoOuEmailExiste(String pseudo, String email);
+
 }

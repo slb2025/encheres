@@ -52,6 +52,8 @@ public class UtilisateurController {
             return "PageConnexion";
         }
     }
+
+
     // Création Créer Compte
     @GetMapping("/PageCreerCompte")
     public String afficherInscription(Model model) {
@@ -59,10 +61,15 @@ public class UtilisateurController {
         return "PageCreerCompte";
     }
 
-    @PostMapping("/inscription")
-    public String inscription(@ModelAttribute Utilisateur utilisateur) {
-        this.utilisateurService.addUser(utilisateur);
 
+    @PostMapping("/inscription")
+    public String inscription(@ModelAttribute Utilisateur utilisateur, Model model) {
+        if (utilisateurService.pseudoOuEmailExiste(utilisateur.getPseudo(), utilisateur.getEmail())) {
+            model.addAttribute("erreur", "Pseudo ou email déjà utilisé");
+            return "PageCreerCompte";
+        }
+
+        utilisateurService.addUser(utilisateur);
         return "redirect:/PagesAcceuilNonConnecte";
     }
 

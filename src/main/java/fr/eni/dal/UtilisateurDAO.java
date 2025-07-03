@@ -9,4 +9,6 @@ public interface UtilisateurDAO {
     Utilisateur findByPseudo(String pseudo);
 
     void createUser(Utilisateur utilisateur);
+
+    public Utilisateur findByEmail(String email);
 }

@@ -17,8 +17,14 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     @Override
     public void addUser(Utilisateur utilisateur) {
         utilisateurDAO.createUser(utilisateur);
-
     }
+
+    // Test si l'email ou le pseudo est unique
+    public boolean pseudoOuEmailExiste(String pseudo, String email) {
+        return utilisateurDAO.findByPseudo(pseudo) != null || utilisateurDAO.findByEmail(email) != null;
+    }
+
+
 
     @Override
     public boolean login(String pseudo, String password) {

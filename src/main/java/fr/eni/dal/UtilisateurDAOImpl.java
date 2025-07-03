@@ -16,10 +16,17 @@ import java.sql.SQLException;
 @Repository
 public class UtilisateurDAOImpl implements UtilisateurDAO {
 
-    private static final String FIND_PSEUDO = "SELECT * FROM Utilisateur WHERE pseudo = :pseudo";
+    private static final String FIND_PSEUDO = "SELECT * FROM UTILISATEUR WHERE pseudo = :pseudo";
     private static final String CREATE_USER = "INSERT INTO UTILISATEUR (pseudo, nom, prenom, email, tel, rue, codePostal, ville, motDePasse) VALUES (:pseudo, :nom, :prenom, :email, :tel, :rue, :codePostal, :ville, :motDePasse)";
+    private static final String FIND_EMAIL = "SELECT * FROM UTILISATEUR WHERE email = :email";
 
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+//    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+//
+//    public UtilisateurDAOImpl(DataSource dataSource) {
+//        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+//    }
+    @Autowired
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     public UtilisateurDAOImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
@@ -50,6 +57,19 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         map.addValue("ville", utilisateur.getVille());
         map.addValue("motDePasse", utilisateur.getMotDePasse());
         this.namedParameterJdbcTemplate.update(CREATE_USER, map);
+    }
+
+
+    @Override
+    public Utilisateur findByEmail(String email) {
+        MapSqlParameterSource map = new MapSqlParameterSource();
+        map.addValue("email", email);
+
+        try {
+            return namedParameterJdbcTemplate.queryForObject(FIND_EMAIL, map, new BeanPropertyRowMapper<>(Utilisateur.class));
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
 
