@@ -6,6 +6,8 @@ import fr.eni.bo.Utilisateur;
 //Ajout SLB 03/07 pour que la pageListeenchereConnecte renvoie vers modifier le profil
 import jakarta.servlet.http.HttpSession;
 //Fin ajout
+import fr.eni.bo.Utilisateur;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -59,16 +61,8 @@ public class UtilisateurController {
 
     //Par :
     @GetMapping("/PagesListeEncheresConnecte")
-    public String afficherPagesListeEncheresConnecte(Model model, HttpSession session) {
-        Utilisateur sessionUser = (Utilisateur) session.getAttribute("utilisateurConnecte");
-
-//        if (sessionUser != null) {
-//            Utilisateur utilisateur = utilisateurService.afficherProfil(sessionUser.getIdUtilisateur());
-//            model.addAttribute("utilisateur", utilisateur);
-//            return "PagesListeEncheresConnecte";
-//        } else {
-            return "PagesListeEncheresConnecte";
-//        }
+    public String afficherPagesListeEncheresConnecte() {
+        return "PagesListeEncheresConnecte";
     }
 
     //Fin remplacement SLB
@@ -77,11 +71,14 @@ public class UtilisateurController {
     public String login(
             @RequestParam String pseudo,
             @RequestParam String password,
+            HttpSession session,
             Model model) {
 
-        boolean success = utilisateurService.login(pseudo, password);
+        Utilisateur utilisateur = utilisateurService.login(pseudo, password);
 
-        if (success) {
+        if (utilisateur != null) {
+            // Stocker l'utilisateur en session
+            session.setAttribute("utilisateurConnecte", utilisateur);
             return "redirect:/PagesListeEncheresConnecte";
         } else {
             model.addAttribute("error", "Identifiant ou mot de passe incorrect.");
