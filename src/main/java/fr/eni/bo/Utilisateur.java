@@ -9,7 +9,7 @@
         private String nom;
         private String prenom;
         private String email;
-        private String telephone;
+        private String tel;
         private String rue;
         private String codePostal;
         private String ville;
@@ -26,13 +26,13 @@
 
         }
 
-        public Utilisateur(int idUtilisateur, String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse, int credit, boolean administrateur, List<ArticleVendu> articleVendu, List<Enchere> encheres) {
+        public Utilisateur(int idUtilisateur, String pseudo, String nom, String prenom, String email, String tel, String rue, String codePostal, String ville, String motDePasse, int credit, boolean administrateur, List<ArticleVendu> articleVendu, List<Enchere> encheres) {
             this.idUtilisateur = idUtilisateur;
             this.pseudo = pseudo;
             this.nom = nom;
             this.prenom = prenom;
             this.email = email;
-            this.telephone = telephone;
+            this.tel = tel;
             this.rue = rue;
             this.codePostal = codePostal;
             this.ville = ville;
@@ -49,6 +49,7 @@
 
         //getters and setters
 
+
         public int getIdUtilisateur() {
             return idUtilisateur;
         }
@@ -57,20 +58,20 @@
             this.idUtilisateur = idUtilisateur;
         }
 
-        public String getNom() {
-            return nom;
-        }
-
-        public void setNom(String nom) {
-            this.nom = nom;
-        }
-
         public String getPseudo() {
             return pseudo;
         }
 
         public void setPseudo(String pseudo) {
             this.pseudo = pseudo;
+        }
+
+        public String getNom() {
+            return nom;
+        }
+
+        public void setNom(String nom) {
+            this.nom = nom;
         }
 
         public String getPrenom() {
@@ -89,12 +90,12 @@
             this.email = email;
         }
 
-        public String getTelephone() {
-            return telephone;
+        public String getTel() {
+            return tel;
         }
 
-        public void setTelephone(String telephone) {
-            this.telephone = telephone;
+        public void setTel(String tel) {
+            this.tel = tel;
         }
 
         public String getRue() {
@@ -161,7 +162,25 @@
             this.encheres = encheres;
         }
 
-
+        @Override
+        public String toString() {
+            return "Utilisateur{" +
+                    "idUtilisateur=" + idUtilisateur +
+                    ", pseudo='" + pseudo + '\'' +
+                    ", nom='" + nom + '\'' +
+                    ", prenom='" + prenom + '\'' +
+                    ", email='" + email + '\'' +
+                    ", tel='" + tel + '\'' +
+                    ", rue='" + rue + '\'' +
+                    ", codePostal='" + codePostal + '\'' +
+                    ", ville='" + ville + '\'' +
+                    ", motDePasse='" + motDePasse + '\'' +
+                    ", credit=" + credit +
+                    ", administrateur=" + administrateur +
+                    ", ArticleVendu=" + ArticleVendu +
+                    ", encheres=" + encheres +
+                    '}';
+        }
     }
 
 
