@@ -30,6 +30,11 @@ public class UtilisateurController {
         return "PageConnexion";
     }
 
+    @GetMapping("/PagesListeEncheresConnecte")
+    public String afficherPagesListeEncheresConnecte() {
+        return "PagesListeEncheresConnecte";
+    }
+
     @PostMapping("/login")
     public String login(
             @RequestParam String pseudo,
