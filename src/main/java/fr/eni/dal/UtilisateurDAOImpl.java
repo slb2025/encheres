@@ -50,8 +50,6 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
         map.addValue("ville", utilisateur.getVille());
         map.addValue("motDePasse", utilisateur.getMotDePasse());
         this.namedParameterJdbcTemplate.update(CREATE_USER, map);
-
-
     }
 
 
