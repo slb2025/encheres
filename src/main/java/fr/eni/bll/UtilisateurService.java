@@ -10,4 +10,8 @@ public interface UtilisateurService {
 
     boolean login(String pseudo, String password);
 
+    //Ajout SLB :
+    Utilisateur afficherProfil(int id);
+    //Fin ajout SLB
+
 }

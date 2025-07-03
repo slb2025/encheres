@@ -1,6 +1,7 @@
     package fr.eni.bo;
 
     import java.util.List;
+    import java.util.Objects;
 
     public class Utilisateur {
 
@@ -39,9 +40,10 @@
             this.encheres = encheres;
         }
 
+        //Ajout SLB : constructeur par défaut
         public Utilisateur() {
-
         }
+        //Fin ajout SLB
 
         //getters and setters
 
@@ -157,6 +159,39 @@
             this.encheres = encheres;
         }
 
+        //Ajout SLB : toString
+        @Override
+        public String toString() {
+            return "Utilisateur{" +
+                    "idUtilisateur=" + idUtilisateur +
+                    ", pseudo='" + pseudo + '\'' +
+                    ", nom='" + nom + '\'' +
+                    ", prenom='" + prenom + '\'' +
+                    ", email='" + email + '\'' +
+                    ", telephone='" + telephone + '\'' +
+                    ", rue='" + rue + '\'' +
+                    ", codePostal='" + codePostal + '\'' +
+                    ", ville='" + ville + '\'' +
+                    ", motDePasse='" + motDePasse + '\'' +
+                    ", credit=" + credit +
+                    ", administrateur=" + administrateur +
+                    ", ArticleVendu=" + ArticleVendu +
+                    ", encheres=" + encheres +
+                    '}';
+        }
+
+        //Ajout SLB : equals et hashcode
+        @Override
+        public boolean equals(Object o) {
+            if (o == null || getClass() != o.getClass()) return false;
+            Utilisateur that = (Utilisateur) o;
+            return idUtilisateur == that.idUtilisateur && credit == that.credit && administrateur == that.administrateur && Objects.equals(pseudo, that.pseudo) && Objects.equals(nom, that.nom) && Objects.equals(prenom, that.prenom) && Objects.equals(email, that.email) && Objects.equals(telephone, that.telephone) && Objects.equals(rue, that.rue) && Objects.equals(codePostal, that.codePostal) && Objects.equals(ville, that.ville) && Objects.equals(motDePasse, that.motDePasse) && Objects.equals(ArticleVendu, that.ArticleVendu) && Objects.equals(encheres, that.encheres);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(idUtilisateur, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur, ArticleVendu, encheres);
+        }
 
     }
 

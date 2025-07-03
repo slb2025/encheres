@@ -8,4 +8,8 @@ public interface UtilisateurDAO {
     boolean pseudoExiste(String pseudo) throws SQLException;
     boolean emailExiste(String email) throws SQLException;
     Utilisateur findByPseudo(String pseudo);
+
+    //Ajout SLB :
+    Utilisateur findById(int Id);
+    //Fin ajout SLB
 }
