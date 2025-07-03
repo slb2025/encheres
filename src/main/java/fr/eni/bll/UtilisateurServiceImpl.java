@@ -15,7 +15,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     }
 
     @Override
-    public void creer(Utilisateur utilisateur) {
+    public void addUser(Utilisateur utilisateur) {
+        utilisateurDAO.createUser(utilisateur);
 
     }
 

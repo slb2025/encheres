@@ -6,7 +6,7 @@ import fr.eni.dal.UtilisateurDAO;
 import java.sql.SQLException;
 
 public interface UtilisateurService {
-    void creer(Utilisateur utilisateur);
+    void addUser(Utilisateur utilisateur);
 
     boolean login(String pseudo, String password);
 
