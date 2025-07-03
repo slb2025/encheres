@@ -30,6 +30,13 @@ public class UtilisateurController {
         return "PageConnexion";
     }
 
+    //Ajout SLB
+    @GetMapping("/PageProfilUtilisateur")
+    public String afficherProfilUtilisateur() {
+        return "PageProfil";
+    }
+    //Fin ajout SLB
+
     @PostMapping("/login")
     public String login(
             @RequestParam String pseudo,
