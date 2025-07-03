@@ -6,6 +6,7 @@ import fr.eni.bo.Utilisateur;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,10 +33,17 @@ public class UtilisateurController {
         return "PageConnexion";
     }
 
-    //Ajout SLB
-    @GetMapping("/PageProfilUtilisateur")
-    public String afficherProfilUtilisateur() {
-        return "PageProfil";
+    //Ajout SLB 02/07 et modifié le 03/07
+    @GetMapping("/PageProfilUtilisateur/{id}")
+    public String afficherProfilUtilisateur(@PathVariable int id, Model model) {
+        Utilisateur utilisateur = utilisateurService.afficherProfil(id);
+
+        if (utilisateur != null) {
+            model.addAttribute("utilisateur", utilisateur);
+            return "PageProfil";
+        } else {
+            return "redirect:/PagesListeEncheresMesVentes";
+        }
     }
     //Fin ajout SLB
 
