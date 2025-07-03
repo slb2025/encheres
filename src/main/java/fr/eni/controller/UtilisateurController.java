@@ -3,6 +3,9 @@ package fr.eni.controller;
 import fr.eni.bll.UtilisateurService;
 import fr.eni.bo.Enchere;
 import fr.eni.bo.Utilisateur;
+//Ajout SLB 03/07 pour que la pageListeenchereConnecte renvoie vers modifier le profil
+import jakarta.servlet.http.HttpSession;
+//Fin ajout
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,10 +50,28 @@ public class UtilisateurController {
     }
     //Fin ajout SLB
 
+    //Remplacement par SLB de :
+
+//    @GetMapping("/PagesListeEncheresConnecte")
+//    public String afficherPagesListeEncheresConnecte() {
+//        return "PagesListeEncheresConnecte";
+//    }
+
+    //Par :
     @GetMapping("/PagesListeEncheresConnecte")
-    public String afficherPagesListeEncheresConnecte() {
-        return "PagesListeEncheresConnecte";
+    public String afficherPagesListeEncheresConnecte(Model model, HttpSession session) {
+        Utilisateur sessionUser = (Utilisateur) session.getAttribute("utilisateurConnecte");
+
+//        if (sessionUser != null) {
+//            Utilisateur utilisateur = utilisateurService.afficherProfil(sessionUser.getIdUtilisateur());
+//            model.addAttribute("utilisateur", utilisateur);
+//            return "PagesListeEncheresConnecte";
+//        } else {
+            return "PagesListeEncheresConnecte";
+//        }
     }
+
+    //Fin remplacement SLB
 
     @PostMapping("/login")
     public String login(
@@ -81,5 +102,13 @@ public class UtilisateurController {
         return "redirect:/PagesAcceuilNonConnecte";
     }
 
+//    Ajout SLB 03/07
+    @GetMapping("/modifier-profil/{id}")
+    public String afficherFormulaireModification(@PathVariable("id") int id, Model model) {
+        Utilisateur utilisateur = utilisateurService.afficherProfil(id);
+        model.addAttribute("utilisateur", utilisateur);
+        return "PageModifierProfil";
+    }
+// Fin Ajout SLB
 
 }
