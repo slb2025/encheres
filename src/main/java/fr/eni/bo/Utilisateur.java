@@ -186,12 +186,12 @@
         public boolean equals(Object o) {
             if (o == null || getClass() != o.getClass()) return false;
             Utilisateur that = (Utilisateur) o;
-            return idUtilisateur == that.idUtilisateur && credit == that.credit && administrateur == that.administrateur && Objects.equals(pseudo, that.pseudo) && Objects.equals(nom, that.nom) && Objects.equals(prenom, that.prenom) && Objects.equals(email, that.email) && Objects.equals(telephone, that.telephone) && Objects.equals(rue, that.rue) && Objects.equals(codePostal, that.codePostal) && Objects.equals(ville, that.ville) && Objects.equals(motDePasse, that.motDePasse) && Objects.equals(ArticleVendu, that.ArticleVendu) && Objects.equals(encheres, that.encheres);
+            return idUtilisateur == that.idUtilisateur && credit == that.credit && administrateur == that.administrateur && Objects.equals(pseudo, that.pseudo) && Objects.equals(nom, that.nom) && Objects.equals(prenom, that.prenom) && Objects.equals(email, that.email) && Objects.equals(tel, that.tel) && Objects.equals(rue, that.rue) && Objects.equals(codePostal, that.codePostal) && Objects.equals(ville, that.ville) && Objects.equals(motDePasse, that.motDePasse) && Objects.equals(ArticleVendu, that.ArticleVendu) && Objects.equals(encheres, that.encheres);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(idUtilisateur, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur, ArticleVendu, encheres);
+            return Objects.hash(idUtilisateur, pseudo, nom, prenom, email, tel, rue, codePostal, ville, motDePasse, credit, administrateur, ArticleVendu, encheres);
         }
 
     }
