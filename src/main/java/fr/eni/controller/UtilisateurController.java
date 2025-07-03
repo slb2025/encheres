@@ -4,6 +4,7 @@ import fr.eni.bll.UtilisateurService;
 import fr.eni.bo.Enchere;
 import fr.eni.bo.Utilisateur;
 import fr.eni.bo.Utilisateur;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -46,7 +47,16 @@ public class UtilisateurController {
     //Fin ajout SLB
 
     @GetMapping("/PagesListeEncheresConnecte")
-    public String afficherPagesListeEncheresConnecte() {
+    public String afficherPagesListeEncheresConnecte(HttpSession session, Model model) {
+        Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateurConnecte");
+
+        if (utilisateur == null) {
+            // Utilisateur non connecté, redirection vers la page de connexion
+            return "redirect:/PageConnexion";
+        }
+
+        // Utilisateur connecté, on peut ajouter ses infos au modèle si nécessaire
+        model.addAttribute("utilisateur", utilisateur);
         return "PagesListeEncheresConnecte";
     }
 
@@ -54,11 +64,14 @@ public class UtilisateurController {
     public String login(
             @RequestParam String pseudo,
             @RequestParam String password,
+            HttpSession session,
             Model model) {
 
-        boolean success = utilisateurService.login(pseudo, password);
+        Utilisateur utilisateur = utilisateurService.login(pseudo, password);
 
-        if (success) {
+        if (utilisateur != null) {
+            // Stocker l'utilisateur en session
+            session.setAttribute("utilisateurConnecte", utilisateur);
             return "redirect:/PagesListeEncheresConnecte";
         } else {
             model.addAttribute("error", "Identifiant ou mot de passe incorrect.");

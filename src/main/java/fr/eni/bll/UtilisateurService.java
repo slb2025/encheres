@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public interface UtilisateurService {
     void addUser(Utilisateur utilisateur);
 
-    boolean login(String pseudo, String password);
+    Utilisateur login(String pseudo, String password);
 
     //Ajout SLB :
     Utilisateur afficherProfil(int id);
