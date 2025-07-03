@@ -22,6 +22,10 @@
 
         //constructeur
 
+        public Utilisateur() {
+
+        }
+
         public Utilisateur(int idUtilisateur, String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse, int credit, boolean administrateur, List<ArticleVendu> articleVendu, List<Enchere> encheres) {
             this.idUtilisateur = idUtilisateur;
             this.pseudo = pseudo;

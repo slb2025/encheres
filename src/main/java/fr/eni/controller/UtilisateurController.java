@@ -2,9 +2,11 @@ package fr.eni.controller;
 
 import fr.eni.bll.UtilisateurService;
 import fr.eni.bo.Enchere;
+import fr.eni.bo.Utilisateur;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -44,5 +46,18 @@ public class UtilisateurController {
             model.addAttribute("error", "Identifiant ou mot de passe incorrect.");
             return "PageConnexion";
         }
+    }
+    // Création Créer Compte
+    @GetMapping("/PageCreerCompte")
+    public String afficherInscription(Model model) {
+        model.addAttribute("utilisateur" , new Utilisateur());
+        return "PageCreerCompte";
+    }
+
+    @PostMapping("/inscription")
+    public String inscription(@ModelAttribute Utilisateur utilisateur) {
+        this.utilisateurService.creer(utilisateur);
+
+        return "redirect:/PagesAcceuilNonConnecte";
     }
 }
