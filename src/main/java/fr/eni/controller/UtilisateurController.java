@@ -32,6 +32,11 @@ public class UtilisateurController {
         return "PageConnexion";
     }
 
+    @GetMapping("/PagesListeEncheresConnecte")
+    public String afficherPagesListeEncheresConnecte() {
+        return "PagesListeEncheresConnecte";
+    }
+
     @PostMapping("/login")
     public String login(
             @RequestParam String pseudo,
@@ -41,7 +46,7 @@ public class UtilisateurController {
         boolean success = utilisateurService.login(pseudo, password);
 
         if (success) {
-            return "redirect:/PageProfil";
+            return "redirect:/PagesListeEncheresConnecte";
         } else {
             model.addAttribute("error", "Identifiant ou mot de passe incorrect.");
             return "PageConnexion";
