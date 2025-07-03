@@ -15,66 +15,44 @@ import java.sql.SQLException;
 
 @Repository
 public class UtilisateurDAOImpl implements UtilisateurDAO {
-    private final DataSource dataSource;
 
-    //constructor
+    private static final String FIND_PSEUDO = "SELECT * FROM Utilisateur WHERE pseudo = :pseudo";
+    private static final String CREATE_USER = "INSERT INTO UTILISATEUR (pseudo, nom, prenom, email, tel, rue, codePostal, ville, motDePasse) VALUES (:pseudo, :nom, :prenom, :email, :tel, :rue, :codePostal, :ville, :motDePasse)";
 
-    public UtilisateurDAOImpl(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
-
-    @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    @Override
-    public void creer(Utilisateur utilisateur) throws SQLException {
-        String sql = "INSERT INTO utilisateurs (pseudo, nom, prenom, email, tel, rue, ville, motDePasse) VALUES (:pseudo, :nom, :prenom, :email, :tel, :rue, :ville, :motDePasse)";
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, utilisateur.getPseudo());
-            stmt.setString(2, utilisateur.getEmail());
-            stmt.setString(3, utilisateur.getMotDePasse());
-            stmt.setInt(4, utilisateur.getCredit());
-            stmt.executeUpdate();
-        }
+    public UtilisateurDAOImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
     @Override
-    public boolean pseudoExiste(String pseudo) throws SQLException {
-//        String sql = "SELECT COUNT(*) FROM utilisateurs WHERE pseudo = ?";
-//        try (Connection conn = dataSource.getConnection();
-//             PreparedStatement stmt = conn.prepareStatement(sql)) {
-//            stmt.setString(1, pseudo);
-//            ResultSet rs = stmt.executeQuery();
-//            rs.next();
-//            return rs.getInt(1) > 0;
-//        }
-        return  false;
-    }
-
-    @Override
-    public boolean emailExiste(String email) throws SQLException {
-//        String sql = "SELECT COUNT(*) FROM utilisateurs WHERE email = ?";
-//        try (Connection conn = dataSource.getConnection();
-//             PreparedStatement stmt = conn.prepareStatement(sql)) {
-//            stmt.setString(1, email);
-//            ResultSet rs = stmt.executeQuery();
-//            rs.next();
-//            return rs.getInt(1) > 0;
-//        }
-        return  false;
-    }
-
-    @Override
-    public Utilisateur findByPseudo(String pseudo) {
-        String sql = "SELECT * FROM Utilisateur WHERE pseudo = :pseudo";
-        MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("pseudo", pseudo);
+    public Utilisateur findByPseudo(String pseudo) {;
+        MapSqlParameterSource map = new MapSqlParameterSource();
+        map.addValue("pseudo", pseudo);
 
         try {
-            return namedParameterJdbcTemplate.queryForObject(sql, params, new BeanPropertyRowMapper<>(Utilisateur.class));
+            return namedParameterJdbcTemplate.queryForObject(FIND_PSEUDO, map, new BeanPropertyRowMapper<>(Utilisateur.class));
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }
+
+    @Override
+    public void createUser(Utilisateur utilisateur) {
+        MapSqlParameterSource map = new MapSqlParameterSource();
+        map.addValue("pseudo", utilisateur.getPseudo());
+        map.addValue("nom", utilisateur.getNom());
+        map.addValue("prenom", utilisateur.getPrenom());
+        map.addValue("email", utilisateur.getEmail());
+        map.addValue("tel", utilisateur.getTel());
+        map.addValue("rue", utilisateur.getRue());
+        map.addValue("codePostal", utilisateur.getCodePostal());
+        map.addValue("ville", utilisateur.getVille());
+        map.addValue("motDePasse", utilisateur.getMotDePasse());
+        this.namedParameterJdbcTemplate.update(CREATE_USER, map);
+
+
+    }
+
+
 }

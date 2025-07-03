@@ -56,12 +56,10 @@ public class UtilisateurController {
 
     @PostMapping("/inscription")
     public String inscription(@ModelAttribute Utilisateur utilisateur) {
-        this.utilisateurService.creer(utilisateur);
+        this.utilisateurService.addUser(utilisateur);
 
         return "redirect:/PagesAcceuilNonConnecte";
     }
-    @GetMapping("PageInscription")
-    public String afficherInscription() {
-        return "PageCreerCompte";
-    }
+
+
 }
