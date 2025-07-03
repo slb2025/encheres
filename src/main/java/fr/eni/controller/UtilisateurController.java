@@ -60,4 +60,8 @@ public class UtilisateurController {
 
         return "redirect:/PagesAcceuilNonConnecte";
     }
+    @GetMapping("PageInscription")
+    public String afficherInscription() {
+        return "PageCreerCompte";
+    }
 }
