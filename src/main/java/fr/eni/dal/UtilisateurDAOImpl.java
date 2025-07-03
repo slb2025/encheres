@@ -71,30 +71,15 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
     @Override
     public Utilisateur findById(int id) {
-        String sql = "SELECT * FROM utilisateurs WHERE id = ?";
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        String sql = "SELECT * FROM Utilisateur WHERE id = :id";
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("id", id);
 
-            stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
+        try {
+            return namedParameterJdbcTemplate.queryForObject(sql, params, new BeanPropertyRowMapper<>(Utilisateur.class));
 
-            if (rs.next()) {
-                Utilisateur u = new Utilisateur();
-                u.setIdUtilisateur(rs.getInt("id"));
-                u.setPseudo(rs.getString("pseudo"));
-                u.setNom(rs.getString("nom"));
-                u.setPrenom(rs.getString("prenom"));
-                u.setEmail(rs.getString("email"));
-                u.setTelephone(rs.getString("telephone"));
-                u.setRue(rs.getString("rue"));
-                u.setCodePostal(rs.getString("code_postal"));
-                u.setVille(rs.getString("ville"));
-                return u;
-            } else {
-                throw new SQLException("Aucun utilisateur trouvé avec l'id : " + id);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
         }
     }
 
