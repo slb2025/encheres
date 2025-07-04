@@ -19,9 +19,15 @@
 
 <h1>Liste des enchères</h1>
 
-<div class="main-wrapper">
+<div th:if="${error}" class="error-message">
+	<p th:text="${error}" style="color: red;"></p>
+</div>
 
-	<h1>Liste des enchères</h1>
+<div th:if="${message}" class="message">
+	<p th:text="${message}" style="color: #10ff00;"></p>
+</div>
+
+<div class="main-wrapper">
 
 	<section class="filtres-container">
 		<h2>Filtres :</h2>

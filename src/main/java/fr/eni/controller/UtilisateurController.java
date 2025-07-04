@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class UtilisateurController {
@@ -52,27 +53,23 @@ public class UtilisateurController {
     }
     //Fin ajout SLB
 
-    //Remplacement par SLB de :
-
-//    @GetMapping("/PagesListeEncheresConnecte")
-//    public String afficherPagesListeEncheresConnecte() {
-//        return "PagesListeEncheresConnecte";
-//    }
-
-    //Par :
     @GetMapping("/PagesListeEncheresConnecte")
-    public String afficherPagesListeEncheresConnecte() {
+    public String afficherPagesListeEncheresConnecte(HttpSession session, Model model, RedirectAttributes redirectAttributes) {
+        Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateurConnecte");
+
+        if (utilisateur == null) {
+            // Utilisateur non connecté, redirection vers la page de connexion
+            redirectAttributes.addFlashAttribute("error", "Vous devez être connecté pour accéder à cette page");
+            return "redirect:/";
+        }
+
+        // Utilisateur connecté, on peut ajouter ses infos au modèle si nécessaire
+        model.addAttribute("utilisateur", utilisateur);
         return "PagesListeEncheresConnecte";
     }
 
-    //Fin remplacement SLB
-
     @PostMapping("/login")
-    public String login(
-            @RequestParam String pseudo,
-            @RequestParam String password,
-            HttpSession session,
-            Model model) {
+    public String login(@RequestParam String pseudo, @RequestParam String password, HttpSession session, Model model) {
 
         Utilisateur utilisateur = utilisateurService.login(pseudo, password);
 
@@ -85,6 +82,14 @@ public class UtilisateurController {
             return "PageConnexion";
         }
     }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session,RedirectAttributes redirectAttributes) {
+        session.invalidate();
+        redirectAttributes.addFlashAttribute("message", "Tu es bien déconnecté");
+        return "redirect:/";
+    }
+
     // Création Créer Compte
     @GetMapping("/PageCreerCompte")
     public String afficherInscription(Model model) {

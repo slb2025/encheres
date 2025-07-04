@@ -10,6 +10,5 @@ public class IndexController {
     public String AfficherAccueil() {
         System.out.println("Appel de la méthode index");
         return "PagesAcceuilNonConnecte";
-
     }
 }
