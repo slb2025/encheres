@@ -108,9 +108,27 @@ public class UtilisateurController {
     @GetMapping("/modifier-profil/{id}")
     public String afficherFormulaireModification(@PathVariable("id") int id, Model model) {
         Utilisateur utilisateur = utilisateurService.afficherProfil(id);
-        model.addAttribute("utilisateur", utilisateur);
-        return "PageModifierProfil";
+        if (utilisateur != null) {
+            model.addAttribute("utilisateur", utilisateur);
+            return "PageModifierProfil";
+        } else {
+            return "redirect:/PagesListeEncheresMesVentes";
+        }
     }
 // Fin Ajout SLB
+
+    //Ajout SLB 04/07
+    @GetMapping("/info-profil/{id}")
+    public String afficherProfilModifier(@PathVariable int id, Model model) {
+        Utilisateur utilisateur = utilisateurService.afficherProfilModifier(id);
+
+        if (utilisateur != null) {
+            model.addAttribute("utilisateur", utilisateur);
+            return "PageMonProfil";
+        } else {
+            return "redirect:/modifier-profil/{id}";
+        }
+    }
+    //Fin ajout SLB
 
 }
