@@ -76,7 +76,7 @@ public class UtilisateurController {
         }
 
         utilisateurService.addUser(utilisateur);
-        return "redirect:/PagesAcceuilNonConnecte";
+        return "redirect:/PagesListeEncheresConnecte";
     }
 
 
