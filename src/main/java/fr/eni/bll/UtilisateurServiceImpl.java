@@ -19,9 +19,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         utilisateurDAO.createUser(utilisateur);
     }
 
-    // Test si l'email ou le pseudo est unique
+
+
     public boolean pseudoOuEmailExiste(String pseudo, String email) {
-        return utilisateurDAO.findByPseudo(pseudo) != null || utilisateurDAO.findByEmail(email) != null;
+        boolean existe = utilisateurDAO.findByPseudo(pseudo) != null || utilisateurDAO.findByEmail(email) != null;
+        System.out.println("Vérif si existe : " + existe);
+        return existe;
     }
 
 

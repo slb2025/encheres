@@ -53,6 +53,12 @@ public class UtilisateurController {
         }
     }
 
+    @GetMapping("/PagesAcceuilNonConnecte")
+    public String AfficherAccueilInscription() {
+        return "PagesAcceuilNonConnecte";
+
+    }
+
 
     // Création Créer Compte
     @GetMapping("/PageCreerCompte")

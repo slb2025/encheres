@@ -20,11 +20,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
     private static final String CREATE_USER = "INSERT INTO UTILISATEUR (pseudo, nom, prenom, email, tel, rue, codePostal, ville, motDePasse) VALUES (:pseudo, :nom, :prenom, :email, :tel, :rue, :codePostal, :ville, :motDePasse)";
     private static final String FIND_EMAIL = "SELECT * FROM UTILISATEUR WHERE email = :email";
 
-//    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-//
-//    public UtilisateurDAOImpl(DataSource dataSource) {
-//        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-//    }
+
     @Autowired
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 

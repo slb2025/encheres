@@ -13,9 +13,5 @@ public class IndexController {
 
     }
 
-    @GetMapping("/PagesAcceuilNonConnecte")
-    public String AfficherAccueilInscription() {
-        return "PagesAcceuilNonConnecte";
 
-    }
 }
