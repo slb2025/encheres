@@ -49,7 +49,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
 
 
-    //Ajout SLB pour Afficher Profil
+    //Ajout SLB pour Afficher Profil ; même méthode utilisée pour toutes les méthodes utilisant l'id pour afficher des infos
 
     @Override
     public Utilisateur findById(int id) {

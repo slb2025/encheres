@@ -44,4 +44,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     }
     //Fin ajout SLB
 
+    //Ajout SLB 04/07 :
+    @Override
+    public Utilisateur afficherProfilModifier(int id) {
+        return utilisateurDAO.findById(id);
+    }
+    //Fin ajout SLB
+
 }

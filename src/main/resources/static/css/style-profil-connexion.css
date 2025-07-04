@@ -91,6 +91,11 @@ nav {
     margin: auto;
 }
 
+.info-profil {
+    border-collapse: separate;
+    border-spacing: 40px 10px;
+}
+
 .field {
     padding-bottom: 30px ;
 }
