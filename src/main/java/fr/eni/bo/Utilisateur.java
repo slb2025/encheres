@@ -44,10 +44,6 @@
             this.encheres = encheres;
         }
 
-        public Utilisateur() {
-
-        }
-
         //getters and setters
 
 
