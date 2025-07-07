@@ -5,5 +5,7 @@ import fr.eni.bo.ArticleVendu;
 public interface EnchereService {
 
     void creerVente(ArticleVendu articleVendu);
+    boolean verifUtilisateurEnchere(int id);
+    boolean verifUtilisateurProduit(int id);
 
 }

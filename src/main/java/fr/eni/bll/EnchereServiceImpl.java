@@ -6,14 +6,25 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class EnchereServiceImpl  implements  EnchereService {
+public class EnchereServiceImpl implements EnchereService {
 
+    private final EnchereDAO enchereDAO;
 
-    private EnchereDAO enchereDAO;
-
+    // Injection du DAO par constructeur
+    public EnchereServiceImpl(EnchereDAO enchereDAO) {
+        this.enchereDAO = enchereDAO;
+    }
 
     @Override
     public void creerVente(ArticleVendu articleVendu) {
         enchereDAO.create(articleVendu);
+    }
+
+    public boolean verifUtilisateurEnchere(int id) {
+        return enchereDAO.noEnchere(id) != null;
+    }
+
+    public boolean verifUtilisateurProduit(int id) {
+        return enchereDAO.noProduit(id) != null;
     }
 }
