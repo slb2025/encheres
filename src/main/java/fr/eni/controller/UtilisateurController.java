@@ -114,6 +114,7 @@ public class UtilisateurController {
         return "PageCreerCompte";
     }
 
+
     @PostMapping("/inscription")
     public String inscription(@ModelAttribute Utilisateur utilisateur, @RequestParam( name = "confirmation") String confirmation, Model model) {
         if (utilisateurService.pseudoOuEmailExiste(utilisateur.getPseudo(), utilisateur.getEmail())) {
