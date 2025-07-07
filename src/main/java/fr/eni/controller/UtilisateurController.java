@@ -132,7 +132,11 @@ public class UtilisateurController {
     }
 
     @GetMapping({"/btnPageMonProfil", "/PageMonProfil/{id}"})
-    public String afficherMonProfil(@PathVariable(required = false) Integer id, HttpSession session, Model model, RedirectAttributes redirectAttributes) {
+    public String afficherMonProfil(
+            @PathVariable(required = false) Integer id,
+            HttpSession session,
+            Model model,
+            RedirectAttributes redirectAttributes) {
 
         // Récupération de l'utilisateur connecté
         Utilisateur sessionUser = (Utilisateur) session.getAttribute("utilisateurConnecte");
@@ -152,7 +156,7 @@ public class UtilisateurController {
         return "PageMonProfil";
     }
 
-    //    Ajout SLB 03/07
+//    Ajout SLB 03/07
     @GetMapping("/PageModifierProfil/{id}")
     public String afficherModifierProfil(@PathVariable int id, HttpSession session, Model model, RedirectAttributes redirectAttributes) {
         // Vérifier que l'utilisateur est connecté
@@ -181,38 +185,37 @@ public class UtilisateurController {
         }
     }
 // Fin Ajout SLB
-
     @GetMapping("/supprimer-compte")
-    public String deleteUser(HttpSession session, RedirectAttributes redirectAttribute) {
+    public String deleteUser(@PathVariable int id, HttpSession session, Model model, RedirectAttributes redirectAttributes) {
         // Vérifier que l'utilisateur est connecté
         Integer connectedUserId = getConnectedUserId(session);
 
         if (connectedUserId == null) {
-            redirectAttribute.addFlashAttribute("error", "Vous devez être connecté pour supprimer votre profil");
+            redirectAttributes.addFlashAttribute("error", "Vous êtes pas connecté pour supprimer votre profil");
             return "redirect:/PageConnexion";
         }
 
-        try {
-            // Vérifier si l'utilisateur peut supprimer son compte
-            if (!utilisateurService.peutSupprimerCompte(connectedUserId)) {
-                redirectAttribute.addFlashAttribute("error", "Impossible de supprimer votre compte : vous avez des enchères ou des articles en cours");
-                return "redirect:/PageMonProfil/" + connectedUserId;
-            }
+        // Vérifier que l'utilisateur modifie bien son propre profil (sécurité)
+        if (!connectedUserId.equals(id)) {
+            redirectAttributes.addFlashAttribute("error", "Vous ne pouvez modifier que votre propre profil");
+            return "redirect:/PagesListeEncheresConnecte";
+        }
 
-            // Supprimer le compte
-            utilisateurService.supprimerCompte(connectedUserId);
+        // Récupérer les données de l'utilisateur
+        Utilisateur utilisateur = utilisateurService.afficherProfil(id);
 
-            // Déconnecter l'utilisateur
-            session.invalidate();
-
-            redirectAttribute.addFlashAttribute("message", "Votre compte a été supprimé avec succès");
-            return "redirect:/";
-
-        } catch (Exception e) {
-            redirectAttribute.addFlashAttribute("error", "Erreur lors de la suppression du compte : " + e.getMessage());
-            return "redirect:/PageMonProfil/" + connectedUserId;
+        if (utilisateur != null) {
+            model.addAttribute("utilisateur", utilisateur);
+            return "PageModifierProfil";
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Utilisateur non trouvé");
+            return "redirect:/PagesListeEncheresConnecte";
         }
     }
+
+
+
+}
 
     //Ajout SLB 07/07 :
     @PostMapping("/btnModifierProfil/{id}")
