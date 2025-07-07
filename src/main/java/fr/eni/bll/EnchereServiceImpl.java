@@ -1,7 +1,6 @@
 package fr.eni.bll;
 
 import fr.eni.bo.ArticleVendu;
-import fr.eni.bo.Categorie;
 import fr.eni.dal.EnchereDAO;
 import org.springframework.stereotype.Service;
 
@@ -11,17 +10,10 @@ import java.util.List;
 @Service
 public class EnchereServiceImpl implements EnchereService {
 
-
     private EnchereDAO enchereDAO;
-
 
     @Override
     public void creerVente(ArticleVendu articleVendu) {
         enchereDAO.create(articleVendu);
-    }
-
-    @Override
-    public List<Categorie> getAllCategories() {
-        return enchereDAO.findCategories();
     }
 }

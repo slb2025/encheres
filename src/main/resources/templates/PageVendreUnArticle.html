@@ -26,7 +26,7 @@
 
     <main class="main">
         <h1 class="titre">Nouvelle Vente</h1>
-        <form action="/creerEnchere" method="post" th:object="${articleVendu}">
+        <form th:action="@{/encheres/creerEnchere}" method="post" th:object="${articleVendu}">
             <div class="form-group">
                 <label for="article"> Article :</label>
                 <input type="text" id="article" name="article" th:field="*{nomArticle}"/>
@@ -39,7 +39,6 @@
             <div class="form-group">
                 <label for="categorie">Catégorie :</label>
                 <select id="categorie" name="categorie">
-                    <option value="">-- Choisir une catégorie --</option>
                     <option th:each="cat : ${categories}" th:text="${cat.libelle}"
                             th:value="${cat.idCategorie}"></option>
                 </select>

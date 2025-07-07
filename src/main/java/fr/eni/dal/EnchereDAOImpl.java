@@ -18,8 +18,6 @@ public class EnchereDAOImpl implements EnchereDAO {
     private final String INSERT = "INSERT INTO Article (idUtilisateur, nom, descriptionArticle, idCategorie, miseAPrix, dateDebut, dateFin)"
             + " VALUES (:idUtilisateur, :nomArticle, :description, :categorieArticle, :miseAprix, :dateDebutEncheres, :dateFinEncheres)";
 
-    private final String SELECT_ALL_CATEGORIES = "SELECT libelle FROM Categorie";
-
 
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
@@ -50,35 +48,5 @@ public class EnchereDAOImpl implements EnchereDAO {
 
          */
     }
-
-    @Override
-    public List<Categorie> findCategories() {
-        return this.jdbcTemplate.query(SELECT_ALL_CATEGORIES, new BeanPropertyRowMapper<>(Categorie.class));
-    }
-
-    /*
-    @Override
-    public List<Categorie> findCategories() {
-        return jdbcTemplate.query(SELECT_ALL_CATEGORIES, (rs, rowNum) -> {
-            Categorie cat = new Categorie();
-            cat.setIdCategorie(rs.getInt("idCategorie"));   // Assure-toi que ce champ est bien sélectionné
-            cat.setLibelle(rs.getString("libelle"));
-            return cat;
-        });
-    }
-
-     */
-
-    /*
-    @Override
-    public List<Categorie> findCategories() {
-        return jdbcTemplate.query(SELECT_ALL_CATEGORIES, (rs, rowNum) -> {
-            Categorie cat = new Categorie();
-            cat.setIdCategorie(rs.getInt("idCategorie"));
-            cat.setLibelle(rs.getString("libelle"));
-            return cat;
-        });
-    }
-     */
 }
 

@@ -8,5 +8,5 @@ import java.util.List;
 public interface EnchereService {
 
     void creerVente(ArticleVendu articleVendu);
-    List<Categorie> getAllCategories();
+
 }
