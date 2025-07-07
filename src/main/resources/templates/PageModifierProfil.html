@@ -102,7 +102,7 @@
 <!--          Fin ajout du Thymeleaf -->
           <div class="button-form">
             <button type="submit">Enregistrer</button>
-            <button type="submit">Supprimer compte</button>
+            <button type="button" onclick="confirmerSuppression()">Supprimer compte</button>
           </div>
 
         </form>
@@ -117,3 +117,11 @@
     </div>
   </body>
 </html>
+
+<script>
+  function confirmerSuppression() {
+    if (confirm("Êtes-vous sûr de vouloir supprimer votre compte ?")) {
+      window.location.href = '/supprimer-compte';
+    }
+  }
+</script>
