@@ -26,6 +26,17 @@ public class UtilisateurController {
         this.utilisateurService = utilisateurService;
     }
 
+    /**
+     * Méthode utilitaire pour récupérer l'ID de l'utilisateur connecté
+     */
+    private Integer getConnectedUserId(HttpSession session) {
+        Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateurConnecte");
+        System.out.println("Utilisateur en session : " + (utilisateur != null ? utilisateur.getPseudo() : "null"));
+        System.out.println("Utilisateur en session : " + (utilisateur != null ? utilisateur.getId() : "null"));
+
+        return utilisateur != null ? utilisateur.getId() : null;
+    }
+
     @GetMapping("/enchere")
     public String afficherEnchere(Model model) {
         Enchere nouvelleEnchere = new Enchere();
@@ -104,12 +115,56 @@ public class UtilisateurController {
         return "redirect:/PagesAcceuilNonConnecte";
     }
 
+    @GetMapping("/btnPageMonProfil")
+    public String afficherMonProfil(HttpSession session, RedirectAttributes redirectAttributes) {
+        Integer userId = getConnectedUserId(session);
+
+        if (userId == null) {
+            redirectAttributes.addFlashAttribute("error", "Vous devez être connecté pour accéder à votre profil");
+            return "redirect:/PageConnexion";
+        }
+        return "redirect:/PageMonProfil/" + userId;
+    }
+
+    @GetMapping("/PageMonProfil/{id}")
+    public String modifierProfilUtilisateur(Model model, HttpSession session) {
+        Utilisateur sessionUser = (Utilisateur) session.getAttribute("utilisateurConnecte");
+        if (sessionUser != null) {
+            model.addAttribute("utilisateur", sessionUser);
+            return "PageMonProfil";
+        } else {
+            model.addAttribute("error", "Identifiant ou mot de passe incorrect.");
+            return "ListeEncheresConnecte";
+        }
+    }
+
 //    Ajout SLB 03/07
-    @GetMapping("/modifier-profil/{id}")
-    public String afficherFormulaireModification(@PathVariable("id") int id, Model model) {
+    @GetMapping("/PageModifierProfil/{id}")
+    public String afficherModifierProfil(@PathVariable int id, HttpSession session, Model model, RedirectAttributes redirectAttributes) {
+        // Vérifier que l'utilisateur est connecté
+        Integer connectedUserId = getConnectedUserId(session);
+
+        if (connectedUserId == null) {
+            redirectAttributes.addFlashAttribute("error", "Vous devez être connecté pour modifier votre profil");
+            return "redirect:/PageConnexion";
+        }
+
+        // Vérifier que l'utilisateur modifie bien son propre profil (sécurité)
+        if (!connectedUserId.equals(id)) {
+            redirectAttributes.addFlashAttribute("error", "Vous ne pouvez modifier que votre propre profil");
+            return "redirect:/PagesListeEncheresConnecte";
+        }
+
+        // Récupérer les données de l'utilisateur
         Utilisateur utilisateur = utilisateurService.afficherProfil(id);
-        model.addAttribute("utilisateur", utilisateur);
-        return "PageModifierProfil";
+
+        if (utilisateur != null) {
+            model.addAttribute("utilisateur", utilisateur);
+            return "PageModifierProfil";
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Utilisateur non trouvé");
+            return "redirect:/PagesListeEncheresConnecte";
+        }
     }
 // Fin Ajout SLB
 

@@ -5,7 +5,7 @@
 
     public class Utilisateur {
 
-        private int idUtilisateur;
+        private int id;
         private String pseudo;
         private String nom;
         private String prenom;
@@ -27,8 +27,8 @@
 
         }
 
-        public Utilisateur(int idUtilisateur, String pseudo, String nom, String prenom, String email, String tel, String rue, String codePostal, String ville, String motDePasse, int credit, boolean administrateur, List<ArticleVendu> articleVendu, List<Enchere> encheres) {
-            this.idUtilisateur = idUtilisateur;
+        public Utilisateur(int id, String pseudo, String nom, String prenom, String email, String tel, String rue, String codePostal, String ville, String motDePasse, int credit, boolean administrateur, List<ArticleVendu> articleVendu, List<Enchere> encheres) {
+            this.id = id;
             this.pseudo = pseudo;
             this.nom = nom;
             this.prenom = prenom;
@@ -48,12 +48,12 @@
         //getters and setters
 
 
-        public int getIdUtilisateur() {
-            return idUtilisateur;
+        public int getId() {
+            return id;
         }
 
-        public void setIdUtilisateur(int idUtilisateur) {
-            this.idUtilisateur = idUtilisateur;
+        public void setId(int id) {
+            this.id = id;
         }
 
         public String getPseudo() {
@@ -163,7 +163,7 @@
         @Override
         public String toString() {
             return "Utilisateur{" +
-                    "idUtilisateur=" + idUtilisateur +
+                    "id=" + id +
                     ", pseudo='" + pseudo + '\'' +
                     ", nom='" + nom + '\'' +
                     ", prenom='" + prenom + '\'' +
@@ -186,12 +186,12 @@
         public boolean equals(Object o) {
             if (o == null || getClass() != o.getClass()) return false;
             Utilisateur that = (Utilisateur) o;
-            return idUtilisateur == that.idUtilisateur && credit == that.credit && administrateur == that.administrateur && Objects.equals(pseudo, that.pseudo) && Objects.equals(nom, that.nom) && Objects.equals(prenom, that.prenom) && Objects.equals(email, that.email) && Objects.equals(tel, that.tel) && Objects.equals(rue, that.rue) && Objects.equals(codePostal, that.codePostal) && Objects.equals(ville, that.ville) && Objects.equals(motDePasse, that.motDePasse) && Objects.equals(ArticleVendu, that.ArticleVendu) && Objects.equals(encheres, that.encheres);
+            return id == that.id && credit == that.credit && administrateur == that.administrateur && Objects.equals(pseudo, that.pseudo) && Objects.equals(nom, that.nom) && Objects.equals(prenom, that.prenom) && Objects.equals(email, that.email) && Objects.equals(tel, that.tel) && Objects.equals(rue, that.rue) && Objects.equals(codePostal, that.codePostal) && Objects.equals(ville, that.ville) && Objects.equals(motDePasse, that.motDePasse) && Objects.equals(ArticleVendu, that.ArticleVendu) && Objects.equals(encheres, that.encheres);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(idUtilisateur, pseudo, nom, prenom, email, tel, rue, codePostal, ville, motDePasse, credit, administrateur, ArticleVendu, encheres);
+            return Objects.hash(id, pseudo, nom, prenom, email, tel, rue, codePostal, ville, motDePasse, credit, administrateur, ArticleVendu, encheres);
         }
 
     }
