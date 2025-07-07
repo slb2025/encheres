@@ -19,6 +19,7 @@ public class EnchereDAOImpl implements EnchereDAO {
             + " VALUES (:idUtilisateur, :nomArticle, :description, :categorieArticle, :miseAprix, :dateDebutEncheres, :dateFinEncheres)";
 
 
+
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
 

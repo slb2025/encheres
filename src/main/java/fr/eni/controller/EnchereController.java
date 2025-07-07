@@ -27,15 +27,16 @@ public class EnchereController {
         this.categorieService = categorieService;
     }
 
-    @GetMapping("/encheres/nouvelleVente")
-    public String getCreerVente(Model model, @ModelAttribute("userSession") Utilisateur userSession) {
-        ArticleVendu article = new ArticleVendu();
+    @GetMapping("/")
+    public String getCreerVente(Model model /*,@ModelAttribute("userSession") Utilisateur userSession*/) {
+
+       ArticleVendu article = new ArticleVendu();
         Retrait retrait = new Retrait();
 
-        article.setLieuRetrait(retrait);
+        /*article.setLieuRetrait(retrait);
         article.getLieuRetrait().setRue(userSession.getRue());
         article.getLieuRetrait().setCodePostal(userSession.getCodePostal());
-        article.getLieuRetrait().setVille(userSession.getVille());
+        article.getLieuRetrait().setVille(userSession.getVille());*/
         model.addAttribute("articleVendu", article);
 
         List<Categorie> categories = categorieService.getCategories();
@@ -52,7 +53,6 @@ public class EnchereController {
         System.out.println("création article");
         //return "redirect:/encheres/enchereNonCommencee";
         return "PageEnchereNonCommencee";
-
     }
 
     @GetMapping("/encheres/enchereNonCommencee")
