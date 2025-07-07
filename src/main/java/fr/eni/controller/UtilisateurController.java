@@ -130,27 +130,29 @@ public class UtilisateurController {
         return "redirect:/PagesListeEncheresConnecte";
     }
 
-    @GetMapping("/btnPageMonProfil")
-    public String afficherMonProfil(HttpSession session, RedirectAttributes redirectAttributes) {
-        Integer userId = getConnectedUserId(session);
+    @GetMapping({"/btnPageMonProfil", "/PageMonProfil/{id}"})
+    public String afficherMonProfil(
+            @PathVariable(required = false) Integer id,
+            HttpSession session,
+            Model model,
+            RedirectAttributes redirectAttributes) {
 
-        if (userId == null) {
+        // Récupération de l'utilisateur connecté
+        Utilisateur sessionUser = (Utilisateur) session.getAttribute("utilisateurConnecte");
+
+        if (sessionUser == null) {
             redirectAttributes.addFlashAttribute("error", "Vous devez être connecté pour accéder à votre profil");
             return "redirect:/PageConnexion";
         }
-        return "redirect:/PageMonProfil/" + userId;
-    }
 
-    @GetMapping("/PageMonProfil/{id}")
-    public String modifierProfilUtilisateur(Model model, HttpSession session) {
-        Utilisateur sessionUser = (Utilisateur) session.getAttribute("utilisateurConnecte");
-        if (sessionUser != null) {
-            model.addAttribute("utilisateur", sessionUser);
-            return "PageMonProfil";
-        } else {
-            model.addAttribute("error", "Identifiant ou mot de passe incorrect.");
-            return "ListeEncheresConnecte";
+        // Si pas d'ID dans l'URL, redirection vers l'URL avec ID
+        if (id == null) {
+            return "redirect:/PageMonProfil/" + sessionUser.getId();
         }
+
+        // Affichage du profil
+        model.addAttribute("utilisateur", sessionUser);
+        return "PageMonProfil";
     }
 
     //    Ajout SLB 03/07
@@ -182,6 +184,33 @@ public class UtilisateurController {
         }
     }
 // Fin Ajout SLB
+    @GetMapping("/supprimer-compte")
+    public String deleteUser(@PathVariable int id, HttpSession session, Model model, RedirectAttributes redirectAttributes) {
+        // Vérifier que l'utilisateur est connecté
+        Integer connectedUserId = getConnectedUserId(session);
+
+        if (connectedUserId == null) {
+            redirectAttributes.addFlashAttribute("error", "Vous êtes pas connecté pour supprimer votre profil");
+            return "redirect:/PageConnexion";
+        }
+
+        // Vérifier que l'utilisateur modifie bien son propre profil (sécurité)
+        if (!connectedUserId.equals(id)) {
+            redirectAttributes.addFlashAttribute("error", "Vous ne pouvez modifier que votre propre profil");
+            return "redirect:/PagesListeEncheresConnecte";
+        }
+
+        // Récupérer les données de l'utilisateur
+        Utilisateur utilisateur = utilisateurService.afficherProfil(id);
+
+        if (utilisateur != null) {
+            model.addAttribute("utilisateur", utilisateur);
+            return "PageModifierProfil";
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Utilisateur non trouvé");
+            return "redirect:/PagesListeEncheresConnecte";
+        }
+    }
 
     //Ajout SLB 07/07 :
     @PostMapping("/btnModifierProfil/{id}")
