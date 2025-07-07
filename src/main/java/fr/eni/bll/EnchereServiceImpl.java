@@ -2,7 +2,6 @@ package fr.eni.bll;
 
 import fr.eni.bo.ArticleVendu;
 import fr.eni.dal.EnchereDAO;
-import fr.eni.dal.RetraitDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
