@@ -8,5 +8,4 @@ import java.util.List;
 public interface EnchereDAO {
 
     void create(ArticleVendu articleVendu);
-    List<Categorie>findCategories();
 }
