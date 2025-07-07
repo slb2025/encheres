@@ -132,11 +132,7 @@ public class UtilisateurController {
     }
 
     @GetMapping({"/btnPageMonProfil", "/PageMonProfil/{id}"})
-    public String afficherMonProfil(
-            @PathVariable(required = false) Integer id,
-            HttpSession session,
-            Model model,
-            RedirectAttributes redirectAttributes) {
+    public String afficherMonProfil(@PathVariable(required = false) Integer id, HttpSession session, Model model, RedirectAttributes redirectAttributes) {
 
         // Récupération de l'utilisateur connecté
         Utilisateur sessionUser = (Utilisateur) session.getAttribute("utilisateurConnecte");
