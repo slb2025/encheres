@@ -4,6 +4,7 @@ import fr.eni.bo.Utilisateur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+//Ajout SLB
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -69,4 +70,22 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
     }
 
 
+
+    //Ajout SLB pour Afficher Profil
+
+    @Override
+    public Utilisateur findById(int id) {
+        String sql = "SELECT * FROM Utilisateur WHERE id = :id";
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("id", id);
+
+        try {
+            return namedParameterJdbcTemplate.queryForObject(sql, params, new BeanPropertyRowMapper<>(Utilisateur.class));
+
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    //Fin ajout SLB
 }

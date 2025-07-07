@@ -30,16 +30,27 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 
     @Override
-    public boolean login(String pseudo, String password) {
+    public Utilisateur login(String pseudo, String password) {
         // Recherche de l'utilisateur en base via DAO
         Utilisateur utilisateur = utilisateurDAO.findByPseudo(pseudo);
 
         if (utilisateur == null) {
             // Pas d'utilisateur avec ce pseudo
-            return false;
+            return null;
         }
 
         // Ici, comparer le password reçu avec celui stocké
-        // ATTENTION EN CLAIR POUR LE MOMENT
-        return utilisateur.getMotDePasse().equals(password);    }
+        if (utilisateur.getMotDePasse().equals(password)) {
+            return utilisateur;
+        }
+        return null;
+    }
+
+    //Ajout SLB
+    @Override
+    public Utilisateur afficherProfil(int id) {
+        return utilisateurDAO.findById(id);
+    }
+    //Fin ajout SLB
+
 }
