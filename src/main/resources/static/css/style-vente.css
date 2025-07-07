@@ -125,3 +125,10 @@ button:hover {
     /*justify-content: space-between;*/
     margin: auto;
 }
+.button-form-NC{
+    text-align: center;
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    margin: auto;
+}
