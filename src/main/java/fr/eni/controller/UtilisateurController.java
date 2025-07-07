@@ -31,8 +31,6 @@ public class UtilisateurController {
      */
     private Integer getConnectedUserId(HttpSession session) {
         Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateurConnecte");
-        System.out.println("Utilisateur en session : " + (utilisateur != null ? utilisateur.getPseudo() : "null"));
-        System.out.println("Utilisateur en session : " + (utilisateur != null ? utilisateur.getId() : "null"));
 
         return utilisateur != null ? utilisateur.getId() : null;
     }
