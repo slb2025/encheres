@@ -69,9 +69,14 @@ public class UtilisateurController {
 
 
     @PostMapping("/inscription")
-    public String inscription(@ModelAttribute Utilisateur utilisateur, Model model) {
+    public String inscription(@ModelAttribute Utilisateur utilisateur, @RequestParam( name = "confirmation") String confirmation, Model model) {
         if (utilisateurService.pseudoOuEmailExiste(utilisateur.getPseudo(), utilisateur.getEmail())) {
             model.addAttribute("erreur", "Pseudo ou email déjà utilisé");
+            return "PageCreerCompte";
+        }
+
+        if (!utilisateur.getMotDePasse().equals(confirmation)) {
+            model.addAttribute("erreur", "Mot de passe incorrect");
             return "PageCreerCompte";
         }
 
