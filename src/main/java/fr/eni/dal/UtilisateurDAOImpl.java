@@ -1,6 +1,7 @@
 package fr.eni.dal;
 
 import fr.eni.bo.Utilisateur;
+import fr.eni.bo.Enchere;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
