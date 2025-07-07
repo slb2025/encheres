@@ -185,18 +185,18 @@ public class UtilisateurController {
     }
 // Fin Ajout SLB
     @GetMapping("/supprimer-compte")
-    public String deleteUser(@PathVariable int id, HttpSession session, Model model, RedirectAttributes redirectAttributes) {
+    public String deleteUser(@PathVariable(required = false) Integer id, HttpSession session, Model model, RedirectAttributes redirectAttribute) {
         // Vérifier que l'utilisateur est connecté
         Integer connectedUserId = getConnectedUserId(session);
 
         if (connectedUserId == null) {
-            redirectAttributes.addFlashAttribute("error", "Vous êtes pas connecté pour supprimer votre profil");
+            redirectAttribute.addFlashAttribute("error", "Vous devez être connecté pour supprimer votre profil");
             return "redirect:/PageConnexion";
         }
 
-        // Vérifier que l'utilisateur modifie bien son propre profil (sécurité)
+        // Vérifier que l'utilisateur supprime bien son propre profil (sécurité)
         if (!connectedUserId.equals(id)) {
-            redirectAttributes.addFlashAttribute("error", "Vous ne pouvez modifier que votre propre profil");
+            redirectAttribute.addFlashAttribute("error", "Vous ne pouvez supprimer que votre propre profil");
             return "redirect:/PagesListeEncheresConnecte";
         }
 
@@ -207,7 +207,7 @@ public class UtilisateurController {
             model.addAttribute("utilisateur", utilisateur);
             return "PageModifierProfil";
         } else {
-            redirectAttributes.addFlashAttribute("error", "Utilisateur non trouvé");
+            redirectAttribute.addFlashAttribute("error", "Utilisateur non trouvé");
             return "redirect:/PagesListeEncheresConnecte";
         }
     }

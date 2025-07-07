@@ -1,6 +1,7 @@
 package fr.eni.bll;
 
 import fr.eni.bo.Utilisateur;
+import fr.eni.dal.EnchereDAO;
 import fr.eni.dal.UtilisateurDAO;
 import org.springframework.stereotype.Service;
 

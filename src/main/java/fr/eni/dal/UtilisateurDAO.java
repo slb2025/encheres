@@ -1,5 +1,6 @@
 package fr.eni.dal;
 
+import fr.eni.bo.Enchere;
 import fr.eni.bo.Utilisateur;
 
 import java.sql.SQLException;

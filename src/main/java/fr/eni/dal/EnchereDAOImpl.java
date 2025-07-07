@@ -1,8 +1,9 @@
 package fr.eni.dal;
 
 import fr.eni.bo.ArticleVendu;
-import fr.eni.bo.Categorie;
+import fr.eni.bo.Enchere;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -20,6 +21,10 @@ public class EnchereDAOImpl implements EnchereDAO {
 
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
+
+    public EnchereDAOImpl(NamedParameterJdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     @Override
     public void create(ArticleVendu articleVendu) {
@@ -45,6 +50,20 @@ public class EnchereDAOImpl implements EnchereDAO {
             idEnchere.setId(keyHolder.getKey().longValue());
 
          */
+    }
+
+    @Override
+    public Enchere noEnchere(int id) {
+        String sql = "SELECT * FROM Enchere INNER JOIN Utilisateur ON Utilisateur.id = Enchere.idUtilisateur WHERE Enchere.idUtilisateur = :id AND Utilisateur.pseudo IS NOT NULL\n";
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("id", id);
+
+        try {
+            return jdbcTemplate.queryForObject(sql, params, new BeanPropertyRowMapper<>(Enchere.class));
+
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 }
 
