@@ -16,6 +16,9 @@ public interface UtilisateurService {
 
     boolean pseudoOuEmailExiste(String pseudo, String email);
 
+    boolean peutSupprimerCompte(int id);
+    void supprimerCompte(int id);
+
     // Ajout SLB 07/07 :
     void modifierProfil(Utilisateur utilisateur);
     // Fin ajout SLB

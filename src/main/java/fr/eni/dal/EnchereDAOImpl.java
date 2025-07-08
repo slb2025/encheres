@@ -19,6 +19,17 @@ public class EnchereDAOImpl implements EnchereDAO {
     private final String INSERT = "INSERT INTO Article (idUtilisateur, nom, descriptionArticle, idCategorie, miseAPrix, dateDebut, dateFin)"
             + " VALUES (:idUtilisateur, :nomArticle, :description, :categorieArticle, :miseAprix, :dateDebutEncheres, :dateFinEncheres)";
 
+    private final String CHECK_ENCHERES_EN_COURS = """
+        SELECT COUNT(*) FROM Enchere e 
+        INNER JOIN Article a ON e.idArticle = a.idArticle 
+        INNER JOIN Utilisateur ON Utilisateur.id = Enchere.idUtilisateur
+        WHERE e.idUtilisateur = :id
+        AND a.dateFin > GETDATE()
+        AND Utilisateur.pseudo IS NOT NULL
+        """;
+
+
+
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -51,18 +62,16 @@ public class EnchereDAOImpl implements EnchereDAO {
 
          */
     }
-
     @Override
-    public Enchere noEnchere(int id) {
-        String sql = "SELECT * FROM Enchere INNER JOIN Utilisateur ON Utilisateur.id = Enchere.idUtilisateur WHERE Enchere.idUtilisateur = :id AND Utilisateur.pseudo IS NOT NULL\n";
+    public boolean noEnchere(int id) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", id);
 
         try {
-            return jdbcTemplate.queryForObject(sql, params, new BeanPropertyRowMapper<>(Enchere.class));
-
+            Integer count = jdbcTemplate.queryForObject(CHECK_ENCHERES_EN_COURS, params, Integer.class);
+            return count != null && count > 0;
         } catch (EmptyResultDataAccessException e) {
-            return null;
+            return false;
         }
     }
 }

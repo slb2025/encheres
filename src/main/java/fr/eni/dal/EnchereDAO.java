@@ -6,7 +6,8 @@ import fr.eni.bo.Enchere;
 public interface EnchereDAO {
 
     void create(ArticleVendu articleVendu);
-    Enchere noEnchere(int id);
+    boolean noEnchere(int id);
+
 
 
 }
