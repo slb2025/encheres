@@ -19,9 +19,6 @@ public class EnchereServiceImpl implements EnchereService {
         this.enchereDAO = enchereDAO;
     }
 
-    @Autowired
-    private EnchereDAO enchereDAO;
-
     @Override
     public void creerVente(ArticleVendu articleVendu) {
         enchereDAO.create(articleVendu);
