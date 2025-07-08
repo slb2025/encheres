@@ -109,6 +109,10 @@ input {
     display: block;
 }
 
+input[readonly] {
+    background-color: #f2f2f2;
+    cursor: not-allowed;
+}
 
 button {
     background-color: #368539;

@@ -14,8 +14,9 @@ public interface UtilisateurService {
     Utilisateur afficherProfil(int id);
     //Fin ajout SLB
 
-    //Ajout SLB 04/07:
-    Utilisateur afficherProfilModifier(int id);
-    //Fin ajout SLB
+    boolean pseudoOuEmailExiste(String pseudo, String email);
 
+    // Ajout SLB 07/07 :
+    void modifierProfil(Utilisateur utilisateur);
+    // Fin ajout SLB
 }

@@ -17,8 +17,17 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     @Override
     public void addUser(Utilisateur utilisateur) {
         utilisateurDAO.createUser(utilisateur);
-
     }
+
+
+
+    public boolean pseudoOuEmailExiste(String pseudo, String email) {
+        boolean existe = utilisateurDAO.findByPseudo(pseudo) != null || utilisateurDAO.findByEmail(email) != null;
+        System.out.println("Vérif si existe : " + existe);
+        return existe;
+    }
+
+
 
     @Override
     public Utilisateur login(String pseudo, String password) {
@@ -44,11 +53,27 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     }
     //Fin ajout SLB
 
-    //Ajout SLB 04/07 :
+    //Ajout SLB 07/07
     @Override
-    public Utilisateur afficherProfilModifier(int id) {
-        return utilisateurDAO.findById(id);
+    public void modifierProfil(Utilisateur utilisateur) {
+        utilisateurDAO.modifierProfil(utilisateur);
     }
-    //Fin ajout SLB
+//    @Override
+//    public Utilisateur modifierMotDePasse(String pseudo, String password) {
+//        // Recherche de l'utilisateur en base via DAO
+//        Utilisateur utilisateur = utilisateurDAO.findByPseudo(pseudo);
+//
+//        if (utilisateur == null) {
+//            // Pas d'utilisateur avec ce pseudo
+//            return null;
+//        }
+//
+//        // Ici, comparer le password reçu avec celui stocké
+//        if (utilisateur.getMotDePasse().equals(password)) {
+//            return utilisateur;
+//        }
+//        return null;
+//    }
+    // Fin ajout SLB
 
 }

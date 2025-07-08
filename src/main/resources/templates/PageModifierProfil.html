@@ -27,9 +27,9 @@
       <main>
         <h1 class="titre">Modifier profil</h1>
 
-<!--        Ajout SLB 03/07-->
-        <form class="form-profil" action="/modifier-profil/5" method="post">
-<!--          Fin ajout-->
+        <!--        Ajout SLB 07/07-->
+        <form th:action="@{'/btnModifierProfil/' + ${utilisateur.id}}" method="post" th:object="${utilisateur}">
+        <!--          Fin ajout-->
 <!--          Ajout SLB 03/07 du Thymeleaf par SLB pour afficher dynamiquement les infos du profil-->
           <div>
             <div class="field">
@@ -42,7 +42,7 @@
             </div>
             <div class="field">
               <label for="tel">Téléphone</label>
-              <input type="text" name="telephone" id="tel" size="30" th:value="${utilisateur.tel}" />
+              <input type="text" name="tel" id="tel" size="30" th:value="${utilisateur.tel}" />
             </div>
             <div class="field">
               <label for="codePostal">Code postale</label>
@@ -55,13 +55,14 @@
             </div>
             <br><br>
             <div class="field">
-              <label for="motDePasse">Mode de passe</label>
+              <label for="motDePasseActuel">Mot de passe actuel</label>
               <input
                 type="password"
-                name="motDePasse"
-                id="motDePasse"
+                name="motDePasseActuel"
+                id="motDePasseActuel"
                 size="30"
-                th:value="${utilisateur.motDePasse}" />
+                />
+
             </div>
 <!--            Ajout SLB 03/07-->
             <div class="field">
@@ -104,6 +105,10 @@
               <label for="ville">Ville</label>
               <input type="text" name="ville" id="ville" size="30" th:value="${utilisateur.ville}" />
             </div>
+
+            <h2>Modification du mot de passe</h2>
+            <p><em>Laissez vide si vous ne souhaitez pas modifier le mot de passe</em></p>
+
           </div>
 
 <!--          Fin ajout du Thymeleaf -->
@@ -114,12 +119,10 @@
 
         </form>
 
-        <table class="credit">
-            <td>Crédit :</td>
-            <td class="contenu-profil">XXXXXXXXXX</td>
-          </tr>
-        </table>
-
+        <div class="credit">
+          <label for="credit">Crédit :</label>
+          <input type="text" name="credit" id="credit" size="30" th:value="${utilisateur.credit}" readonly />
+        </div>
       </main>
     </div>
   </body>
