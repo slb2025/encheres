@@ -17,6 +17,10 @@ public class Categorie {
         ArticleVendu = articleVendu;
     }
 
+    public Categorie() {
+
+    }
+
     //getters and setters
 
     public int getIdCategorie() {
