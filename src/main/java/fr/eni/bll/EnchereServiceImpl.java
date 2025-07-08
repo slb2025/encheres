@@ -14,6 +14,7 @@ public class EnchereServiceImpl implements EnchereService {
 
     private final EnchereDAO enchereDAO;
 
+    // Injection du DAO par constructeur
     public EnchereServiceImpl(EnchereDAO enchereDAO) {
         this.enchereDAO = enchereDAO;
     }

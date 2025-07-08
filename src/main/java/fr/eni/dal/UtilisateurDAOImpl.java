@@ -22,6 +22,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
     private static final String CREATE_USER = "INSERT INTO UTILISATEUR (pseudo, nom, prenom, email, tel, rue, codePostal, ville, motDePasse) VALUES (:pseudo, :nom, :prenom, :email, :tel, :rue, :codePostal, :ville, :motDePasse)";
     private static final String FIND_EMAIL = "SELECT * FROM UTILISATEUR WHERE email = :email";
     private static final String DELETE_USER = "UPDATE UTILISATEUR SET isDeleted = 1 WHERE id = :id";
+    private static final String DELETE_USER = "UPDATE UTILISATEUR SET isDeleted = 1 WHERE id = :id";
     //Ajout SLB :
     String FIND_ID = "SELECT * FROM Utilisateur WHERE id = :id";
     //Ajout SLB :
@@ -86,16 +87,18 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
     @Override
     public Utilisateur findById(int id) {
+        String sql = "SELECT * FROM Utilisateur WHERE id = :id";
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", id);
 
         try {
-            return namedParameterJdbcTemplate.queryForObject(FIND_ID, params, new BeanPropertyRowMapper<>(Utilisateur.class));
+            return namedParameterJdbcTemplate.queryForObject(sql, params, new BeanPropertyRowMapper<>(Utilisateur.class));
 
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }
+
     //Fin ajout SLB
 
     @Override

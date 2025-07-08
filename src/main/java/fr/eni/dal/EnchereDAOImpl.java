@@ -11,6 +11,8 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class EnchereDAOImpl implements EnchereDAO {
 
@@ -43,8 +45,7 @@ public class EnchereDAOImpl implements EnchereDAO {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
         namedParameters.addValue("nomArticle", articleVendu.getNomArticle());
         namedParameters.addValue("description", articleVendu.getDescription());
-        //namedParameters.addValue("categorieArticle", articleVendu.getCategorieArticle().getIdCategorie());
-        namedParameters.addValue("categorieArticle", "1");
+        namedParameters.addValue("categorieArticle", articleVendu.getCategorieArticle().getIdCategorie());
         namedParameters.addValue("miseAprix", articleVendu.getMiseAPrix());
         namedParameters.addValue("dateDebutEncheres", articleVendu.getDateDebutEncheres());
         namedParameters.addValue("dateFinEncheres", articleVendu.getDateFinEncheres());
