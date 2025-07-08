@@ -20,14 +20,13 @@ public class EnchereDAOImpl implements EnchereDAO {
             + " VALUES (:idUtilisateur, :nomArticle, :description, :categorieArticle, :miseAprix, :dateDebutEncheres, :dateFinEncheres)";
 
     private final String CHECK_ENCHERES_EN_COURS = """
-        SELECT COUNT(*) FROM Enchere e 
-        INNER JOIN Article a ON e.idArticle = a.idArticle 
-        INNER JOIN Utilisateur ON Utilisateur.id = Enchere.idUtilisateur
-        WHERE e.idUtilisateur = :id
-        AND a.dateFin > GETDATE()
-        AND Utilisateur.pseudo IS NOT NULL
-        """;
-
+    SELECT COUNT(*) FROM Enchere e 
+    INNER JOIN Article a ON e.idArticle = a.id 
+    INNER JOIN Utilisateur u ON u.id = e.idUtilisateur
+    WHERE e.idUtilisateur = :id
+    AND a.dateFin > GETDATE()
+    AND u.isDeleted = 0
+    """;
 
 
     @Autowired

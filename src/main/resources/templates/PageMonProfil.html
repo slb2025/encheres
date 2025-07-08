@@ -15,6 +15,9 @@
         </nav>
     </header>
     <main><h1 class="titre">Information profil</h1>
+        <div th:if="${error}" class="error-message">
+            <p th:text="${error}" style="color: red;"></p>
+        </div>
         <table class="info-profil">
             <tr>
                 <td>Pseudo</td>

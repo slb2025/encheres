@@ -13,7 +13,7 @@ import java.util.List;
 public class ArticleDAOImpl implements ArticleDAO {
 
     private final String FIND_ARTICLE = "SELECT nom, miseAPrix, dateFinEncheres FROM ArticeVendu";
-    private final String CHECK_ARTICLES_EN_COURS = "SELECT COUNT(*) FROM Article INNER JOIN Utilisateur ON Utilisateur.id = Article.idUtilisateur WHERE idUtilisateur = :id AND dateFin > GETDATE() AND Utilisateur.pseudo IS NOT NULL\n ";
+    private final String CHECK_ARTICLES_EN_COURS = "SELECT COUNT(*) FROM Article INNER JOIN Utilisateur ON Utilisateur.id = Article.idUtilisateur WHERE idUtilisateur = :id AND Article.dateFin > GETDATE() AND Utilisateur.isDeleted = 0\n ";
 
 
     private NamedParameterJdbcTemplate jdbcTemplate;

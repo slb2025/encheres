@@ -152,7 +152,7 @@ public class UtilisateurController {
         return "PageMonProfil";
     }
 
-//    Ajout SLB 03/07
+    //    Ajout SLB 03/07
     @GetMapping("/PageModifierProfil/{id}")
     public String afficherModifierProfil(@PathVariable int id, HttpSession session, Model model, RedirectAttributes redirectAttributes) {
         // Vérifier que l'utilisateur est connecté
@@ -214,18 +214,16 @@ public class UtilisateurController {
         }
     }
 
-}
-
     //Ajout SLB 07/07 :
     @PostMapping("/btnModifierProfil/{id}")
-    public String modifierProfil    (@PathVariable int id,
-                                     @ModelAttribute Utilisateur utilisateurForm,
-                                     @RequestParam String motDePasseActuel,
-                                     @RequestParam String nvMotDePasse,
-                                     @RequestParam String confirmation,
-                                     HttpSession session,
-                                     Model model,
-                                     RedirectAttributes redirectAttributes) {
+    public String modifierProfil(@PathVariable int id,
+                                 @ModelAttribute Utilisateur utilisateurForm,
+                                 @RequestParam String motDePasseActuel,
+                                 @RequestParam String nvMotDePasse,
+                                 @RequestParam String confirmation,
+                                 HttpSession session,
+                                 Model model,
+                                 RedirectAttributes redirectAttributes) {
 
         Utilisateur sessionUser = (Utilisateur) session.getAttribute("utilisateurConnecte");
 
@@ -325,9 +323,4 @@ public class UtilisateurController {
             return "PageModifierProfil";
         }
     }
-
-//Fin ajout SLB
-
-
 }
-
