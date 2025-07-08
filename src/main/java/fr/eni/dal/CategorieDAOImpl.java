@@ -3,6 +3,7 @@ package fr.eni.dal;
 import fr.eni.bo.Categorie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +20,8 @@ public class CategorieDAOImpl implements CategorieDAO {
     }
 
     private static final String SELECT_ALL = "select id, libelle from categorie";
+    private static final String SELECT_BY_ID = "select id, libelle from categorie where id = :idCategorie";
+
 
     @Override
     public List<Categorie> getCategories() {
@@ -29,4 +32,14 @@ public class CategorieDAOImpl implements CategorieDAO {
 
     }
 
+    @Override
+    public Categorie getCategorie(int idCategorie) {
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        namedParameters.addValue("idCategorie", idCategorie);
+        return namedParameterJdbcTemplate.queryForObject(SELECT_BY_ID, namedParameters,
+                new BeanPropertyRowMapper<>(Categorie.class));
+    }
+
 }
+
+

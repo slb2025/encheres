@@ -11,7 +11,6 @@ import java.util.List;
 @Service
 public class CategorieServiceImpl implements CategorieService {
 
-    //private ArticleVenduDAO articleVenduDAO;
     private CategorieDAO categorieDAO;
 
     @Autowired

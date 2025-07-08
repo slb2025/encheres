@@ -1,7 +1,10 @@
 package fr.eni.dal;
 
 import fr.eni.bo.ArticleVendu;
+import fr.eni.bo.Categorie;
+import fr.eni.bo.Retrait;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -12,6 +15,7 @@ import java.awt.*;
 public class RetraitDAOImpl implements RetraitDAO {
 
     private static final String INSERT = "insert into retrait (rue, codePostal, ville) values (:rue, :codePostal, :ville)";
+    private static final String SELECT_BY_ID = "SELECT * FROM retrait WHERE id = :idRetrait";
 
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -28,6 +32,13 @@ public class RetraitDAOImpl implements RetraitDAO {
 
         namedParameterJdbcTemplate.update(INSERT, map);
 
+    }
+
+    @Override
+    public Retrait getRetraitByIdArticle(int noArticle) {
+        MapSqlParameterSource map = new MapSqlParameterSource();
+        map.addValue("no_article", noArticle);
+        return namedParameterJdbcTemplate.queryForObject(SELECT_BY_ID, map, new BeanPropertyRowMapper<>(Retrait.class));
     }
 }
 

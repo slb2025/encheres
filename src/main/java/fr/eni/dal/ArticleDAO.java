@@ -7,6 +7,6 @@ import java.util.List;
 public interface ArticleDAO {
 
     List<ArticleVendu> findAllArticle();
-
+    ArticleVendu getArticleById(int idArticle);
 
 }
