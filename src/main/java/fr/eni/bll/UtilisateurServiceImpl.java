@@ -53,4 +53,27 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     }
     //Fin ajout SLB
 
+    //Ajout SLB 07/07
+    @Override
+    public void modifierProfil(Utilisateur utilisateur) {
+        utilisateurDAO.modifierProfil(utilisateur);
+    }
+//    @Override
+//    public Utilisateur modifierMotDePasse(String pseudo, String password) {
+//        // Recherche de l'utilisateur en base via DAO
+//        Utilisateur utilisateur = utilisateurDAO.findByPseudo(pseudo);
+//
+//        if (utilisateur == null) {
+//            // Pas d'utilisateur avec ce pseudo
+//            return null;
+//        }
+//
+//        // Ici, comparer le password reçu avec celui stocké
+//        if (utilisateur.getMotDePasse().equals(password)) {
+//            return utilisateur;
+//        }
+//        return null;
+//    }
+    // Fin ajout SLB
+
 }

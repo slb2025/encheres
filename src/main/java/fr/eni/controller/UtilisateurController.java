@@ -116,7 +116,6 @@ public class UtilisateurController {
         return "PageCreerCompte";
     }
 
-
     @PostMapping("/inscription")
     public String inscription(@ModelAttribute Utilisateur utilisateur, @RequestParam( name = "confirmation") String confirmation, Model model) {
         if (utilisateurService.pseudoOuEmailExiste(utilisateur.getPseudo(), utilisateur.getEmail())) {
@@ -156,7 +155,7 @@ public class UtilisateurController {
         }
     }
 
-//    Ajout SLB 03/07
+    //    Ajout SLB 03/07
     @GetMapping("/PageModifierProfil/{id}")
     public String afficherModifierProfil(@PathVariable int id, HttpSession session, Model model, RedirectAttributes redirectAttributes) {
         // Vérifier que l'utilisateur est connecté
@@ -186,4 +185,118 @@ public class UtilisateurController {
     }
 // Fin Ajout SLB
 
+    //Ajout SLB 07/07 :
+    @PostMapping("/btnModifierProfil/{id}")
+    public String modifierProfil    (@PathVariable int id,
+                                     @ModelAttribute Utilisateur utilisateurForm,
+                                     @RequestParam String motDePasseActuel,
+                                     @RequestParam String nvMotDePasse,
+                                     @RequestParam String confirmation,
+                                     HttpSession session,
+                                     Model model,
+                                     RedirectAttributes redirectAttributes) {
+
+        Utilisateur sessionUser = (Utilisateur) session.getAttribute("utilisateurConnecte");
+
+        if (sessionUser == null || sessionUser.getId() != id) {
+            redirectAttributes.addFlashAttribute("error", "Accès non autorisé.");
+            return "redirect:/PageConnexion";
+        }
+
+        // Validation des champs obligatoires
+        if (utilisateurForm.getPseudo() == null || utilisateurForm.getPseudo().trim().isEmpty()) {
+            model.addAttribute("error", "Le pseudo est obligatoire");
+            model.addAttribute("utilisateur", sessionUser);
+            return "PageModifierProfil";
+        }
+
+        if (utilisateurForm.getNom() == null || utilisateurForm.getNom().trim().isEmpty()) {
+            model.addAttribute("error", "Le nom est obligatoire");
+            model.addAttribute("utilisateur", sessionUser);
+            return "PageModifierProfil";
+        }
+
+        if (utilisateurForm.getPrenom() == null || utilisateurForm.getPrenom().trim().isEmpty()) {
+            model.addAttribute("error", "Le prénom est obligatoire");
+            model.addAttribute("utilisateur", sessionUser);
+            return "PageModifierProfil";
+        }
+
+        if (utilisateurForm.getEmail() == null || utilisateurForm.getEmail().trim().isEmpty()) {
+            model.addAttribute("error", "L'email est obligatoire");
+            model.addAttribute("utilisateur", sessionUser);
+            return "PageModifierProfil";
+        }
+
+        // Mise à jour des informations personnelles
+        sessionUser.setPseudo(utilisateurForm.getPseudo().trim());
+        sessionUser.setNom(utilisateurForm.getNom().trim());
+        sessionUser.setPrenom(utilisateurForm.getPrenom().trim());
+        sessionUser.setEmail(utilisateurForm.getEmail().trim());
+        sessionUser.setTel(utilisateurForm.getTel() != null ? utilisateurForm.getTel().trim() : "");
+        sessionUser.setRue(utilisateurForm.getRue() != null ? utilisateurForm.getRue().trim() : "");
+        sessionUser.setCodePostal(utilisateurForm.getCodePostal() != null ? utilisateurForm.getCodePostal().trim() : "");
+        sessionUser.setVille(utilisateurForm.getVille() != null ? utilisateurForm.getVille().trim() : "");
+
+        // Gestion du changement de mot de passe (optionnel)
+        boolean motDePasseModifie = false;
+        if (nvMotDePasse != null && !nvMotDePasse.trim().isEmpty()) {
+            // Vérification du mot de passe actuel
+            if (motDePasseActuel == null || motDePasseActuel.trim().isEmpty()) {
+                model.addAttribute("error", "Vous devez saisir votre mot de passe actuel pour le modifier");
+                model.addAttribute("utilisateur", sessionUser);
+                return "PageModifierProfil";
+            }
+
+            if (!sessionUser.getMotDePasse().equals(motDePasseActuel)) {
+                model.addAttribute("error", "Mot de passe actuel incorrect");
+                model.addAttribute("utilisateur", sessionUser);
+                return "PageModifierProfil";
+            }
+
+            // Vérification de la confirmation
+            if (confirmation == null || !nvMotDePasse.equals(confirmation)) {
+                model.addAttribute("error", "La confirmation ne correspond pas au nouveau mot de passe");
+                model.addAttribute("utilisateur", sessionUser);
+                return "PageModifierProfil";
+            }
+
+            // Validation du nouveau mot de passe (optionnel)
+            if (nvMotDePasse.length() < 6) {
+                model.addAttribute("error", "Le nouveau mot de passe doit contenir au moins 6 caractères");
+                model.addAttribute("utilisateur", sessionUser);
+                return "PageModifierProfil";
+            }
+
+            sessionUser.setMotDePasse(nvMotDePasse);
+            motDePasseModifie = true;
+        }
+
+        try {
+            // Sauvegarde en base de données
+            utilisateurService.modifierProfil(sessionUser);
+
+            // Mise à jour de la session
+            session.setAttribute("utilisateurConnecte", sessionUser);
+
+            // Message de succès
+            String message = "Profil modifié avec succès !";
+            if (motDePasseModifie) {
+                message += " Votre mot de passe a également été modifié.";
+            }
+
+            redirectAttributes.addFlashAttribute("message", message);
+            return "redirect:/PageModifierProfil/" + id;
+
+        } catch (Exception e) {
+            model.addAttribute("error", "Erreur lors de la modification du profil : " + e.getMessage());
+            model.addAttribute("utilisateur", sessionUser);
+            return "PageModifierProfil";
+        }
+    }
+
+//Fin ajout SLB
+
+
 }
+
