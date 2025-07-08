@@ -79,7 +79,7 @@ input[type="search"] {
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	width: 100%;
-	margin-bottom: 2 rem;
+	margin-bottom: 2rem;
 }
 
 .radio-group label,
@@ -129,6 +129,7 @@ button:hover {
 }
 
 .detailVente-container {
+	flex-direction: column;
 	border: solid;
 	display: flex;
 	justify-content: space-around;
@@ -137,9 +138,7 @@ button:hover {
 	max-width: 300px;
 }
 
-.Article-vente-container {
-	max-width: 50%;
-}
+
 
 .img-placeholder {
 	max-width: 50%;
