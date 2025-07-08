@@ -71,23 +71,23 @@
                 <legend>Retrait</legend>
                 <div class="form-group">
                     <label for="rue">Rue :</label>
-                    <input type="text" id="rue"/>
+                    <input type="text" id="rue" th:field="*{lieuRetrait.rue}"/>
                 </div>
                 <br/>
                 <div class="form-group">
                     <label for="code-postal">Code postal :</label>
-                    <input type="text" id="code-postal" />
+                    <input type="text" id="code-postal" th:field="*{lieuRetrait.codePostal}"/>
                 </div>
                 <br/>
                 <div class="form-group">
                     <label for="ville">Ville :</label>
-                    <input type="text" id="ville"/>
+                    <input type="text" id="ville" th:field="*{lieuRetrait.ville}"/>
                 </div>
             </fieldset>
             <br/>
             <div class="button-form">
                 <button type="submit">Enregistrer</button>
-                <button type="reset">Annuler</button>
+                <button type="reset"onclick="window.location.href='/annulation'">Annuler</button>
             </div>
         </form>
     </main>

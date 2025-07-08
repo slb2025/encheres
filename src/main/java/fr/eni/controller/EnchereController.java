@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@SessionAttributes("userSession")
+@SessionAttributes("utilisateurConnecte")
 public class EnchereController {
 
     @Autowired
@@ -27,16 +27,21 @@ public class EnchereController {
         this.categorieService = categorieService;
     }
 
-    @GetMapping("/")
-    public String getCreerVente(Model model /*,@ModelAttribute("userSession") Utilisateur userSession*/) {
+    @GetMapping("/annulation")
+    public String annulation() {
+        return "PagesListeEncheresConnecte"; // nom de la vue à afficher
+    }
 
-       ArticleVendu article = new ArticleVendu();
+    @GetMapping("encheres/creerEnchere")
+    public String getCreerVente(Model model,@ModelAttribute("utilisateurConnecte") Utilisateur userSession) {
+
+        ArticleVendu article = new ArticleVendu();
         Retrait retrait = new Retrait();
 
-        /*article.setLieuRetrait(retrait);
+        article.setLieuRetrait(retrait);
         article.getLieuRetrait().setRue(userSession.getRue());
         article.getLieuRetrait().setCodePostal(userSession.getCodePostal());
-        article.getLieuRetrait().setVille(userSession.getVille());*/
+        article.getLieuRetrait().setVille(userSession.getVille());
         model.addAttribute("articleVendu", article);
 
         List<Categorie> categories = categorieService.getCategories();
@@ -52,7 +57,7 @@ public class EnchereController {
         enchereService.creerVente(article);
         System.out.println("création article");
         //return "redirect:/encheres/enchereNonCommencee";
-        return "PageEnchereNonCommencee";
+        return "PagesListeEncheresConnecte.html";
     }
 
     @GetMapping("/encheres/enchereNonCommencee")

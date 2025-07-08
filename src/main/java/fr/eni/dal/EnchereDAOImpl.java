@@ -18,8 +18,6 @@ public class EnchereDAOImpl implements EnchereDAO {
     private final String INSERT = "INSERT INTO Article (idUtilisateur, nom, descriptionArticle, idCategorie, miseAPrix, dateDebut, dateFin)"
             + " VALUES (:idUtilisateur, :nomArticle, :description, :categorieArticle, :miseAprix, :dateDebutEncheres, :dateFinEncheres)";
 
-
-
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -31,14 +29,13 @@ public class EnchereDAOImpl implements EnchereDAO {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
         namedParameters.addValue("nomArticle", articleVendu.getNomArticle());
         namedParameters.addValue("description", articleVendu.getDescription());
-        namedParameters.addValue("categorieArticle", articleVendu.getCategorieArticle().getIdCategorie());
+        //namedParameters.addValue("categorieArticle", articleVendu.getCategorieArticle().getIdCategorie());
+        namedParameters.addValue("categorieArticle", "1");
         namedParameters.addValue("miseAprix", articleVendu.getMiseAPrix());
         namedParameters.addValue("dateDebutEncheres", articleVendu.getDateDebutEncheres());
         namedParameters.addValue("dateFinEncheres", articleVendu.getDateFinEncheres());
-        namedParameters.addValue("idUtilisateur", articleVendu.getVendeur().getIdUtilisateur());
-//        namedParameters.addValue("rue", articleVendu.getLieuRetrait().getRue());
-//        namedParameters.addValue("codePostal", articleVendu.getLieuRetrait().getCodePostal());
-//        namedParameters.addValue("ville", articleVendu.getLieuRetrait().getVille());
+        namedParameters.addValue("idUtilisateur", "2");
+        //namedParameters.addValue("idUtilisateur", articleVendu.getVendeur());
 
         jdbcTemplate.update(INSERT, namedParameters, keyHolder);
 

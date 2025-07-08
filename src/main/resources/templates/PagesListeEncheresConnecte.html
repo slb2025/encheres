@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Enchères.org</title>
-    <link rel="stylesheet" href="css/general.css"/>
+    <link rel="stylesheet" href="/css/general.css"/>
     <link
             href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
             rel="stylesheet">
@@ -18,16 +18,16 @@
                 <a th:href="@{/}">Enchères</a>
             </div>
             <div class="button-nav">
-                <a th:href="@{/}">Vente article</a>
+                <a th:href="@{'/encheres/creerEnchere'}">Vente article</a>
             </div>
-<!--            Ajout SLB 03/07 que le lien de la page renvoie vers PageModifierProfil-->
+            <!--            Ajout SLB 03/07 que le lien de la page renvoie vers PageModifierProfil-->
             <div class="button-nav">
                 <a th:href="@{'/btnPageMonProfil'}">Mon profil</a>
             </div>
-            </div>
-            <div class="button-nav">
-                <a th:href="@{'/logout'}">Deconnexion</a>
-            </div>
+        </div>
+        <div class="button-nav">
+            <a th:href="@{'/logout'}">Deconnexion</a>
+        </div>
         </div>
     </nav>
 </header>
@@ -47,17 +47,8 @@
         <br><br>
         <label>Catégorie :</label> <select
             name="listeCategorie">
-        <option>Informatique</option>
-        <option>Ameublement</option>
-        <option>Vêtement</option>
-        <option>Sports&Loisirs222</option>
-        <option>Test</option>
-        <!--
-        <option th:each="categorie : ${categories}"
-            th:value="${categorie.libelle}"
-            th:text="${categorie.libelle}">
-        </option>
-         -->
+        <option th:each="cat : ${categories}" th:text="${cat.libelle}"
+                th:value="${cat.idCategorie}"></option>
     </select>
     </section>
 
@@ -107,10 +98,10 @@
                     <a href="/PageProfilUtilisateur/5">Voir profil</a>
 
                     <!--    <a th:href="@{/PageProfilUtilisateur}" th:text="${article.vendeur}">Nom du vendeur</a> -->
-                    </li>
+                </li>
                 <!-- Fin ajout SLB -->
 
-                    <!--<li>Vendeur</li>-->
+                <!--<li>Vendeur</li>-->
                 <!--${article.vendeur}  -->
                 <!-- <a href="#">NineJea</a> -->
             </ul>
