@@ -9,7 +9,8 @@ import java.util.List;
 public interface EnchereDAO {
 
     void create(ArticleVendu articleVendu);
-    Enchere noEnchere(int id);
+    boolean noEnchere(int id);
+
 
 
 }

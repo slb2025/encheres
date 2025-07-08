@@ -16,4 +16,7 @@ public interface UtilisateurService {
 
     boolean pseudoOuEmailExiste(String pseudo, String email);
 
+    boolean peutSupprimerCompte(int id);
+    void supprimerCompte(int id);
+
 }

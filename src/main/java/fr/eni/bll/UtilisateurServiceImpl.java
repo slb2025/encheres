@@ -10,9 +10,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 
     private final UtilisateurDAO utilisateurDAO;
+    private final ArticleService articleService;
+    private final EnchereService enchereService;
 
-    public UtilisateurServiceImpl(UtilisateurDAO utilisateurDAO) {
+    public UtilisateurServiceImpl(UtilisateurDAO utilisateurDAO, ArticleService articleService, EnchereService enchereService) {
         this.utilisateurDAO = utilisateurDAO;
+        this.articleService = articleService;
+        this.enchereService = enchereService;
     }
 
     @Override
@@ -53,5 +57,30 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         return utilisateurDAO.findById(id);
     }
     //Fin ajout SLB
+
+    @Override
+    public boolean peutSupprimerCompte(int idUtilisateur) {
+        // Vérifier qu'il n'y a pas d'articles en cours de vente
+        if (articleService.verifUtilisateurProduit(idUtilisateur)) {
+            return false;
+        }
+
+        // Vérifier qu'il n'y a pas d'enchères en cours
+        if (enchereService.verifUtilisateurEnchere(idUtilisateur)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public void supprimerCompte(int idUtilisateur) {
+        // Vérifier avant de supprimer
+        if (!peutSupprimerCompte(idUtilisateur)) {
+            throw new IllegalStateException("Impossible de supprimer le compte : des enchères ou articles sont en cours");
+        }
+
+        utilisateurDAO.supprimerUtilisateur(idUtilisateur);
+    }
 
 }

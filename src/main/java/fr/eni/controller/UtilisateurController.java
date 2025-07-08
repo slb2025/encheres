@@ -180,8 +180,9 @@ public class UtilisateurController {
         }
     }
 // Fin Ajout SLB
+
     @GetMapping("/supprimer-compte")
-    public String deleteUser(@PathVariable(required = false) Integer id, HttpSession session, Model model, RedirectAttributes redirectAttribute) {
+    public String deleteUser(HttpSession session, RedirectAttributes redirectAttribute) {
         // Vérifier que l'utilisateur est connecté
         Integer connectedUserId = getConnectedUserId(session);
 
@@ -190,21 +191,25 @@ public class UtilisateurController {
             return "redirect:/PageConnexion";
         }
 
-        // Vérifier que l'utilisateur supprime bien son propre profil (sécurité)
-        if (!connectedUserId.equals(id)) {
-            redirectAttribute.addFlashAttribute("error", "Vous ne pouvez supprimer que votre propre profil");
-            return "redirect:/PagesListeEncheresConnecte";
-        }
+        try {
+            // Vérifier si l'utilisateur peut supprimer son compte
+            if (!utilisateurService.peutSupprimerCompte(connectedUserId)) {
+                redirectAttribute.addFlashAttribute("error", "Impossible de supprimer votre compte : vous avez des enchères ou des articles en cours");
+                return "redirect:/PageMonProfil/" + connectedUserId;
+            }
 
-        // Récupérer les données de l'utilisateur
-        Utilisateur utilisateur = utilisateurService.afficherProfil(id);
+            // Supprimer le compte
+            utilisateurService.supprimerCompte(connectedUserId);
 
-        if (utilisateur != null) {
-            model.addAttribute("utilisateur", utilisateur);
-            return "PageModifierProfil";
-        } else {
-            redirectAttribute.addFlashAttribute("error", "Utilisateur non trouvé");
-            return "redirect:/PagesListeEncheresConnecte";
+            // Déconnecter l'utilisateur
+            session.invalidate();
+
+            redirectAttribute.addFlashAttribute("message", "Votre compte a été supprimé avec succès");
+            return "redirect:/";
+
+        } catch (Exception e) {
+            redirectAttribute.addFlashAttribute("error", "Erreur lors de la suppression du compte : " + e.getMessage());
+            return "redirect:/PageMonProfil/" + connectedUserId;
         }
     }
 }

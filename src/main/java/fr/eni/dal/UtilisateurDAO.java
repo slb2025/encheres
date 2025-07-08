@@ -17,5 +17,8 @@ public interface UtilisateurDAO {
     Utilisateur findById(int Id);
     //Fin ajout SLB
 
+    void supprimerUtilisateur(int id);
+
+
 
 }
