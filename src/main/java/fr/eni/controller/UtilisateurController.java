@@ -107,7 +107,7 @@ public class UtilisateurController {
     }
 
 
-    // Création Créer Compte
+    // Création  Compte
     @GetMapping("/PageCreerCompte")
     public String afficherInscription(Model model) {
         model.addAttribute("utilisateur" , new Utilisateur());

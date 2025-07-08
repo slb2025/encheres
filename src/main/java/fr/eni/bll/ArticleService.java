@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface ArticleService {
 
+    List<ArticleVendu> getArticleAcceuilDeco();
 
 }

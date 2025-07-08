@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ArticleDAO {
 
-    List<ArticleVendu> findAllArticle();
+    List<ArticleVendu> findArticleAccueilDeco();
 
 
 }
