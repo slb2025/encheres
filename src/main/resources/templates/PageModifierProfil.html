@@ -11,7 +11,13 @@
     <title>Encheres</title>
   </head>
 
+<!--  ajout SLB 08/07-->
   <body>
+    <div th:if="${message}" class="flash-message success">
+      <p th:text="${message}"></p>
+    </div>
+  <!-- fin ajout SLB-->
+
     <div class="container">
       <header>
         <nav>
