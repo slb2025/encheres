@@ -14,9 +14,13 @@ public class EnchereServiceImpl implements EnchereService {
 
     private final EnchereDAO enchereDAO;
 
+    // Injection du DAO par constructeur
     public EnchereServiceImpl(EnchereDAO enchereDAO) {
         this.enchereDAO = enchereDAO;
     }
+
+    @Autowired
+    private EnchereDAO enchereDAO;
 
     @Override
     public void creerVente(ArticleVendu articleVendu) {
