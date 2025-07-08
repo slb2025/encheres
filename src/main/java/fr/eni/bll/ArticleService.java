@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface ArticleService {
 
-
+    boolean verifUtilisateurProduit(int id);
 }
