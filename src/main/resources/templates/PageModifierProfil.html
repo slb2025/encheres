@@ -127,6 +127,18 @@
 
               </div>
 
+<!--          Fin ajout du Thymeleaf -->
+          <div class="button-form">
+            <button type="submit">Enregistrer</button>
+            <button type="button" onclick="confirmerSuppression()">Supprimer compte</button>
+          </div>
+
+        </form>
+
+        <div class="credit">
+          <label for="credit">Crédit :</label>
+          <input type="text" name="credit" id="credit" size="30" th:value="${utilisateur.credit}" readonly />
+        </div>
     <!--          Fin ajout du Thymeleaf -->
               <div class="button-form">
                 <button type="submit">Enregistrer</button>

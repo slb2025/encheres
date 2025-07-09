@@ -8,4 +8,5 @@ public interface ArticleService {
 
     List<ArticleVendu> getArticleAcceuilDeco();
 
+    boolean verifUtilisateurProduit(int id);
 }

@@ -2,21 +2,27 @@ package fr.eni.bll;
 
 import fr.eni.bo.ArticleVendu;
 import fr.eni.dal.ArticleDAO;
+import fr.eni.dal.EnchereDAO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ArticleServiveImpl implements ArticleService {
+public class ArticleServiceImpl implements ArticleService {
 
-    private ArticleDAO articleDAO;
+    private final ArticleDAO articleDAO;
 
-    public ArticleServiveImpl(ArticleDAO articleDAO) {
+    public ArticleServiceImpl(ArticleDAO articleDAO) {
         this.articleDAO = articleDAO;
     }
 
     @Override
     public List<ArticleVendu> getArticleAcceuilDeco() {
         return articleDAO.findArticleAccueilDeco();
+    }
+
+    @Override
+    public boolean verifUtilisateurProduit(int id) {
+        return articleDAO.noArticle(id);
     }
 }

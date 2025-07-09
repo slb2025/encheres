@@ -29,7 +29,7 @@ INSERT INTO Article (
       (4, 4, 'Vélo VTC Décathlon', 'Taille M, bon état, pneus neufs', '2025-07-04', '2025-07-10', 180.00, NULL, 'EN_COURS', '2025-07-02'),
       (3, 1, 'Écran 24" Full HD', 'Dalle IPS, 75Hz, parfait pour le télétravail', '2025-07-04', '2025-07-10', 70.00, NULL, 'EN_COURS', '2025-07-02'),
       (2, 2, 'Canapé convertible 3 places', 'Tissu gris foncé, matelas intégré', '2025-07-04', '2025-07-10', 250.00, 280.00, 'TERMINEE', '2025-07-02'),
-      (1, 1, 'Souris sans fil Logitech', 'Modèle ergonomique avec capteur optique 16000 DPI', '2025-07-04', '2025-07-10', 49.99, NULL, 'EN_COURS', '2025-07-02'),
+      (5, 1, 'Souris sans fil Logitech', 'Modèle ergonomique avec capteur optique 16000 DPI', '2025-07-04', '2025-07-10', 49.99, NULL, 'EN_COURS', '2025-07-02'),
       (2, 2, 'Table basse scandinave', 'Bois clair, design épuré 90x60cm', '2025-07-05', '2025-07-12', 80.00, 95.00, 'TERMINEE', '2025-07-02'),
       (3, 3, 'Raquette de tennis Babolat', 'Modèle Pure Drive 2023, manche 3', '2025-07-04', '2025-07-10', 49.99, NULL, 'EN_COURS', '2025-07-02'),
       (4, 1, 'Disque SSD NVMe 1To', 'Samsung 980 Pro, performances élevées', '2025-07-04', '2025-07-10', 49.99, NULL, 'EN_COURS', '2025-07-02'),
@@ -42,11 +42,11 @@ VALUES
     (2, 32, '2025-07-02', 130),
     (3, 35, '2025-07-02', 55),
     (4, 43, '2025-07-03', 30),
-    (1, 44, '2025-07-04', 420),
+    (5, 44, '2025-07-04', 420),
     (5, 52, '2025-07-05', 110),
     (2, 54, '2025-07-02', 200),
     (3, 35, '2025-07-02', 60),
     (4, 53, '2025-07-03', 50),
-    (1, 44, '2025-07-04', 300),
+    (5, 44, '2025-07-04', 300),
     (5, 45, '2025-07-05', 140);
 
