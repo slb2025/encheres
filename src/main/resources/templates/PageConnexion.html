@@ -12,7 +12,10 @@
     <div class="container">
         <header>
             <nav>
-                <div class="titre-entete">ENI-Enchères</div>
+                <div class="titre-entete">
+                    <a th:if="${session.utilisateurConnecte != null}" th:href="@{/PagesListeEncheresConnecte}">ENI-Enchères</a>
+                    <span th:unless="${session.utilisateurConnecte != null}">ENI-Enchères</span>
+                </div>
             </nav>
         </header>
         <main>
