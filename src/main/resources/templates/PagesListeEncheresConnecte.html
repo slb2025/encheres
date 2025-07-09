@@ -23,7 +23,7 @@
             <div class="button-nav">
                 <a th:href="@{'/encheres/creerEnchere'}">Vente article</a>
             </div>
-            <!--            Ajout SLB 03/07 que le lien de la page renvoie vers PageModifierProfil-->
+            <!--            Ajout SLB 03/07 que le lien de la page renvoie vers PageMonProfil-->
             <div class="button-nav">
                 <a th:href="@{'/btnPageMonProfil'}">Mon profil</a>
             </div>
@@ -45,9 +45,7 @@
         <form method="post"></form>
         <!-- th:action=""  -->
         <!-- "@{/filtres}" -->
-        <input type="search" name="nomArticle" size="30"
-               placeholder="Le nom de l'article contient">
-        <br><br>
+        <input type="search" name="nomArticle" size="30" placeholder="Le nom de l'article contient"> <br><br>
         <label>Catégorie :</label> <select
             name="listeCategorie">
         <option th:each="cat : ${categories}" th:text="${cat.libelle}"
