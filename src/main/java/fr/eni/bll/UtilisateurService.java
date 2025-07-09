@@ -19,4 +19,6 @@ public interface UtilisateurService {
     // Ajout SLB 07/07 :
     void modifierProfil(Utilisateur utilisateur);
     // Fin ajout SLB
+
+    boolean verifierMotDePasse(String pseudo, String motDePasse);
 }
