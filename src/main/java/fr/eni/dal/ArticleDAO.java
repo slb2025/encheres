@@ -7,10 +7,11 @@ import java.util.List;
 
 public interface ArticleDAO {
 
+    List<ArticleVendu> findAllArticle();
+    ArticleVendu getArticleById(int idArticle);
     boolean noArticle(int id);
     List<ArticleVendu> findArticleAccueilDeco();
-
-
     List<ArticleVendu> findByCategorie(String libelleCategorie, String nomArticle);
+
 
 }

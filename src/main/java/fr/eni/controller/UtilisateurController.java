@@ -267,17 +267,18 @@ public class UtilisateurController {
         sessionUser.setCodePostal(utilisateurForm.getCodePostal() != null ? utilisateurForm.getCodePostal().trim() : "");
         sessionUser.setVille(utilisateurForm.getVille() != null ? utilisateurForm.getVille().trim() : "");
 
-        // Gestion du changement de mot de passe (optionnel)
+        // Gestion du changement de mot de passe
         boolean motDePasseModifie = false;
         if (nvMotDePasse != null && !nvMotDePasse.trim().isEmpty()) {
-            // Vérification du mot de passe actuel
+            // Vérification du mot de passe actuel avec le service (qui utilise maintenant le PasswordEncoder)
             if (motDePasseActuel == null || motDePasseActuel.trim().isEmpty()) {
                 model.addAttribute("error", "Vous devez saisir votre mot de passe actuel pour le modifier");
                 model.addAttribute("utilisateur", sessionUser);
                 return "PageModifierProfil";
             }
 
-            if (!sessionUser.getMotDePasse().equals(motDePasseActuel)) {
+            // Vérifier avec le service (qui utilise le PasswordEncoder)
+            if (!utilisateurService.verifierMotDePasse(sessionUser.getPseudo(), motDePasseActuel)) {
                 model.addAttribute("error", "Mot de passe actuel incorrect");
                 model.addAttribute("utilisateur", sessionUser);
                 return "PageModifierProfil";
@@ -290,23 +291,24 @@ public class UtilisateurController {
                 return "PageModifierProfil";
             }
 
-            // Validation du nouveau mot de passe (optionnel)
+            // Validation du nouveau mot de passe
             if (nvMotDePasse.length() < 6) {
                 model.addAttribute("error", "Le nouveau mot de passe doit contenir au moins 6 caractères");
                 model.addAttribute("utilisateur", sessionUser);
                 return "PageModifierProfil";
             }
 
-            sessionUser.setMotDePasse(nvMotDePasse);
+            sessionUser.setMotDePasse(nvMotDePasse); // Le service se chargera du hashage
             motDePasseModifie = true;
         }
 
         try {
-            // Sauvegarde en base de données
+            // Sauvegarde en base de données (le service hashera automatiquement le mot de passe)
             utilisateurService.modifierProfil(sessionUser);
 
-            // Mise à jour de la session
-            session.setAttribute("utilisateurConnecte", sessionUser);
+            // Récupérer l'utilisateur mis à jour depuis la base (avec le mot de passe hashé)
+            Utilisateur utilisateurMisAJour = utilisateurService.afficherProfil(sessionUser.getId());
+            session.setAttribute("utilisateurConnecte", utilisateurMisAJour);
 
             // Message de succès
             String message = "Profil modifié avec succès !";

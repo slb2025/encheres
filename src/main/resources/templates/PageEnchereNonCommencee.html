@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nouvelle vente - ENI-Enchères</title>
-  <link rel="stylesheet" href="/css/style-vente.css"/>
+  <link rel="stylesheet" href="/static/css/style-vente.css"/>
 </head>
 <body>
 <div class="container">
@@ -12,10 +12,10 @@
     <nav>
       <div class="titre-entete">ENI-Enchères</div>
       <div class="buttons-nav">
-        <div class="button-nav"><a href="">Enchères</a></div>
-        <div class="button-nav"><a href="">Vente article</a></div>
-        <div class="button-nav"><a href="">Mon profil</a></div>
-        <div class="button-nav"><a href="">Deconnexion</a></div>
+        <div class="button-nav"><a th:href="@{/}">Enchères</a></div>
+        <div class="button-nav"><a th:href="@{'/encheres/creerEnchere'}">Vente article</a></div>
+        <div class="button-nav"><a th:href="@{'/btnPageMonProfil'}">Mon profil</a></div>
+        <div class="button-nav"><a th:href="@{'/logout'}">Deconnexion</a></div>
       </div>
     </nav>
   </header>

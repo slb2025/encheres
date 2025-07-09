@@ -2,8 +2,8 @@
 <html>
 <head>
     <meta charset="UTF-8"/>
-    <title>Encheres.org</title>
-    <link rel="stylesheet" href="css/general.css"/>
+    <title>Enchères.org</title>
+    <link rel="stylesheet" th:href="@{/css/general.css}" />
 </head>
 
 <body>
@@ -23,11 +23,11 @@
 <h1>Liste des enchères</h1>
 
 <div th:if="${error}" class="error-message">
-    <p th:text="${error}" style="color: red;"></p>
+	<p th:text="${error}" style="color: red;"></p>
 </div>
 
 <div th:if="${message}" class="message">
-    <p th:text="${message}" style="color: #10ff00;"></p>
+	<p th:text="${message}" style="color: #10ff00;"></p>
 </div>
 
 <div class="main-wrapper">

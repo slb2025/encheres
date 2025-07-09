@@ -4,6 +4,7 @@ import fr.eni.bo.ArticleVendu;
 import fr.eni.bo.Categorie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -15,17 +16,16 @@ import java.util.List;
 @Repository
 public class CategorieDAOImpl implements CategorieDAO {
 
-    private final JdbcTemplate jdbcTemplate;
-
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+        private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Autowired
-    public CategorieDAOImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate, JdbcTemplate jdbcTemplate) {
+    public CategorieDAOImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
-        this.jdbcTemplate = jdbcTemplate;
     }
 
     private static final String SELECT_ALL = "select id, libelle from categorie";
+    private static final String SELECT_BY_ID = "select id, libelle from categorie where id = :idCategorie";
+
 
     @Override
     public List<Categorie> getCategories() {
@@ -33,6 +33,14 @@ public class CategorieDAOImpl implements CategorieDAO {
                 SELECT_ALL,
                 new BeanPropertyRowMapper<>(Categorie.class)
         );
+
     }
 
-}
+    @Override
+    public Categorie getCategorie(int idCategorie) {
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        namedParameters.addValue("idCategorie", idCategorie);
+        return namedParameterJdbcTemplate.queryForObject(SELECT_BY_ID, namedParameters,
+                new BeanPropertyRowMapper<>(Categorie.class));
+    }
+    }

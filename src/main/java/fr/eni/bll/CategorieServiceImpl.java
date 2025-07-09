@@ -13,14 +13,12 @@ import java.util.List;
 @Service
 public class CategorieServiceImpl implements CategorieService {
 
-    private final ArticleDAOImpl articleDAOImpl;
     //private ArticleVenduDAO articleVenduDAO;
     private CategorieDAO categorieDAO;
 
     @Autowired
     public CategorieServiceImpl(CategorieDAO categorieDAO, ArticleDAOImpl articleDAOImpl) {
         this.categorieDAO = categorieDAO;
-        this.articleDAOImpl = articleDAOImpl;
     }
 
 
@@ -28,9 +26,5 @@ public class CategorieServiceImpl implements CategorieService {
     public List<Categorie> getCategories() {
         return categorieDAO.getCategories();
     }
-
-
-
-
 
 }

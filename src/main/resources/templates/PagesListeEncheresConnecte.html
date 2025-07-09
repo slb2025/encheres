@@ -23,7 +23,7 @@
             <div class="button-nav">
                 <a th:href="@{'/encheres/creerEnchere'}">Vente article</a>
             </div>
-            <!--            Ajout SLB 03/07 que le lien de la page renvoie vers PageModifierProfil-->
+            <!--            Ajout SLB 03/07 que le lien de la page renvoie vers PageMonProfil-->
             <div class="button-nav">
                 <a th:href="@{'/btnPageMonProfil'}">Mon profil</a>
             </div>
@@ -45,9 +45,7 @@
         <form method="post"></form>
         <!-- th:action=""  -->
         <!-- "@{/filtres}" -->
-        <input type="search" name="nomArticle" size="30"
-               placeholder="Le nom de l'article contient">
-        <br><br>
+        <input type="search" name="nomArticle" size="30" placeholder="Le nom de l'article contient"> <br><br>
         <label>Catégorie :</label> <select
             name="listeCategorie">
         <option th:each="cat : ${categories}" th:text="${cat.libelle}"
@@ -77,45 +75,39 @@
     <aside class="asideBtn">
         <button type="submit">Rechercher</button>
     </aside>
-    <section class="detailVente-container">
+    <section class="detailVente-container" th:each="item : ${article}">
         <div class="photoArticle-container">
             <img alt="PC Gamer" src="/images/logoENI.png">
         </div>
-        <div class="Article-vente-container">
-            <!-- th:each="" -->
-            <!--article : ${articles}  -->
+        <div class="Article-vente-container"></div>
+        <a th:text="${item.nomArticle}" th:href="@{/encheres/detail(id=${item.idArticle})}"></a>
+        <!-- th:each="" -->
+        <!--article : ${articles}  -->
 
-            <ul>
-                <li>Nom Article</li>
-                <!--th:text=""  -->
-                <!--${article.nomArticle}  -->
-                <li>Prix Article</li>
-                <!--${article.prixArticle}  -->
-                <li>Fin Enchères</li>
-                <!--${encheres.finEnchere}  -->
+        <ul>
+            <li th:each="item : ${article}">Nom Article</li>
+            <!--th:text=""  -->
+            <!--${article.nomArticle}  -->
+            <li>Prix Article</li>
+            <!--${article.prixArticle}  -->
+            <li>Fin Enchères</li>
+            <!--${encheres.finEnchere}  -->
 
-                <!--Ajout SLB 02/07 : devant "Vendeur :" sur la page je crée un lien qui renvoie vers PageProfilUtilisateur-->
-                <!--Ajout SLB 03/07 : id 5 pour bypasser la premiere étape de connexion qui est une fonctionnalité ddéveloppée par qqn d'autre-->
-                <li>
-                    Vendeur :
-                    <a href="/PageProfilUtilisateur/5">Voir profil</a>
+            <!--Ajout SLB 02/07 : devant "Vendeur :" sur la page je crée un lien qui renvoie vers PageProfilUtilisateur-->
+            <!--Ajout SLB 03/07 : id 5 pour bypasser la premiere étape de connexion qui est une fonctionnalité ddéveloppée par qqn d'autre-->
+            <li>
+                Vendeur :
+                <a href="/PageProfilUtilisateur/5">Voir profil</a>
 
-                    <!--    <a th:href="@{/PageProfilUtilisateur}" th:text="${article.vendeur}">Nom du vendeur</a> -->
-                </li>
-                <!-- Fin ajout SLB -->
+                <!--    <a th:href="@{/PageProfilUtilisateur}" th:text="${article.vendeur}">Nom du vendeur</a> -->
+            </li>
+            <!-- Fin ajout SLB -->
 
-                <!--<li>Vendeur</li>-->
-                <!--${article.vendeur}  -->
-                <!-- <a href="#">NineJea</a> -->
-            </ul>
-        </div>
+            <!--<li>Vendeur</li>-->
+            <!--${article.vendeur}  -->
+            <!-- <a href="#">NineJea</a> -->
+        </ul>
     </section>
-
-
-    <div class="main-wrapper">
-</body>
-</html>
-
-
+</div>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package fr.eni.controller;
 
+import fr.eni.bll.ArticleService;
 import fr.eni.bll.CategorieService;
 import fr.eni.bll.EnchereService;
 import fr.eni.bo.ArticleVendu;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @Controller
 @SessionAttributes("utilisateurConnecte")
 public class EnchereController {
@@ -21,10 +23,12 @@ public class EnchereController {
     @Autowired
     private EnchereService enchereService;
     private CategorieService categorieService;
+    private ArticleService articleService;
 
-    public EnchereController(EnchereService enchereService, CategorieService categorieService) {
+    public EnchereController(EnchereService enchereService, CategorieService categorieService, ArticleService articleService) {
         this.enchereService = enchereService;
         this.categorieService = categorieService;
+        this.articleService = articleService;
     }
 
     @GetMapping("/annulation")
@@ -33,100 +37,75 @@ public class EnchereController {
     }
 
     @GetMapping("encheres/creerEnchere")
-    public String getCreerVente(Model model,@ModelAttribute("utilisateurConnecte") Utilisateur userSession) {
+    public String getCreerVente(Model model, @ModelAttribute("utilisateurConnecte") Utilisateur utilisateur) {
 
         ArticleVendu article = new ArticleVendu();
         Retrait retrait = new Retrait();
 
+        //Pour injection du lieu de retrait en fonction du vendeur en session
         article.setLieuRetrait(retrait);
-        article.getLieuRetrait().setRue(userSession.getRue());
-        article.getLieuRetrait().setCodePostal(userSession.getCodePostal());
-        article.getLieuRetrait().setVille(userSession.getVille());
+        article.getLieuRetrait().setRue(utilisateur.getRue());
+        article.getLieuRetrait().setCodePostal(utilisateur.getCodePostal());
+        article.getLieuRetrait().setVille(utilisateur.getVille());
         model.addAttribute("articleVendu", article);
 
         List<Categorie> categories = categorieService.getCategories();
         model.addAttribute("categories", categories);
-        System.out.println("création article");
         return "PageVendreUnArticle";
     }
-
 
     @PostMapping("encheres/creerEnchere")
     public String postCreerVente(@ModelAttribute("articleVendu") ArticleVendu article) {
 
         enchereService.creerVente(article);
-        System.out.println("création article");
-        //return "redirect:/encheres/enchereNonCommencee";
         return "PagesListeEncheresConnecte.html";
     }
 
     @GetMapping("/encheres/enchereNonCommencee")
     public String enchereNonCommencee() {
-
-
         return "PageEnchereNonCommencee";
     }
 
-  /*
-  @PostMapping("encheres/creerEnchere")
-public String postCreerVente(@ModelAttribute("articleVendu") ArticleVendu article) {
-    ArticleVendu savedArticle = enchereService.creerVente(article);
-    return "redirect:/encheres/" + savedArticle.getId();
-}
-
-@GetMapping("/encheres/{id}")
-public String afficherEnchere(@PathVariable("id") Long id, Model model) {
-    ArticleVendu article = enchereService.getArticleById(id);
-    model.addAttribute("article", article);
-    return "PageEnchereNonCommencee";
-}
-   */
-
-
-/*
-@PostMapping("encheres/creerEnchere")
-public String postCreerVente(@Valid @ModelAttribute("articleVendu") ArticleVendu article,
-                             BindingResult bindingResult, Model model, @ModelAttribute("userSession") Utilisateur userSession, @RequestParam("image") MultipartFile file) throws IOException {
-
-    if (bindingResult.hasErrors()) {
-        List<Categorie> categories = categorieService.getCategories();
-        model.addAttribute("categories", categories);
-        return "PageVendreUnArticle";
-    } else {
-        try {
-            article.setVendeur(userSession);
-            enchereService.creerVente(article);
-
-            Path uploadDir = Paths.get("uploads/");
-            if (!Files.exists(uploadDir)) {
-                Files.createDirectories(uploadDir);
-            }
-
-            Path imagePath = Paths.get("uploads/" + article.getIdArticle() + ".png");
-
-            if (file.isEmpty()) {
-                Path defaultImagePath = Paths.get("src/main/resources/static/images/photo.png");
-                Files.copy(defaultImagePath, imagePath, StandardCopyOption.REPLACE_EXISTING);
-            } else {
-                byte[] bytes = file.getBytes();
-                Files.write(imagePath, bytes);
-            }
-
-            return "redirect:/encheres";
-        } catch (BusinessException e) {
-            e.printStackTrace();
-            e.getClesErreurs().forEach(cle -> {
-                ObjectError error = new ObjectError("globalError", cle);
-                bindingResult.addError(error);
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    @GetMapping("/enchere/{id}")
+    public String afficherEnchere(@PathVariable("id") int id, Model model, @ModelAttribute("utilisateurConnecte") Utilisateur utilisateur) {
+        ArticleVendu article = articleService.getArticleById(id);
+        model.addAttribute("article", article);
+        model.addAttribute("utilisateurConnecte", utilisateur);
+        return "PageEncherir";
     }
-    List<Categorie> categories = categorieService.getCategories();
-    model.addAttribute("categories", categories);
-    return "PageEnchereNonCommencee";
+
+    @PostMapping("enchere/créer")
+
+    public String postCreerEnchere(@RequestParam(name = "montant") int montant, @RequestParam("id") int idArticle,
+                                   @ModelAttribute("userSession") Utilisateur utilisateur) {
+
+        this.enchereService.creerEnchere(utilisateur, montant, idArticle);
+        return "redirect:/encheres/detail?id=" + idArticle;
+
+    }
+
+      /*
+    @GetMapping("/encheres/detail")
+    public String detailArticle(@RequestParam("id") int id, Model model,
+                                @ModelAttribute("utilisateurConnecte") Utilisateur utilisateur) {
+
+
+        ArticleVendu article = articleService.getArticleById(id);
+        model.addAttribute("article", article);
+        model.addAttribute("utilisateurConnecte", utilisateur);
+
+        return "PageEncherir";
+    }
+
+     */
+
+
 }
-*/
-}
+
+
+
+
+
+
+
 
