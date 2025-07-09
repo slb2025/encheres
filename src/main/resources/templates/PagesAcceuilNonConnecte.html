@@ -52,7 +52,10 @@
 
     <section th:each="a : ${articleVendu}" class="detailVente-container">
         <div class="photoArticle-container">
-            <img alt="PC Gamer" src="/images/logoENI.png">
+            <img th:if="${a.categorieArticle != null and a.categorieArticle.libelle == 'Informatique'}" th:src="@{/images/informatique.png}" alt="Informatique">
+            <img th:if="${a.categorieArticle != null and a.categorieArticle.libelle == 'Ameublement'}" th:src="@{/images/ameublement.png}" alt="Ameublement">
+            <img th:if="${a.categorieArticle != null and a.categorieArticle.libelle == 'Vêtement'}" th:src="@{/images/vetement.png}" alt="Vêtement">
+            <img th:if="${a.categorieArticle != null and a.categorieArticle.libelle == 'Sports&Loisirs'}" th:src="@{/images/sports.png}" alt="Sports & Loisirs">
         </div>
         <div  class="Article-vente-container">
 

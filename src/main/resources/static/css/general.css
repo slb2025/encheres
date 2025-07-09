@@ -147,3 +147,10 @@ button:hover {
 .img-placeholder {
 	max-width: 50%;
 }
+
+.photoArticle-container img {
+	width: 120px;
+	height: 120px;
+	object-fit: cover;
+	border-radius: 8px;
+}
