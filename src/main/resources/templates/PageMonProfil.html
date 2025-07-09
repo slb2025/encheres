@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/style-profil-connexion.css}"/>
+    <title>Encheres</title></head>
+<body>
+<div class="container">
+    <header>
+        <nav>
+            <div class="titre-entete">ENI-Enchères</div>
+        </nav>
+    </header>
+    <main><h1 class="titre">Information profil</h1>
+        <div th:if="${error}" class="error-message">
+            <p th:text="${error}" style="color: red;"></p>
+        </div>
+        <table class="info-profil">
+            <tr>
+                <td>Pseudo</td>
+                <td class="contenu-profil" th:text="${utilisateur.pseudo}">Pseudo</td>
+            </tr>
+            <tr>
+                <td>Nom</td>
+                <td class="contenu-profil" th:text="${utilisateur.nom}">Nom</td>
+            </tr>
+            <tr>
+                <td>Prénom</td>
+                <td class="contenu-profil" th:text="${utilisateur.prenom}">prenom</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td class="contenu-profil" th:text="${utilisateur.email}">email</td>
+            </tr>
+            <tr>
+                <td>Téléphone</td>
+                <td class="contenu-profil" th:text="${utilisateur.tel}">tel</td>
+            </tr>
+            <tr>
+                <td>Rue</td>
+                <td class="contenu-profil" th:text="${utilisateur.rue}">rue</td>
+            </tr>
+            <tr>
+                <td>Code postale</td>
+                <td class="contenu-profil" th:text="${utilisateur.nom}">rue</td>
+            </tr>
+            <tr>
+                <td>Ville</td>
+                <td class="contenu-profil" th:text="${utilisateur.ville}">ville</td>
+            </tr>
+        </table><!--        Modif SLB :-->
+        <form th:action="@{'/PageModifierProfil/' + ${utilisateur.id}}" method="get"
+              class="button-form button-profil">
+            <button type="submit">Modifier</button>
+        </form>
+        <!--        <form th:action="@{'/info-profil/' + ${utilisateur.idUtilisateur}}" method="get" class="button-form button-profil">-->
+        <!--          <button type="submit">Modifier</button>--><!--        </form>-->
+        <!--        <div class="button-form button-profil">--><!--            <button type="submit">Modifier</button>-->
+        <!--        </div>--><!--        Fin modif SLB-->      </main>
+</div>
+</body>
+</html>

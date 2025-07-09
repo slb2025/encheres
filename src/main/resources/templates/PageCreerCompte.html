@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style-profil-connexion.css" />
+    <title>Encheres</title>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <nav>
+          <div class="titre-entete">ENI-Enchères</div>
+          <div class="buttons-nav">
+<!--            <div class="button-nav"><a href="">Enchères</a></div>-->
+<!--            <div class="button-nav"><a href="">Vente article</a></div>-->
+<!--            <div class="button-nav"><a href="">Mon profil</a></div>-->
+<!--            <div class="button-nav"><a href="">Deconnexion</a></div>-->
+          </div>
+        </nav>
+      </header>
+      <main>
+        <h1 class="titre">Mon profil</h1>
+
+        <div th:if="${erreur}" class="erreur-message">
+          <p th:text="${erreur}"></p>
+        </div>
+
+        <form action="/inscription" method="post" th:object="${utilisateur}" class="form-profil">
+          <div>
+            <div class="field">
+              <label for="pseudo">Pseudo</label>
+              <input type="text" th:field="*{pseudo}" id="pseudo" size="30" />
+            </div>
+            <div class="field">
+              <label for="prenom">Prénom</label>
+              <input type="text" th:field="*{prenom}" id="prenom" size="30" />
+            </div>
+            <div class="field">
+              <label for="prenom">Téléphone</label>
+              <input type="text" th:field="*{tel}" id="telephone" size="30" />
+            </div>
+            <div class="field">
+              <label for="code-postale">Code postale</label>
+              <input type="text" th:field="*{codePostal}" id="code-postale" size="30"/>
+            </div>
+            <div class="field">
+              <label for="mot-de-passe">Mode de passe</label>
+              <input type="password" th:field="*{motDePasse}" id="mot-de-passe" size="30"/>
+            </div>
+            <div class="button-form">
+              <button type="submit">Créer</button>
+            </div>
+          </div>
+
+          <div>
+            <div class="field">
+              <label for="nom">Nom</label>
+              <input type="text" th:field="*{nom}" id="nom" size="30" />
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input type="text" th:field="*{email}" id="email" size="30" />
+            </div>
+            <div class="field">
+              <label for="rue">Rue</label>
+              <input type="text" th:field="*{rue}" id="rue" size="30" />
+            </div>
+            <div class="field">
+              <label for="ville">Ville</label>
+              <input type="text" th:field="*{ville}" id="ville" size="30" />
+            </div>
+            <div class="field">
+              <label for="confirmation">Confirmation</label>
+              <input type="password" name="confirmation" id="confirmation" size="30"/>
+            </div>
+            <div class="button-form">
+              <a href="/PagesAcceuilNonConnecte" class="button-form">Annuler</a>
+            </div>
+          </div>
+
+        </form>
+
+      </main>
+    </div>
+  </body>
+</html>
