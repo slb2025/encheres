@@ -17,7 +17,7 @@ public class CategorieServiceImpl implements CategorieService {
     private CategorieDAO categorieDAO;
 
     @Autowired
-    public CategorieServiceImpl(CategorieDAO categorieDAO, ArticleDAOImpl articleDAOImpl) {
+    public CategorieServiceImpl(CategorieDAO categorieDAO) {
         this.categorieDAO = categorieDAO;
     }
 
