@@ -45,6 +45,8 @@ CREATE TABLE Utilisateur (
 
                              isAdmin BIT NOT NULL DEFAULT 0,
 
+                             isDeleted BIT NOT NULL DEFAULT 0,
+
                              dateCreation DATETIME NOT NULL DEFAULT GETDATE(),
 
                              CONSTRAINT CK_Utilisateur_Credit CHECK (credit >= 0)

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Enchères.org</title>
-    <link rel="stylesheet" href="/css/general.css"/>
+    <link rel="stylesheet" href="css/general.css"/>
     <link
             href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
             rel="stylesheet">
@@ -12,7 +12,10 @@
 
 <header>
     <nav>
-        <div class="titre-entete">ENI-Enchères</div>
+        <div class="titre-entete">
+            <a th:if="${session.utilisateurConnecte != null}" th:href="@{/PagesListeEncheresConnecte}">ENI-Enchères</a>
+            <span th:unless="${session.utilisateurConnecte != null}">ENI-Enchères</span>
+        </div>
         <div class="buttons-nav">
             <div class="button-nav">
                 <a th:href="@{/}">Enchères</a>

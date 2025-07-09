@@ -1,6 +1,7 @@
 package fr.eni.bll;
 
 import fr.eni.bo.Utilisateur;
+import fr.eni.dal.EnchereDAO;
 import fr.eni.dal.UtilisateurDAO;
 import org.springframework.stereotype.Service;
 
@@ -9,9 +10,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 
     private final UtilisateurDAO utilisateurDAO;
+    private final ArticleService articleService;
+    private final EnchereService enchereService;
 
-    public UtilisateurServiceImpl(UtilisateurDAO utilisateurDAO) {
+    public UtilisateurServiceImpl(UtilisateurDAO utilisateurDAO, ArticleService articleService, EnchereService enchereService) {
         this.utilisateurDAO = utilisateurDAO;
+        this.articleService = articleService;
+        this.enchereService = enchereService;
     }
 
     @Override
@@ -58,22 +63,29 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     public void modifierProfil(Utilisateur utilisateur) {
         utilisateurDAO.modifierProfil(utilisateur);
     }
-//    @Override
-//    public Utilisateur modifierMotDePasse(String pseudo, String password) {
-//        // Recherche de l'utilisateur en base via DAO
-//        Utilisateur utilisateur = utilisateurDAO.findByPseudo(pseudo);
-//
-//        if (utilisateur == null) {
-//            // Pas d'utilisateur avec ce pseudo
-//            return null;
-//        }
-//
-//        // Ici, comparer le password reçu avec celui stocké
-//        if (utilisateur.getMotDePasse().equals(password)) {
-//            return utilisateur;
-//        }
-//        return null;
-//    }
     // Fin ajout SLB
+
+    @Override
+    public boolean peutSupprimerCompte(int idUtilisateur) {
+        // Vérifier qu'il n'y a pas d'articles en cours de vente
+        if (articleService.verifUtilisateurProduit(idUtilisateur)) {
+            return false;
+        }
+        // Vérifier qu'il n'y a pas d'enchères en cours
+        if (enchereService.verifUtilisateurEnchere(idUtilisateur)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void supprimerCompte(int idUtilisateur) {
+        // Vérifier avant de supprimer
+        if (!peutSupprimerCompte(idUtilisateur)) {
+            throw new IllegalStateException("Impossible de supprimer le compte : des enchères ou articles sont en cours");
+        }
+
+        utilisateurDAO.supprimerUtilisateur(idUtilisateur);
+    }
 
 }

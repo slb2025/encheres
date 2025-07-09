@@ -2,6 +2,9 @@ package fr.eni.dal;
 
 import fr.eni.bo.ArticleVendu;
 import fr.eni.bo.Utilisateur;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -23,6 +26,9 @@ public class ArticleDAOImpl implements ArticleDAO {
             "JOIN Categorie c ON a.idCategorie = c.id\n" +
             "WHERE (:categorie IS NULL OR c.libelle = :categorie)\n" +
             "AND (:nomArticle IS NULL OR a.nom LIKE '%' + :nomArticle + '%')";
+
+    private final String CHECK_ARTICLES_EN_COURS = "SELECT COUNT(*) FROM Article INNER JOIN Utilisateur ON Utilisateur.id = Article.idUtilisateur WHERE idUtilisateur = :id AND Article.dateFin > GETDATE() AND Utilisateur.isDeleted = 0\n ";
+
 
     private NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -61,6 +67,19 @@ public class ArticleDAOImpl implements ArticleDAO {
             article.setVendeur(vendeur);
 
             return article;
+        }
+    }
+
+    @Override
+    public boolean noArticle(int id) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("id", id);
+
+        try {
+            Integer count = jdbcTemplate.queryForObject(CHECK_ARTICLES_EN_COURS, params, Integer.class);
+            return count != null && count > 0;
+        } catch (EmptyResultDataAccessException e) {
+            return false;
         }
     }
 }
