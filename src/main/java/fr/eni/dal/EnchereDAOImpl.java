@@ -21,8 +21,22 @@ public class EnchereDAOImpl implements EnchereDAO {
     private static final String MAJ_PRIX_VENTE = "UPDATE ARTICLE SET prixVente = :prixVente WHERE id = :idArticle";
 
 
+    private final String CHECK_ENCHERES_EN_COURS = """
+    SELECT COUNT(*) FROM Enchere e 
+    INNER JOIN Article a ON e.idArticle = a.id 
+    INNER JOIN Utilisateur u ON u.id = e.idUtilisateur
+    WHERE e.idUtilisateur = :id
+    AND a.dateFin > GETDATE()
+    AND u.isDeleted = 0
+    """;
+
+
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
+
+    public EnchereDAOImpl(NamedParameterJdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     @Override
     public void create(ArticleVendu articleVendu) {
@@ -32,8 +46,7 @@ public class EnchereDAOImpl implements EnchereDAO {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
         namedParameters.addValue("nomArticle", articleVendu.getNomArticle());
         namedParameters.addValue("description", articleVendu.getDescription());
-        //namedParameters.addValue("categorieArticle", articleVendu.getCategorieArticle().getIdCategorie());
-        namedParameters.addValue("categorieArticle", "1");
+        namedParameters.addValue("categorieArticle", articleVendu.getCategorieArticle().getIdCategorie());
         namedParameters.addValue("miseAprix", articleVendu.getMiseAPrix());
         namedParameters.addValue("dateDebutEncheres", articleVendu.getDateDebutEncheres());
         namedParameters.addValue("dateFinEncheres", articleVendu.getDateFinEncheres());
@@ -58,6 +71,18 @@ public class EnchereDAOImpl implements EnchereDAO {
         map2.addValue("idArticle", article.getIdArticle());
 
         jdbcTemplate.update(MAJ_PRIX_VENTE, map2);
+    }
+    @Override
+    public boolean noEnchere(int id) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("id", id);
+
+        try {
+            Integer count = jdbcTemplate.queryForObject(CHECK_ENCHERES_EN_COURS, params, Integer.class);
+            return count != null && count > 0;
+        } catch (EmptyResultDataAccessException e) {
+            return false;
+        }
     }
 }
 

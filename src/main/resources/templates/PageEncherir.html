@@ -2,102 +2,95 @@
 <html lang="fr">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link
-            href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
-            rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/encherir-acquisition-detail.css">
-    <title>Encheres</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link
+          href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/encherir-acquisition-detail.css">
+  <title>Encheres</title>
 </head>
 
 <body>
 <div class="container">
 
-    <header>
-        <nav>
-            <div class="titre-entete">ENI-Enchères</div>
-            <div class="buttons-nav">
-                <div class="button-nav"><a href="">Enchères</a></div>
-                <div class="button-nav"><a href="">Vente article</a></div>
-                <div class="button-nav"><a href="">Mon profil</a></div>
-                <div class="button-nav"><a href="">Deconnexion</a></div>
-            </div>
-        </nav>
-    </header>
+  <header>
+    <nav>
+      <div class="titre-entete">
+        <a th:if="${session.utilisateurConnecte != null}" th:href="@{/PagesListeEncheresConnecte}">ENI-Enchères</a>
+        <span th:unless="${session.utilisateurConnecte != null}">ENI-Enchères</span>
+      </div>
+      <div class="buttons-nav">
+        <div class="button-nav"><a href="">Enchères</a></div>
+        <div class="button-nav"><a href="">Vente article</a></div>
+        <div class="button-nav"><a href="">Mon profil</a></div>
+        <div class="button-nav"><a href="">Deconnexion</a></div>
+      </div>
+    </nav>
+  </header>
 
-    <main>
-        <h1 class="titre">Détail vente</h1>
+  <main>
+    <h1 class="titre">Détail vente</h1>
 
-        <div class="conteneur-layout">
+    <div class="conteneur-layout">
+    
+      <!-- Colonne gauche avec l'image -->
+      <div class="colonne-image">
+        <img src="../static/images/PC-gamer.jpg" alt="PC Gamer" class="img-produit">
+      </div>
 
-            <!-- Colonne gauche avec l'image -->
-            <div class="colonne-image">
-                <img src="../static/images/PC-gamer.jpg" alt="PC Gamer" class="img-produit">
-            </div>
+    <form class="form-profil" action="">
+      
+      <div>
 
-            <form class="form-profil" th:action="@{/enchere/creer}" method="POST">
+        <div class="colonne-formulaire">
+          <h2 class="sous-titre">PC Gamer pour travailler</h2>
 
-                <div>
-                    <div class="colonne-formulaire">
-                        <h2 class="sous-titre">PC Gamer pour travailler</h2>
-                        <h2 th:text="''+${article.idArticle}"></h2>
-
-                        <div class="ligne-info">
-                            <span class="intitule">Description :</span>
-                            <span class="contenu description">---------------</span>
-                            <p th:text="${article.description}"></p>
-                        </div>
-
-                        <div class="ligne-info">
-                            <span class="intitule">Catégorie :</span>
-                            <span class="contenu categorie">Informatique</span>
-                            <p th:text="${article.categorieArticle.libelle}"></p>
-                        </div>
-
-                        <div class="ligne-info">
-                            <span class="intitule">Meilleure offre :</span>
-                            <span class="contenu meilleure offre">210 points par Bob</span>
-                        </div>
-
-                        <div class="ligne-info">
-                            <span class="intitule">Mise à prix :</span>
-                            <span class="contenu mise à prix">185 points</span>
-                            <p th:text="${article.miseAPrix}"></p>
-                        </div>
-
-                        <div class="ligne-info">
-                            <span class="intitule">Fin de l'enchère :</span>
-                            <span class="contenu fin de l'enchère">15/07/2025</span>
-                            <p id="marginL"
-                               th:text="${#temporals.format(article.dateFinEncheres, 'dd/MM/yyyy HH:mm')}"></p>
-                        </div>
-
-                        <div class="ligne-info">
-                            <span class="intitule">Retrait :</span>
-                            <span class="contenu retrait">ENI Faraday 44800 St Herblain</span>
-                            <p th:text="${article.lieuRetrait.rue}"></p>
-                            <p th:text="${article.lieuRetrait.codePostal} + ' ' +${article.lieuRetrait.ville} "></p>
-                        </div>
-
-                        <div class="ligne-info">
-                            <span class="intitule">Vendeur :</span>
-                            <span class="contenu vendeur">—</span>
-                            <p th:text="${article.vendeur.pseudo}"></p>
-                        </div>
-
-                        <div class="enchere-ligne" th:if="${article.etatVente} == 'EN_COURS' and (${article.vendeur.id} != ${utilisateurConnecte.id})">
-                            <label for="montant" class="label-proposition">Ma proposition :</label>
-                            <input type="number" id="montant" name="montant" value="0" min="0" max="100000" step="5">
-                            <button type="submit" class="btn-encherir">Enchérir</button>
-                        </div>
-
-                    </div>
-
-                </div>
-            </form>
+        <div class="ligne-info">
+          <span class="intitule">Description :</span>
+          <span class="contenu description">---------------</span> <!-- à remplacer dynamiquement plus tard -->
         </div>
-    </main>
+        
+        <div class="ligne-info">
+          <span class="intitule">Catégorie :</span>
+          <span class="contenu categorie">Informatique</span>
+        </div>
+
+        <div class="ligne-info">
+          <span class="intitule">Meilleure offre :</span>
+          <span class="contenu meilleure offre">210 points par Bob</span>
+        </div>
+        
+        <div class="ligne-info">
+          <span class="intitule">Mise à prix :</span>
+          <span class="contenu mise à prix">185 points</span> <!-- à remplacer dynamiquement plus tard -->
+        </div>
+        
+        <div class="ligne-info">
+          <span class="intitule">Fin de l'enchère :</span>
+          <span class="contenu fin de l'enchère">15/07/2025</span> <!-- à remplacer dynamiquement plus tard -->
+        </div>
+        
+        <div class="ligne-info">
+          <span class="intitule">Retrait :</span>
+          <span class="contenu retrait">ENI Faraday 44800 St Herblain</span>
+        </div>
+
+        <div class="ligne-info">
+          <span class="intitule">Vendeur :</span>
+          <span class="contenu vendeur">—</span> <!-- à remplacer dynamiquement plus tard -->
+        </div>
+        
+        <div class="enchere-ligne">
+          <label for="montant" class="label-proposition">Ma proposition :</label>
+          <input type="number" id="montant" name="montant" value="0" min="0" max="100000" step="5">
+          <button type="submit" class="btn-encherir">Enchérir</button>
+        </div>
+        
+      </div>
+
+      </div>
+    </form>
+  </main>
 </div>
 
 </body>

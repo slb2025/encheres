@@ -15,65 +15,70 @@
             <a href="PageConnexion">Se connecter</a>
         </div>
     </nav>
+	<nav>
+		<div class="titre-entete">
+			<a th:if="${session.utilisateurConnecte != null}" th:href="@{/PagesListeEncheresConnecte}">ENI-Enchères</a>
+			<span th:unless="${session.utilisateurConnecte != null}">ENI-Enchères</span>
+		</div>
+		<div class="button-nav">
+			<a href="PageCreerCompte">S'inscrire</a>
+			<a href="PageConnexion">Se connecter</a>
+		</div>
+	</nav>
 </header>
 
 <h1>Liste des enchères</h1>
 
 <div th:if="${error}" class="error-message">
-    <p th:text="${error}" style="color: red;"></p>
+	<p th:text="${error}" style="color: red;"></p>
 </div>
 
 <div th:if="${message}" class="message">
-    <p th:text="${message}" style="color: #10ff00;"></p>
+	<p th:text="${message}" style="color: #10ff00;"></p>
 </div>
 
 <div class="main-wrapper">
 
     <section class="filtres-container">
         <h2>Filtres :</h2>
-        <form method="post"></form>
-        <!-- th:action=""  -->
-        <!-- "@{/filtres}" -->
-        <input type="search" name="nomArticle" size="30"
-               placeholder="Le nom de l'article contient"> <br><br><label>Catégorie :</label> <select>
-        name="listeCategorie">
-        <option>Informatique</option>
-        <option>Ameublement</option>
-        <option>Vêtement</option>
-        <option>Sports&Loisirs222</option>
-        <option>Test</option>
-        <!--
-        <option th:each="categorie : ${categories}"
-            th:value="${categorie.libelle}"
-            th:text="${categorie.libelle}">
-        </option>
-         -->
-    </select>
+        <form method="post">
+
+        <input type="search" name="nomArticle" size="30" placeholder="Le nom de l'article"> <br><br>
+        <label>Catégorie :</label>
+        <select>
+            <option>Informatique</option>
+            <option>Ameublement</option>
+            <option>Vêtement</option>
+            <option>Sports&Loisirs</option>
+            <!--
+            <option th:each="categorie : ${categories}"
+                th:value="${categorie.libelle}"
+                th:text="${categorie.libelle}">
+            </option>
+             -->
+        </select>
+        </form>
     </section>
     <aside class="asideBtn">
         <button type="submit">Rechercher</button>
     </aside>
-    <section class="detailVente-container">
+    <section th:each="a : ${articleVendu}" class="detailVente-container">
         <div class="photoArticle-container">
             <img alt="PC Gamer" src="/images/logoENI.png">
         </div>
-        <div class="Article-vente-container">
-            <!-- th:each="" -->
-            <!--article : ${articles}  -->
+        <div  class="Article-vente-container">
 
             <ul>
-                <li>Nom Article</li>
-                <!--th:text=""  -->
-                <!--${article.nomArticle}  -->
-                <li>Prix Article</li>
-                <!--${article.prixArticle}  -->
-                <li>Fin Enchères</li>
-                <!--${encheres.finEnchere}  -->
-                <li>Vendeur</li>
-                <!--${article.vendeur}  -->
-                <!-- <a href="#">NineJea</a> -->
+                <li th:text="${a.nomArticle}">Nom Article</li>
+
+                <li th:text="${a.miseAPrix} + ' €'">Prix Article</li>
+
+                <li th:text="${#temporals.format(a.dateFinEncheres, 'dd/MM/yyyy')}">Fin Enchères</li>
+
+                <li th:text="${a.vendeur.pseudo}">Vendeur</li>
             </ul>
         </div>
+
     </section>
 </div>
 </body>

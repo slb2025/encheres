@@ -8,6 +8,9 @@ import java.util.List;
 
 public interface EnchereService {
 
+    void creerVente(ArticleVendu articleVendu);
+    boolean verifUtilisateurEnchere(int id);
+
     void creerVente(ArticleVendu articleVendu) /*throws BusinessException*/;
     void creerEnchere(Utilisateur userSession, int montant, int idArticle);
 }

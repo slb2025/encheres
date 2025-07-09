@@ -107,12 +107,13 @@ public class UtilisateurController {
     }
 
 
-    // Création Créer Compte
+    // Création  Compte
     @GetMapping("/PageCreerCompte")
     public String afficherInscription(Model model) {
         model.addAttribute("utilisateur" , new Utilisateur());
         return "PageCreerCompte";
     }
+
 
     @PostMapping("/inscription")
     public String inscription(@ModelAttribute Utilisateur utilisateur, @RequestParam( name = "confirmation") String confirmation, Model model) {
@@ -130,30 +131,28 @@ public class UtilisateurController {
         return "redirect:/PagesListeEncheresConnecte";
     }
 
-    @GetMapping("/btnPageMonProfil")
-    public String afficherMonProfil(HttpSession session, RedirectAttributes redirectAttributes) {
-        Integer userId = getConnectedUserId(session);
+    @GetMapping({"/btnPageMonProfil", "/PageMonProfil/{id}"})
+    public String afficherMonProfil(@PathVariable(required = false) Integer id, HttpSession session, Model model, RedirectAttributes redirectAttributes) {
 
-        if (userId == null) {
+        // Récupération de l'utilisateur connecté
+        Utilisateur sessionUser = (Utilisateur) session.getAttribute("utilisateurConnecte");
+
+        if (sessionUser == null) {
             redirectAttributes.addFlashAttribute("error", "Vous devez être connecté pour accéder à votre profil");
             return "redirect:/PageConnexion";
         }
-        return "redirect:/PageMonProfil/" + userId;
-    }
 
-    @GetMapping("/PageMonProfil/{id}")
-    public String modifierProfilUtilisateur(Model model, HttpSession session) {
-        Utilisateur sessionUser = (Utilisateur) session.getAttribute("utilisateurConnecte");
-        if (sessionUser != null) {
-            model.addAttribute("utilisateur", sessionUser);
-            return "PageMonProfil";
-        } else {
-            model.addAttribute("error", "Identifiant ou mot de passe incorrect.");
-            return "ListeEncheresConnecte";
+        // Si pas d'ID dans l'URL, redirection vers l'URL avec ID
+        if (id == null) {
+            return "redirect:/PageMonProfil/" + sessionUser.getId();
         }
+
+        // Affichage du profil
+        model.addAttribute("utilisateur", sessionUser);
+        return "PageMonProfil";
     }
 
-//    Ajout SLB 03/07
+    //    Ajout SLB 03/07
     @GetMapping("/PageModifierProfil/{id}")
     public String afficherModifierProfil(@PathVariable int id, HttpSession session, Model model, RedirectAttributes redirectAttributes) {
         // Vérifier que l'utilisateur est connecté
@@ -183,4 +182,145 @@ public class UtilisateurController {
     }
 // Fin Ajout SLB
 
+    @GetMapping("/supprimer-compte")
+    public String deleteUser(HttpSession session, RedirectAttributes redirectAttribute) {
+        // Vérifier que l'utilisateur est connecté
+        Integer connectedUserId = getConnectedUserId(session);
+
+        if (connectedUserId == null) {
+            redirectAttribute.addFlashAttribute("error", "Vous devez être connecté pour supprimer votre profil");
+            return "redirect:/PageConnexion";
+        }
+
+        try {
+            // Vérifier si l'utilisateur peut supprimer son compte
+            if (!utilisateurService.peutSupprimerCompte(connectedUserId)) {
+                redirectAttribute.addFlashAttribute("error", "Impossible de supprimer votre compte : vous avez des enchères ou des articles en cours");
+                return "redirect:/PageMonProfil/" + connectedUserId;
+            }
+
+            // Supprimer le compte
+            utilisateurService.supprimerCompte(connectedUserId);
+
+            // Déconnecter l'utilisateur
+            session.invalidate();
+
+            redirectAttribute.addFlashAttribute("message", "Votre compte a été supprimé avec succès");
+            return "redirect:/";
+
+        } catch (Exception e) {
+            redirectAttribute.addFlashAttribute("error", "Erreur lors de la suppression du compte : " + e.getMessage());
+            return "redirect:/PageMonProfil/" + connectedUserId;
+        }
+    }
+
+    //Ajout SLB 07/07 :
+    @PostMapping("/btnModifierProfil/{id}")
+    public String modifierProfil(@PathVariable int id,
+                                 @ModelAttribute Utilisateur utilisateurForm,
+                                 @RequestParam String motDePasseActuel,
+                                 @RequestParam String nvMotDePasse,
+                                 @RequestParam String confirmation,
+                                 HttpSession session,
+                                 Model model,
+                                 RedirectAttributes redirectAttributes) {
+
+        Utilisateur sessionUser = (Utilisateur) session.getAttribute("utilisateurConnecte");
+
+        if (sessionUser == null || sessionUser.getId() != id) {
+            redirectAttributes.addFlashAttribute("error", "Accès non autorisé.");
+            return "redirect:/PageConnexion";
+        }
+
+        // Validation des champs obligatoires
+        if (utilisateurForm.getPseudo() == null || utilisateurForm.getPseudo().trim().isEmpty()) {
+            model.addAttribute("error", "Le pseudo est obligatoire");
+            model.addAttribute("utilisateur", sessionUser);
+            return "PageModifierProfil";
+        }
+
+        if (utilisateurForm.getNom() == null || utilisateurForm.getNom().trim().isEmpty()) {
+            model.addAttribute("error", "Le nom est obligatoire");
+            model.addAttribute("utilisateur", sessionUser);
+            return "PageModifierProfil";
+        }
+
+        if (utilisateurForm.getPrenom() == null || utilisateurForm.getPrenom().trim().isEmpty()) {
+            model.addAttribute("error", "Le prénom est obligatoire");
+            model.addAttribute("utilisateur", sessionUser);
+            return "PageModifierProfil";
+        }
+
+        if (utilisateurForm.getEmail() == null || utilisateurForm.getEmail().trim().isEmpty()) {
+            model.addAttribute("error", "L'email est obligatoire");
+            model.addAttribute("utilisateur", sessionUser);
+            return "PageModifierProfil";
+        }
+
+        // Mise à jour des informations personnelles
+        sessionUser.setPseudo(utilisateurForm.getPseudo().trim());
+        sessionUser.setNom(utilisateurForm.getNom().trim());
+        sessionUser.setPrenom(utilisateurForm.getPrenom().trim());
+        sessionUser.setEmail(utilisateurForm.getEmail().trim());
+        sessionUser.setTel(utilisateurForm.getTel() != null ? utilisateurForm.getTel().trim() : "");
+        sessionUser.setRue(utilisateurForm.getRue() != null ? utilisateurForm.getRue().trim() : "");
+        sessionUser.setCodePostal(utilisateurForm.getCodePostal() != null ? utilisateurForm.getCodePostal().trim() : "");
+        sessionUser.setVille(utilisateurForm.getVille() != null ? utilisateurForm.getVille().trim() : "");
+
+        // Gestion du changement de mot de passe (optionnel)
+        boolean motDePasseModifie = false;
+        if (nvMotDePasse != null && !nvMotDePasse.trim().isEmpty()) {
+            // Vérification du mot de passe actuel
+            if (motDePasseActuel == null || motDePasseActuel.trim().isEmpty()) {
+                model.addAttribute("error", "Vous devez saisir votre mot de passe actuel pour le modifier");
+                model.addAttribute("utilisateur", sessionUser);
+                return "PageModifierProfil";
+            }
+
+            if (!sessionUser.getMotDePasse().equals(motDePasseActuel)) {
+                model.addAttribute("error", "Mot de passe actuel incorrect");
+                model.addAttribute("utilisateur", sessionUser);
+                return "PageModifierProfil";
+            }
+
+            // Vérification de la confirmation
+            if (confirmation == null || !nvMotDePasse.equals(confirmation)) {
+                model.addAttribute("error", "La confirmation ne correspond pas au nouveau mot de passe");
+                model.addAttribute("utilisateur", sessionUser);
+                return "PageModifierProfil";
+            }
+
+            // Validation du nouveau mot de passe (optionnel)
+            if (nvMotDePasse.length() < 6) {
+                model.addAttribute("error", "Le nouveau mot de passe doit contenir au moins 6 caractères");
+                model.addAttribute("utilisateur", sessionUser);
+                return "PageModifierProfil";
+            }
+
+            sessionUser.setMotDePasse(nvMotDePasse);
+            motDePasseModifie = true;
+        }
+
+        try {
+            // Sauvegarde en base de données
+            utilisateurService.modifierProfil(sessionUser);
+
+            // Mise à jour de la session
+            session.setAttribute("utilisateurConnecte", sessionUser);
+
+            // Message de succès
+            String message = "Profil modifié avec succès !";
+            if (motDePasseModifie) {
+                message += " Votre mot de passe a également été modifié.";
+            }
+
+            redirectAttributes.addFlashAttribute("message", message);
+            return "redirect:/PageModifierProfil/" + id;
+
+        } catch (Exception e) {
+            model.addAttribute("error", "Erreur lors de la modification du profil : " + e.getMessage());
+            model.addAttribute("utilisateur", sessionUser);
+            return "PageModifierProfil";
+        }
+    }
 }

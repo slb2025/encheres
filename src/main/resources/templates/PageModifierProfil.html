@@ -10,108 +10,143 @@
     <link rel="stylesheet" th:href="@{/css/style-profil-connexion.css}" />
     <title>Encheres</title>
   </head>
+
   <body>
     <div class="container">
       <header>
         <nav>
-          <div class="titre-entete">ENI-Enchères</div>
+          <div class="titre-entete">
+            <a th:if="${session.utilisateurConnecte != null}" th:href="@{/PagesListeEncheresConnecte}">ENI-Enchères</a>
+            <span th:unless="${session.utilisateurConnecte != null}">ENI-Enchères</span>
+          </div>
+          <div class="buttons-nav">
+            <div class="button-nav"><a href="">Enchères</a></div>
+            <div class="button-nav"><a href="">Vente article</a></div>
+            <div class="button-nav"><a href="">Mon profil</a></div>
+            <div class="button-nav"><a href="">Deconnexion</a></div>
+          </div>
         </nav>
       </header>
       <main>
         <h1 class="titre">Modifier profil</h1>
 
-<!--        Ajout SLB 03/07-->
-        <form class="form-profil" action="/modifier-profil/5" method="post">
-<!--          Fin ajout-->
+        <!--        Ajout SLB 07/07-->
+
+        <div class="credit">
+          <label for="credit">Crédit :</label>
+          <input type="text" name="credit" id="credit" size="30" th:value="${utilisateur.credit}" readonly />
+        </div>
+
+        <form th:action="@{'/btnModifierProfil/' + ${utilisateur.id}}" method="post" th:object="${utilisateur}">
+        <!--          Fin ajout-->
 <!--          Ajout SLB 03/07 du Thymeleaf par SLB pour afficher dynamiquement les infos du profil-->
           <div>
-            <div class="field">
-              <label for="pseudo">Pseudo</label>
-              <input type="text" name="pseudo" id="pseudo" size="30" th:value="${utilisateur.pseudo}" />
-            </div>
-            <div class="field">
-              <label for="prenom">Prénom</label>
-              <input type="text" name="prenom" id="prenom" size="30" th:value="${utilisateur.prenom}"/>
-            </div>
-            <div class="field">
-              <label for="tel">Téléphone</label>
-              <input type="text" name="telephone" id="tel" size="30" th:value="${utilisateur.tel}" />
-            </div>
-            <div class="field">
-              <label for="codePostal">Code postale</label>
-              <input
-                type="text"
-                name="codePostal"
-                id="codePostal"
-                size="30"
-                th:value="${utilisateur.codePostal}" />
-            </div>
-            <br><br>
-            <div class="field">
-              <label for="motDePasse">Mode de passe</label>
-              <input
-                type="password"
-                name="motDePasse"
-                id="motDePasse"
-                size="30"
-                th:value="${utilisateur.motDePasse}" />
-            </div>
-<!--            Ajout SLB 03/07-->
-            <div class="field">
-              <label for="nvMotDePasse">Nouveau mot de passe</label>
-              <input
-                      type="password"
-                      name="nvMotDePasse"
-                      id="nvMotDePasse"
-                      size="30"
-              />
-            </div>
+            <div class="form-grid">
+              <div class="column">
 
-<!--            Fin ajout-->
-            <div class="field">
-              <label for="confirmation">Confirmation</label>
-              <input
-                      type="password"
-                      name="confirmation"
-                      id="confirmation"
-                      size="30"
-              />
-            </div>
+                <div class="field">
+                  <label for="pseudo">Pseudo</label>
+                  <input type="text" name="pseudo" id="pseudo" size="30" th:value="${utilisateur.pseudo}" />
+                </div>
 
-          </div>
+                <div class="field">
+                  <label for="prenom">Prénom</label>
+                  <input type="text" name="prenom" id="prenom" size="30" th:value="${utilisateur.prenom}"/>
+                </div>
 
-          <div>
-            <div class="field">
-              <label for="nom">Nom</label>
-              <input type="text" name="nom" id="nom" size="30" th:value="${utilisateur.nom}" />
-            </div>
-            <div class="field">
-              <label for="email">Email</label>
-              <input type="text" name="email" id="email" size="30" th:value="${utilisateur.email}" />
-            </div>
-            <div class="field">
-              <label for="rue">Rue</label>
-              <input type="text" name="rue" id="rue" size="30" th:value="${utilisateur.rue}" />
-            </div>
-            <div class="field">
-              <label for="ville">Ville</label>
-              <input type="text" name="ville" id="ville" size="30" th:value="${utilisateur.ville}" />
-            </div>
-          </div>
+                <div class="field">
+                  <label for="tel">Téléphone</label>
+                  <input type="text" name="tel" id="tel" size="30" th:value="${utilisateur.tel}" />
+                </div>
+
+                <div class="field">
+                  <label for="codePostal">Code postale</label>
+                  <input
+                    type="text"
+                    name="codePostal"
+                    id="codePostal"
+                    size="30"
+                    th:value="${utilisateur.codePostal}" />
+                </div>
+
+                <br>
+                <h2>Modification du mot de passe</h2>
+                <p><em>Laissez vide si vous ne souhaitez pas modifier le mot de passe</em></p>
+                <br>
+
+                <div class="field">
+                  <label for="motDePasseActuel">Mot de passe actuel</label>
+                  <input
+                    type="password"
+                    name="motDePasseActuel"
+                    id="motDePasseActuel"
+                    size="30"
+                    />
+                </div>
+
+    <!--            Ajout SLB 03/07-->
+                <div class="field">
+                  <label for="nvMotDePasse">Nouveau mot de passe</label>
+                  <input
+                          type="password"
+                          name="nvMotDePasse"
+                          id="nvMotDePasse"
+                          size="30"
+                  />
+                </div>
+
+    <!--            Fin ajout-->
+                <div class="field">
+                  <label for="confirmation">Confirmation</label>
+                  <input
+                          type="password"
+                          name="confirmation"
+                          id="confirmation"
+                          size="30"
+                  />
+                </div>
+              </div>
+
+              <div class="column">
+                <div class="field">
+                  <label for="nom">Nom</label>
+                  <input type="text" name="nom" id="nom" size="30" th:value="${utilisateur.nom}" />
+                </div>
+                <div class="field">
+                  <label for="email">Email</label>
+                  <input type="text" name="email" id="email" size="30" th:value="${utilisateur.email}" />
+                </div>
+                <div class="field">
+                  <label for="rue">Rue</label>
+                  <input type="text" name="rue" id="rue" size="30" th:value="${utilisateur.rue}" />
+                </div>
+                <div class="field">
+                  <label for="ville">Ville</label>
+                  <input type="text" name="ville" id="ville" size="30" th:value="${utilisateur.ville}" />
+                </div>
+
+              </div>
 
 <!--          Fin ajout du Thymeleaf -->
           <div class="button-form">
             <button type="submit">Enregistrer</button>
-            <button type="submit">Supprimer compte</button>
+            <button type="button" onclick="confirmerSuppression()">Supprimer compte</button>
           </div>
 
         </form>
 
-        <table class="credit">
-            <td>Crédit :</td>
-            <td class="contenu-profil">XXXXXXXXXX</td>
-          </tr>
-        </table>
+        <div class="credit">
+          <label for="credit">Crédit :</label>
+          <input type="text" name="credit" id="credit" size="30" th:value="${utilisateur.credit}" readonly />
+        </div>
+    <!--          Fin ajout du Thymeleaf -->
+              <div class="button-form">
+                <button type="submit">Enregistrer</button>
+                <button type="submit">Supprimer compte</button>
+              </div>
+            </div>
+          </div>
+        </form>
 
       </main>
     </div>

@@ -3,6 +3,7 @@ package fr.eni.bll;
 import fr.eni.bo.ArticleVendu;
 import fr.eni.bo.Utilisateur;
 import fr.eni.dal.ArticleDAO;
+import fr.eni.dal.ArticleDAO;
 import fr.eni.dal.EnchereDAO;
 import fr.eni.dal.RetraitDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,12 @@ import java.util.List;
 @Service
 public class EnchereServiceImpl implements EnchereService {
 
-    @Autowired
-    private EnchereDAO enchereDAO;
+    private final EnchereDAO enchereDAO;
+
+    // Injection du DAO par constructeur
+    public EnchereServiceImpl(EnchereDAO enchereDAO) {
+        this.enchereDAO = enchereDAO;
+    }
 
     @Autowired
     private RetraitDAO retraitDAO;
@@ -39,4 +44,8 @@ public class EnchereServiceImpl implements EnchereService {
 
     }
 
+
+    public boolean verifUtilisateurEnchere(int id) {
+        return enchereDAO.noEnchere(id);
+    }
 }

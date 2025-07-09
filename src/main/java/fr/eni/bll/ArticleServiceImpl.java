@@ -7,6 +7,7 @@ import fr.eni.dal.ArticleDAO;
 import fr.eni.dal.CategorieDAO;
 import fr.eni.dal.RetraitDAO;
 import fr.eni.dal.UtilisateurDAO;
+import fr.eni.dal.EnchereDAO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +19,11 @@ public class ArticleServiceImpl implements ArticleService {
     private UtilisateurDAO utilisateurDAO;
     private RetraitDAO retraitDAO;
     private CategorieDAO categorieDAO;
+    private final ArticleDAO articleDAO;
 
+    public ArticleServiceImpl(ArticleDAO articleDAO) {
+        this.articleDAO = articleDAO;
+    }
 
     // Récupération des information pour injection dans le modèle : Créer enchère
     @Override
@@ -33,10 +38,27 @@ public class ArticleServiceImpl implements ArticleService {
         article.getCategorieArticle().setLibelle(libelle);
         article.setVendeur(vendeur);
         return article;
-    }
+        public List<ArticleVendu> getArticleAcceuilDeco () {
+            return articleDAO.findArticleAccueilDeco();
+        }
 
-    @Override
-    public List<ArticleVendu> findAll() {
-        return articleDAO.findAllArticle();
-    }
-}
+        @Override
+        public List<ArticleVendu> findAll () {
+            return articleDAO.findAllArticle();
+            public boolean verifUtilisateurProduit ( int id){
+                return articleDAO.noArticle(id);
+            }
+       public ArticleServiceImpl(ArticleDAO articleDAO) {
+                this.articleDAO = articleDAO;
+            }
+
+            @Override
+            public List<ArticleVendu> getArticleAcceuilDeco () {
+                return articleDAO.findArticleAccueilDeco();
+            }
+
+            @Override
+            public boolean verifUtilisateurProduit ( int id){
+                return articleDAO.noArticle(id);
+            }
+        }

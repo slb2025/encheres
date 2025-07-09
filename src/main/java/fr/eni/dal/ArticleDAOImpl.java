@@ -1,9 +1,14 @@
 package fr.eni.dal;
 
 import fr.eni.bo.ArticleVendu;
+import fr.eni.bo.Utilisateur;
+import org.springframework.dao.EmptyResultDataAccessException;
 import fr.eni.bo.Categorie;
 import fr.eni.bo.Utilisateur;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.PreparedStatementSetter;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -19,7 +24,26 @@ public class ArticleDAOImpl implements ArticleDAO {
 
     private final String FIND_ARTICLE = "SELECT nom, miseAPrix, dateFinEncheres FROM ArticeVendu";
     private static final String SELECT_BY_ID = "SELECT idCategorie, prixVente, id, nom, descriptionArticle, dateDebut, dateFin, miseAPrix, prixVente, idUtilisateur FROM article WHERE id = :id";
+    private final String FIND_ARTICLE = "SELECT Article.nom, Article.miseAPrix, Article.dateFin, Utilisateur.pseudo FROM Article\n" +
+            "JOIN Utilisateur ON Article.idUtilisateur = Utilisateur.id;\n";
+
+    private static final String FIND_BY_CATEGORIE = " SELECT a.nom, a.miseAPrix, a.dateFin, u.pseudo, c.libelle FROM Article a\n" +
+            "JOIN Utilisateur u ON a.idUtilisateur = u.id\n" +
+            "JOIN Categorie c ON a.idCategorie = c.id\n" +
+            "WHERE c.libelle = :libelleCategorie\n";
+
+    private final String CHECK_ARTICLES_EN_COURS = "SELECT COUNT(*) FROM Article INNER JOIN Utilisateur ON Utilisateur.id = Article.idUtilisateur WHERE idUtilisateur = :id AND Article.dateFin > GETDATE() AND Utilisateur.isDeleted = 0\n ";
+
     private NamedParameterJdbcTemplate jdbcTemplate;
+
+    public ArticleDAOImpl(NamedParameterJdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public List<ArticleVendu> findArticleAccueilDeco() {
+        return jdbcTemplate.query(FIND_ARTICLE, new ArticleRowMapper());
+    }
 
     @Override
     public List<ArticleVendu> findAllArticle() {
@@ -63,3 +87,35 @@ public class ArticleDAOImpl implements ArticleDAO {
     }
 }
 
+
+
+    static class ArticleRowMapper implements RowMapper<ArticleVendu> {
+
+        @Override
+        public ArticleVendu mapRow(ResultSet rs, int rowNum) throws SQLException {
+            ArticleVendu article = new ArticleVendu();
+            article.setNomArticle(rs.getString("nom"));
+            article.setMiseAPrix(rs.getInt("miseAPrix"));
+            article.setDateFinEncheres(LocalDate.from(rs.getTimestamp("dateFin").toLocalDateTime()));
+
+            Utilisateur vendeur = new Utilisateur();
+            vendeur.setPseudo(rs.getString("pseudo"));
+            article.setVendeur(vendeur);
+
+            return article;
+        }
+    }
+
+    @Override
+    public boolean noArticle(int id) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("id", id);
+
+        try {
+            Integer count = jdbcTemplate.queryForObject(CHECK_ARTICLES_EN_COURS, params, Integer.class);
+            return count != null && count > 0;
+        } catch (EmptyResultDataAccessException e) {
+            return false;
+        }
+    }
+}

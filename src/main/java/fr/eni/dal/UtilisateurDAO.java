@@ -1,5 +1,6 @@
 package fr.eni.dal;
 
+import fr.eni.bo.Enchere;
 import fr.eni.bo.Utilisateur;
 
 import java.sql.SQLException;
@@ -14,5 +15,11 @@ public interface UtilisateurDAO {
 
     //Ajout SLB :
     Utilisateur findById(int Id);
+    //Fin ajout SLB
+
+    void supprimerUtilisateur(int id);
+
+    //Ajout SLB 07/07 :
+    void modifierProfil(Utilisateur utilisateur);
     //Fin ajout SLB
 }

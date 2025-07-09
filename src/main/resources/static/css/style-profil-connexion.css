@@ -91,6 +91,11 @@ nav {
     margin: auto;
 }
 
+.info-profil {
+    border-collapse: separate;
+    border-spacing: 40px 10px;
+}
+
 .field {
     padding-bottom: 30px ;
 }
@@ -104,6 +109,10 @@ input {
     display: block;
 }
 
+input[readonly] {
+    background-color: #f2f2f2;
+    cursor: not-allowed;
+}
 
 button {
     background-color: #368539;
@@ -185,4 +194,16 @@ button:hover {
     justify-content: center;
     padding-bottom: 20px;
 }
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
 
