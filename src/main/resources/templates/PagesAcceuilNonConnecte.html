@@ -31,27 +31,22 @@
 
     <section class="filtres-container">
         <h2>Filtres :</h2>
-        <form method="post">
-
-        <input type="search" name="nomArticle" size="30" placeholder="Le nom de l'article"> <br><br>
+        <form action="/" method="post">
+            <input type="search" name="nomArticle" size="30" placeholder="Le nom de l'article" th:value="${nomArticle}"> <br><br>
         <label>Catégorie :</label>
-        <select>
-            <option>Informatique</option>
-            <option>Ameublement</option>
-            <option>Vêtement</option>
-            <option>Sports&Loisirs</option>
-            <!--
-            <option th:each="categorie : ${categories}"
-                th:value="${categorie.libelle}"
-                th:text="${categorie.libelle}">
-            </option>
-             -->
+            <select name="categorie">
+                <option value="" th:selected="${categorieSelectionnee == null or categorieSelectionnee == ''}">-- Toutes les catégories --</option>
+                <option value="Informatique" th:selected="${categorieSelectionnee == 'Informatique'}">Informatique</option>
+                <option value="Ameublement" th:selected="${categorieSelectionnee == 'Ameublement'}">Ameublement</option>
+                <option value="Vêtement" th:selected="${categorieSelectionnee == 'Vêtement'}">Vêtement</option>
+                <option value="Sports&Loisirs" th:selected="${categorieSelectionnee == 'Sports&Loisirs'}">Sports&Loisirs</option>
         </select>
+            <aside class="asideBtn">
+                <button type="submit">Rechercher</button>
+            </aside>
         </form>
     </section>
-    <aside class="asideBtn">
-        <button type="submit">Rechercher</button>
-    </aside>
+
     <section th:each="a : ${articleVendu}" class="detailVente-container">
         <div class="photoArticle-container">
             <img alt="PC Gamer" src="/images/logoENI.png">

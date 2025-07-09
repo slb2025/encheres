@@ -74,6 +74,10 @@ select {
 	width: fit-content;
 }
 
+.asideBtn {
+	padding-top: 15px;
+}
+
 input[type="search"] {
 	font-size: 1rem;
 	border: 1px solid #ccc;

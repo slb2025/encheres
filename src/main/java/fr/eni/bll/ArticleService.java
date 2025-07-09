@@ -8,4 +8,5 @@ public interface ArticleService {
 
     List<ArticleVendu> getArticleAcceuilDeco();
 
+    List<ArticleVendu> getArticlesParCategorie(String libelleCategorie, String nomArticle);
 }

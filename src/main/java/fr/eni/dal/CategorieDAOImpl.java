@@ -1,8 +1,12 @@
 package fr.eni.dal;
 
+import fr.eni.bo.ArticleVendu;
 import fr.eni.bo.Categorie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementSetter;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -11,11 +15,14 @@ import java.util.List;
 @Repository
 public class CategorieDAOImpl implements CategorieDAO {
 
+    private final JdbcTemplate jdbcTemplate;
+
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Autowired
-    public CategorieDAOImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    public CategorieDAOImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate, JdbcTemplate jdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     private static final String SELECT_ALL = "select id, libelle from categorie";
@@ -26,7 +33,6 @@ public class CategorieDAOImpl implements CategorieDAO {
                 SELECT_ALL,
                 new BeanPropertyRowMapper<>(Categorie.class)
         );
-
     }
 
 }

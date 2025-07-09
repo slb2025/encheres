@@ -7,16 +7,21 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ArticleServiveImpl implements ArticleService {
+public class ArticleServiceImpl implements ArticleService {
 
     private ArticleDAO articleDAO;
 
-    public ArticleServiveImpl(ArticleDAO articleDAO) {
+    public ArticleServiceImpl(ArticleDAO articleDAO) {
         this.articleDAO = articleDAO;
     }
 
     @Override
     public List<ArticleVendu> getArticleAcceuilDeco() {
         return articleDAO.findArticleAccueilDeco();
+    }
+
+    @Override
+    public List<ArticleVendu> getArticlesParCategorie(String libelleCategorie, String nomArticle) {
+        return articleDAO.findByCategorie(libelleCategorie, nomArticle);
     }
 }

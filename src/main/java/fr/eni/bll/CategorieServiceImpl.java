@@ -1,7 +1,9 @@
 package fr.eni.bll;
 
 
+import fr.eni.bo.ArticleVendu;
 import fr.eni.bo.Categorie;
+import fr.eni.dal.ArticleDAOImpl;
 import fr.eni.dal.CategorieDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,12 +13,14 @@ import java.util.List;
 @Service
 public class CategorieServiceImpl implements CategorieService {
 
+    private final ArticleDAOImpl articleDAOImpl;
     //private ArticleVenduDAO articleVenduDAO;
     private CategorieDAO categorieDAO;
 
     @Autowired
-    public CategorieServiceImpl(CategorieDAO categorieDAO) {
+    public CategorieServiceImpl(CategorieDAO categorieDAO, ArticleDAOImpl articleDAOImpl) {
         this.categorieDAO = categorieDAO;
+        this.articleDAOImpl = articleDAOImpl;
     }
 
 
@@ -24,5 +28,9 @@ public class CategorieServiceImpl implements CategorieService {
     public List<Categorie> getCategories() {
         return categorieDAO.getCategories();
     }
+
+
+
+
 
 }
