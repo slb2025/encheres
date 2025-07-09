@@ -19,7 +19,6 @@ public class CategorieServiceImpl implements CategorieService {
     @Autowired
     public CategorieServiceImpl(CategorieDAO categorieDAO, ArticleDAOImpl articleDAOImpl) {
         this.categorieDAO = categorieDAO;
-        this.articleDAOImpl = articleDAOImpl;
     }
 
 

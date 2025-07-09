@@ -3,18 +3,11 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Enchères.org</title>
-    <link rel="stylesheet" href="/static/css/general.css"/>
+    <link rel="stylesheet" th:href="@{/css/general.css}" />
 </head>
 
 <body>
 <header>
-    <nav>
-        <div class="titre-entete">ENI-Enchères</div>
-        <div class="button-nav">
-            <a href="PageCreerCompte">S'inscrire</a>
-            <a href="PageConnexion">Se connecter</a>
-        </div>
-    </nav>
 	<nav>
 		<div class="titre-entete">
 			<a th:if="${session.utilisateurConnecte != null}" th:href="@{/PagesListeEncheresConnecte}">ENI-Enchères</a>

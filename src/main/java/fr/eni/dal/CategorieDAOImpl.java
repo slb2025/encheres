@@ -16,14 +16,11 @@ import java.util.List;
 @Repository
 public class CategorieDAOImpl implements CategorieDAO {
 
-    private final JdbcTemplate jdbcTemplate;
-
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+        private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Autowired
     public CategorieDAOImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
-        this.jdbcTemplate = jdbcTemplate;
     }
 
     private static final String SELECT_ALL = "select id, libelle from categorie";
@@ -45,4 +42,5 @@ public class CategorieDAOImpl implements CategorieDAO {
         namedParameters.addValue("idCategorie", idCategorie);
         return namedParameterJdbcTemplate.queryForObject(SELECT_BY_ID, namedParameters,
                 new BeanPropertyRowMapper<>(Categorie.class));
+    }
     }
