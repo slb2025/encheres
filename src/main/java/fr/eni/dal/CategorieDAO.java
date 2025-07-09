@@ -1,5 +1,6 @@
 package fr.eni.dal;
 
+import fr.eni.bo.ArticleVendu;
 import fr.eni.bo.Categorie;
 
 import java.util.List;

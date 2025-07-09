@@ -19,7 +19,6 @@ public class ArticleServiceImpl implements ArticleService {
     private UtilisateurDAO utilisateurDAO;
     private RetraitDAO retraitDAO;
     private CategorieDAO categorieDAO;
-    private final ArticleDAO articleDAO;
 
     public ArticleServiceImpl(ArticleDAO articleDAO) {
         this.articleDAO = articleDAO;
@@ -38,6 +37,7 @@ public class ArticleServiceImpl implements ArticleService {
         article.getCategorieArticle().setLibelle(libelle);
         article.setVendeur(vendeur);
         return article;
+
         public List<ArticleVendu> getArticleAcceuilDeco () {
             return articleDAO.findArticleAccueilDeco();
         }
@@ -45,20 +45,24 @@ public class ArticleServiceImpl implements ArticleService {
         @Override
         public List<ArticleVendu> findAll () {
             return articleDAO.findAllArticle();
-            public boolean verifUtilisateurProduit ( int id){
-                return articleDAO.noArticle(id);
-            }
-       public ArticleServiceImpl(ArticleDAO articleDAO) {
-                this.articleDAO = articleDAO;
-            }
-
-            @Override
-            public List<ArticleVendu> getArticleAcceuilDeco () {
-                return articleDAO.findArticleAccueilDeco();
-            }
-
-            @Override
-            public boolean verifUtilisateurProduit ( int id){
-                return articleDAO.noArticle(id);
-            }
         }
+
+        public boolean verifUtilisateurProduit ( int id){
+            return articleDAO.noArticle(id);
+        }
+
+
+        @Override
+        public boolean verifUtilisateurProduit ( int id){
+            return articleDAO.noArticle(id);
+        }
+
+
+        @Override
+        public List<ArticleVendu> getArticlesParCategorie (String libelleCategorie, String nomArticle){
+            return articleDAO.findByCategorie(libelleCategorie, nomArticle);
+        }
+
+    }
+}
+

@@ -13,5 +13,6 @@ public interface ArticleDAO {
     List<ArticleVendu> findArticleAccueilDeco();
     List<ArticleVendu> findByCategorie(String libelleCategorie, String nomArticle);
 
+    List<ArticleVendu> findByCategorie(String libelleCategorie, String nomArticle);
 
 }

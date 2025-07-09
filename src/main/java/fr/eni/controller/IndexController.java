@@ -6,6 +6,7 @@ import fr.eni.bo.Utilisateur;
 import jakarta.persistence.Access;
 import org.springframework.beans.factory.annotation.Autowired;
 import fr.eni.bll.ArticleService;
+import fr.eni.bll.CategorieService;
 import fr.eni.bo.ArticleVendu;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -21,7 +24,7 @@ import java.util.List;
 @SessionAttributes("utilisateurConnecte")
 public class IndexController {
 
-    @Autowired
+    private final CategorieService categorieService;
     private ArticleService articleService;
 
     @GetMapping("/")
@@ -37,8 +40,9 @@ public class IndexController {
     }
 
 
-    public IndexController(ArticleService articleService) {
+    public IndexController(ArticleService articleService, CategorieService categorieService) {
         this.articleService = articleService;
+        this.categorieService = categorieService;
     }
 
     @GetMapping("/")
@@ -47,6 +51,28 @@ public class IndexController {
 
         List<ArticleVendu> article = articleService.getArticleAcceuilDeco();
         model.addAttribute("articleVendu", article);
+
+        return "PagesAcceuilNonConnecte";
+    }
+
+
+    @PostMapping("/")
+    public String filtrerParCategorie(
+            @RequestParam(required = false) String categorie,
+            @RequestParam(required = false) String nomArticle,
+            Model model) {
+
+        List<ArticleVendu> articles;
+
+        if (categorie != null && !categorie.isEmpty() || nomArticle != null && !nomArticle.isEmpty()) {
+            articles = articleService.getArticlesParCategorie(categorie, nomArticle);
+        } else {
+            articles = articleService.getArticleAcceuilDeco();
+        }
+
+        model.addAttribute("articleVendu", articles);
+        model.addAttribute("categorieSelectionnee", categorie);
+        model.addAttribute("nomArticle", nomArticle);
 
         return "PagesAcceuilNonConnecte";
     }

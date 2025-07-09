@@ -11,4 +11,6 @@ public interface ArticleService {
     List<ArticleVendu> getArticleAcceuilDeco();
 
     boolean verifUtilisateurProduit(int id);
+
+    List<ArticleVendu> getArticlesParCategorie(String libelleCategorie, String nomArticle);
 }

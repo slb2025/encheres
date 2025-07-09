@@ -1,6 +1,7 @@
 package fr.eni.dal;
 
 import fr.eni.bo.ArticleVendu;
+import fr.eni.bo.Categorie;
 import fr.eni.bo.Utilisateur;
 import org.springframework.dao.EmptyResultDataAccessException;
 import fr.eni.bo.Categorie;
@@ -22,10 +23,12 @@ import java.util.List;
 @Repository
 public class ArticleDAOImpl implements ArticleDAO {
 
-    private final String FIND_ARTICLE = "SELECT nom, miseAPrix, dateFinEncheres FROM ArticeVendu";
+    private final String FIND_ARTICLE2 = "SELECT nom, miseAPrix, dateFinEncheres FROM ArticeVendu";
     private static final String SELECT_BY_ID = "SELECT idCategorie, prixVente, id, nom, descriptionArticle, dateDebut, dateFin, miseAPrix, prixVente, idUtilisateur FROM article WHERE id = :id";
     private final String FIND_ARTICLE = "SELECT Article.nom, Article.miseAPrix, Article.dateFin, Utilisateur.pseudo FROM Article\n" +
             "JOIN Utilisateur ON Article.idUtilisateur = Utilisateur.id;\n";
+
+
 
     private static final String FIND_BY_CATEGORIE = " SELECT a.nom, a.miseAPrix, a.dateFin, u.pseudo, c.libelle FROM Article a\n" +
             "JOIN Utilisateur u ON a.idUtilisateur = u.id\n" +
@@ -46,8 +49,18 @@ public class ArticleDAOImpl implements ArticleDAO {
     }
 
     @Override
+    public List<ArticleVendu> findByCategorie(String libelleCategorie, String nomArticle) {
+        MapSqlParameterSource map = new MapSqlParameterSource();
+
+        map.addValue("categorie", (libelleCategorie == null || libelleCategorie.isEmpty()) ? null : libelleCategorie);
+        map.addValue("nomArticle", (nomArticle == null || nomArticle.isEmpty()) ? null : nomArticle);
+
+
+        return jdbcTemplate.query(FIND_BY_CATEGORIE, map, new ArticleRowMapper());
+    }
+    @Override
     public List<ArticleVendu> findAllArticle() {
-        return jdbcTemplate.query(FIND_ARTICLE, new BeanPropertyRowMapper<>(ArticleVendu.class));
+        return jdbcTemplate.query(FIND_ARTICLE2, new BeanPropertyRowMapper<>(ArticleVendu.class));
     }
 
     @Override
@@ -85,8 +98,6 @@ public class ArticleDAOImpl implements ArticleDAO {
             return article;
         }
     }
-}
-
 
 
     static class ArticleRowMapper implements RowMapper<ArticleVendu> {
