@@ -97,7 +97,19 @@ nav {
 }
 
 .field {
-    padding-bottom: 30px ;
+    margin-bottom: 6px ;
+}
+
+.field label {
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.field input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 label {
@@ -191,10 +203,37 @@ button:hover {
 /* Modifier Profil*/
 .credit {
     display: flex;
+    align-items: center;
     justify-content: center;
-    padding-bottom: 20px;
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #2e7d32; /* vert agréable */
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
 }
+.credit input {
+    border: none;
+    background: transparent;
+    font-weight: bold;
+    font-size: inherit;
+    width: 80px;
+    text-align: center;
+    color: #2e7d32;
+}
+.credit label {
+    margin-right: 10px;
+}
+
 .form-grid {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px 40px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
