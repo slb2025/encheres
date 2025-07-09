@@ -116,19 +116,27 @@ public class UtilisateurController {
 
 
     @PostMapping("/inscription")
-    public String inscription(@ModelAttribute Utilisateur utilisateur, @RequestParam( name = "confirmation") String confirmation, Model model) {
+    public String inscription(@ModelAttribute Utilisateur utilisateur,
+                              @RequestParam(name = "confirmation") String confirmation,
+                              HttpSession session,
+                              Model model) {
+
+        // Vérification si pseudo ou email existe déjà
         if (utilisateurService.pseudoOuEmailExiste(utilisateur.getPseudo(), utilisateur.getEmail())) {
             model.addAttribute("erreur", "Pseudo ou email déjà utilisé");
             return "PageCreerCompte";
         }
 
+        // Vérification de la confirmation du mot de passe
         if (!utilisateur.getMotDePasse().equals(confirmation)) {
             model.addAttribute("erreur", "Mot de passe incorrect");
             return "PageCreerCompte";
         }
-
+        String motDePasseClair = utilisateur.getMotDePasse();
+        // Créer l'utilisateur
         utilisateurService.addUser(utilisateur);
-        return "redirect:/PagesListeEncheresConnecte";
+
+        return login(utilisateur.getPseudo(), motDePasseClair, session, model);
     }
 
     @GetMapping({"/btnPageMonProfil", "/PageMonProfil/{id}"})
