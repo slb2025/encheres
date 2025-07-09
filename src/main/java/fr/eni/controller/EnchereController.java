@@ -37,23 +37,22 @@ public class EnchereController {
     }
 
     @GetMapping("encheres/creerEnchere")
-    public String getCreerVente(Model model, @ModelAttribute("utilisateurConnecte") Utilisateur userSession) {
+    public String getCreerVente(Model model, @ModelAttribute("utilisateurConnecte") Utilisateur utilisateur) {
 
         ArticleVendu article = new ArticleVendu();
         Retrait retrait = new Retrait();
 
+        //Pour injection du lieu de retrait en fonction du vendeur en session
         article.setLieuRetrait(retrait);
-        article.getLieuRetrait().setRue(userSession.getRue());
-        article.getLieuRetrait().setCodePostal(userSession.getCodePostal());
-        article.getLieuRetrait().setVille(userSession.getVille());
+        article.getLieuRetrait().setRue(utilisateur.getRue());
+        article.getLieuRetrait().setCodePostal(utilisateur.getCodePostal());
+        article.getLieuRetrait().setVille(utilisateur.getVille());
         model.addAttribute("articleVendu", article);
 
         List<Categorie> categories = categorieService.getCategories();
         model.addAttribute("categories", categories);
-        System.out.println("création article");
         return "PageVendreUnArticle";
     }
-
 
     @PostMapping("encheres/creerEnchere")
     public String postCreerVente(@ModelAttribute("articleVendu") ArticleVendu article) {
@@ -67,15 +66,11 @@ public class EnchereController {
         return "PageEnchereNonCommencee";
     }
 
-    @GetMapping("/encheres/detail")
-    public String detailArticle(@RequestParam("id") int id, Model model,
-                                @ModelAttribute("utilisateurConnecte") Utilisateur utilisateur) {
-
-
+    @GetMapping("/enchere/{id}")
+    public String afficherEnchere(@PathVariable("id") int id, Model model, @ModelAttribute("utilisateurConnecte") Utilisateur utilisateur) {
         ArticleVendu article = articleService.getArticleById(id);
         model.addAttribute("article", article);
         model.addAttribute("utilisateurConnecte", utilisateur);
-
         return "PageEncherir";
     }
 
@@ -88,17 +83,25 @@ public class EnchereController {
         return "redirect:/encheres/detail?id=" + idArticle;
 
     }
-}
+
+      /*
+    @GetMapping("/encheres/detail")
+    public String detailArticle(@RequestParam("id") int id, Model model,
+                                @ModelAttribute("utilisateurConnecte") Utilisateur utilisateur) {
 
 
-/*
-@GetMapping("/encheres/{id}")
-public String afficherEnchere(@PathVariable("id") Long id, Model model) {
-    ArticleVendu article = enchereService.getArticleById(id);
-    model.addAttribute("article", article);
-    return "PageEnchereNonCommencee";
+        ArticleVendu article = articleService.getArticleById(id);
+        model.addAttribute("article", article);
+        model.addAttribute("utilisateurConnecte", utilisateur);
+
+        return "PageEncherir";
+    }
+
+     */
+
+
 }
-   */
+
 
 
 

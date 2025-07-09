@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface ArticleService {
 
-    ArticleVendu getArticleById(int id);
+    ArticleVendu getArticleById(int idArticle);
+    List<ArticleVendu> findAll();
 
 }

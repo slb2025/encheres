@@ -36,7 +36,7 @@
                 <img src="../static/images/PC-gamer.jpg" alt="PC Gamer" class="img-produit">
             </div>
 
-            <form class="form-profil" th:action="@{/encheres/creer}" method="POST">
+            <form class="form-profil" th:action="@{/enchere/creer}" method="POST">
 
                 <div>
                     <div class="colonne-formulaire">
@@ -46,7 +46,7 @@
                         <div class="ligne-info">
                             <span class="intitule">Description :</span>
                             <span class="contenu description">---------------</span>
-                            <p th:text="${article.description}"></p><!-- à remplacer dynamiquement plus tard -->
+                            <p th:text="${article.description}"></p>
                         </div>
 
                         <div class="ligne-info">
@@ -63,14 +63,12 @@
                         <div class="ligne-info">
                             <span class="intitule">Mise à prix :</span>
                             <span class="contenu mise à prix">185 points</span>
-                            <!-- à remplacer dynamiquement plus tard -->
                             <p th:text="${article.miseAPrix}"></p>
                         </div>
 
                         <div class="ligne-info">
                             <span class="intitule">Fin de l'enchère :</span>
                             <span class="contenu fin de l'enchère">15/07/2025</span>
-                            <!-- à remplacer dynamiquement plus tard -->
                             <p id="marginL"
                                th:text="${#temporals.format(article.dateFinEncheres, 'dd/MM/yyyy HH:mm')}"></p>
                         </div>
@@ -84,7 +82,7 @@
 
                         <div class="ligne-info">
                             <span class="intitule">Vendeur :</span>
-                            <span class="contenu vendeur">—</span> <!-- à remplacer dynamiquement plus tard -->
+                            <span class="contenu vendeur">—</span>
                             <p th:text="${article.vendeur.pseudo}"></p>
                         </div>
 

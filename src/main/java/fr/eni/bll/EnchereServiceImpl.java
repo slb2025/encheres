@@ -34,10 +34,8 @@ public class EnchereServiceImpl implements EnchereService {
     public void creerEnchere(Utilisateur utilisateur, int montant, int idArticle) {
 
         ArticleVendu article = articleDAO.getArticleById(idArticle);
-
         article.setPrixVente(montant);
         enchereDAO.creerEnchere(montant, article, utilisateur);
-
 
     }
 
