@@ -7,6 +7,7 @@ import fr.eni.dal.ArticleDAO;
 import fr.eni.dal.CategorieDAO;
 import fr.eni.dal.RetraitDAO;
 import fr.eni.dal.UtilisateurDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,9 +15,13 @@ import java.util.List;
 @Service
 public class ArticleServiceImpl implements ArticleService {
 
+    @Autowired
     private ArticleDAO articleDAO;
+    @Autowired
     private UtilisateurDAO utilisateurDAO;
+    @Autowired
     private RetraitDAO retraitDAO;
+    @Autowired
     private CategorieDAO categorieDAO;
 
     public ArticleServiceImpl(ArticleDAO articleDAO) {
@@ -24,6 +29,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     // Récupération des information pour injection dans le modèle : Créer enchère
+    /*
     @Override
     public ArticleVendu getArticleById(int idArticle) {
 
@@ -37,6 +43,33 @@ public class ArticleServiceImpl implements ArticleService {
         article.setVendeur(vendeur);
         return article;
     }
+    */
+
+    public ArticleVendu getArticleById(int id) {
+
+        ArticleVendu article = this.articleDAO.getArticleById(id);
+        Utilisateur vendeur = this.utilisateurDAO.findById(article.getVendeur().getId());
+        Retrait lieuRetrait = this.retraitDAO.getRetraitByIdArticle(id);
+        String libelle = this.categorieDAO.getCategorie(article.getCategorieArticle().getIdCategorie())
+                .getLibelle();
+        article.setLieuRetrait(lieuRetrait);
+        article.getCategorieArticle().setLibelle(libelle);
+        article.setVendeur(vendeur);
+
+        return article;
+    }
+
+
+
+        /*
+        Utilisateur vendeur = this.utilisateurDAO.findById(article.getVendeur().getId());
+        Retrait lieuRetrait = this.retraitDAO.getRetraitByIdArticle(id);
+        String libelle = this.categorieDAO.getCategorie(article.getCategorieArticle().getIdCategorie())
+                .getLibelle();
+        article.setLieuRetrait(lieuRetrait);
+        article.getCategorieArticle().setLibelle(libelle);
+        article.setVendeur(vendeur);*/
+
 
     public List<ArticleVendu> getArticleAcceuilDeco() {
         return articleDAO.findArticleAccueilDeco();

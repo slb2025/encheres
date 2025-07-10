@@ -16,7 +16,8 @@ public class ArticleVendu {
     private String etatVente;
 
     private Categorie categorieArticle;
-    private Utilisateur vendeur; // A vérifier
+    private Utilisateur vendeur;
+    private Utilisateur acheteur;// A vérifier
     private Retrait lieuRetrait;
 
     private List<Enchere> encheres;
@@ -24,10 +25,11 @@ public class ArticleVendu {
     //constructeur
 
 
-    public ArticleVendu(int idArticle) {
+    public ArticleVendu(int idArticle, Utilisateur acheteur) {
+        this.acheteur = acheteur;
     }
 
-    public ArticleVendu(int idArticle, String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, int prixVente, String etatVente, Categorie categorieArticle, Utilisateur vendeur, Retrait lieuRetrait, List<Enchere> encheres) {
+    public ArticleVendu(int idArticle, String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres, int miseAPrix, int prixVente, String etatVente, Categorie categorieArticle, Utilisateur vendeur, Utilisateur acheteur, Retrait lieuRetrait, List<Enchere> encheres) {
         this.idArticle = idArticle;
         this.nomArticle = nomArticle;
         this.description = description;
@@ -38,8 +40,14 @@ public class ArticleVendu {
         this.etatVente = etatVente;
         this.categorieArticle = categorieArticle;
         this.vendeur = vendeur;
+        this.acheteur = acheteur;
         this.lieuRetrait = lieuRetrait;
         this.encheres = encheres;
+    }
+
+    public ArticleVendu(Utilisateur acheteur) {
+
+        this.acheteur = acheteur;
     }
 
     public ArticleVendu() {
@@ -140,6 +148,14 @@ public class ArticleVendu {
 
     public List<Enchere> getEncheres() {
         return encheres;
+    }
+
+    public Utilisateur getAcheteur() {
+        return acheteur;
+    }
+
+    public void setAcheteur(Utilisateur acheteur) {
+        this.acheteur = acheteur;
     }
 }
 //getters and setters
