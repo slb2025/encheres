@@ -29,7 +29,6 @@ public class ArticleDAOImpl implements ArticleDAO {
             "JOIN Utilisateur ON Article.idUtilisateur = Utilisateur.id;\n";
 
 
-
     private static final String FIND_BY_CATEGORIE =
             "SELECT a.nom, a.miseAPrix, a.dateFin, u.pseudo, c.libelle " +
                     "FROM Article a " +

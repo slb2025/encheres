@@ -50,24 +50,78 @@
                 <option value="Sports&Loisirs" th:selected="${categorieSelectionnee == 'Sports&Loisirs'}">Sports&Loisirs</option>
             </select>
 
+            <!-- RADIO BUTTONS ACHATS/VENTES -->
             <section class="RG-AchatVente">
-                <label><input type="radio" name="type" checked>
-                    Achats</label>
-                <label><input type="radio" name="type"> Mes ventes</label>
+                <label>
+                    <input type="radio" name="type" value="achats"
+                           th:checked="${filtre == null or filtre.type == null or filtre.type == 'achats'}">
+                    Achats
+                </label>
+                <label>
+                    <input type="radio" name="type" value="ventes"
+                           th:checked="${filtre != null and filtre.type == 'ventes'}">
+                    Mes ventes
+                </label>
             </section>
 
+<!--            <section class="RG-AchatVente">-->
+<!--                <label><input type="radio" name="type" checked>-->
+<!--                    Achats</label>-->
+<!--                <label><input type="radio" name="type"> Mes ventes</label>-->
+<!--            </section>-->
+
+            <!-- CHECKBOXES CONDITIONNELLES -->
             <section class="AchatVente">
-                <div class="CB-achat">
-                    <label><input type="checkbox"> enchères ouvertes</label>
-                    <label><input type="checkbox"> mes enchères</label>
-                    <label><input type="checkbox"> mes enchères remportées</label>
+                <!-- CHECKBOXES ACHATS (affichées si type=achats) -->
+                <div class="CB-achat" id="checkboxes-achats">
+                    <label>
+                        <input type="checkbox" name="encheresOuvertes"
+                               th:checked="${filtre != null and filtre.encheresOuvertes}">
+                        Enchères ouvertes
+                    </label>
+                    <label>
+                        <input type="checkbox" name="mesEncheres"
+                               th:checked="${filtre != null and filtre.mesEncheres}">
+                        Mes enchères
+                    </label>
+                    <label>
+                        <input type="checkbox" name="encheresRemportees"
+                               th:checked="${filtre != null and filtre.encheresRemportees}">
+                        Mes enchères remportées
+                    </label>
                 </div>
-                <div class="CB-Vente">
-                    <label><input type="checkbox"> mes ventes en cours</label>
-                    <label><input type="checkbox" checked> ventes non débutées</label>
-                    <label><input type="checkbox"> ventes terminées</label>
+                <!-- CHECKBOXES VENTES (affichées si type=ventes) -->
+                <div class="CB-Vente" id="checkboxes-ventes" style="display: none;">
+                    <label>
+                        <input type="checkbox" name="ventesEnCours"
+                               th:checked="${filtre != null and filtre.ventesEnCours}">
+                        Mes ventes en cours
+                    </label>
+                    <label>
+                        <input type="checkbox" name="ventesNonDebutees"
+                               th:checked="${filtre != null and filtre.ventesNonDebutees}">
+                        Ventes non débutées
+                    </label>
+                    <label>
+                        <input type="checkbox" name="ventesTerminees"
+                               th:checked="${filtre != null and filtre.ventesTerminees}">
+                        Ventes terminées
+                    </label>
                 </div>
             </section>
+
+<!--            <section class="AchatVente">-->
+<!--                <div class="CB-achat">-->
+<!--                    <label><input type="checkbox"> enchères ouvertes</label>-->
+<!--                    <label><input type="checkbox"> mes enchères</label>-->
+<!--                    <label><input type="checkbox"> mes enchères remportées</label>-->
+<!--                </div>-->
+<!--                <div class="CB-Vente">-->
+<!--                    <label><input type="checkbox"> mes ventes en cours</label>-->
+<!--                    <label><input type="checkbox" checked> ventes non débutées</label>-->
+<!--                    <label><input type="checkbox"> ventes terminées</label>-->
+<!--                </div>-->
+<!--            </section>-->
 
             <aside class="asideBtn">
                 <button type="submit">Rechercher</button>
@@ -106,5 +160,29 @@
         </div>
     </section>
 </div>
+
+<!-- JAVASCRIPT POUR AFFICHER/MASQUER LES CHECKBOXES -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const radioAchats = document.querySelector('input[name="type"][value="achats"]');
+        const radioVentes = document.querySelector('input[name="type"][value="ventes"]');
+        const checkboxesAchats = document.getElementById('checkboxes-achats');
+        const checkboxesVentes = document.getElementById('checkboxes-ventes');
+        function toggleCheckboxes() {
+            if (radioAchats.checked) {
+                checkboxesAchats.style.display = 'block';
+                checkboxesVentes.style.display = 'none';
+            } else if (radioVentes.checked) {
+                checkboxesAchats.style.display = 'none';
+                checkboxesVentes.style.display = 'block';
+            }
+        }
+        radioAchats.addEventListener('change', toggleCheckboxes);
+        radioVentes.addEventListener('change', toggleCheckboxes);
+        // État initial
+        toggleCheckboxes();
+    });
+</script>
+
 </body>
 </html>
