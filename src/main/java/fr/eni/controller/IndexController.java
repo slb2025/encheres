@@ -51,7 +51,7 @@ public class IndexController {
         List<ArticleVendu> article = articleService.getArticleAcceuilDeco();
         model.addAttribute("articleVendu", article);
 
-        return "PagesAcceuilNonConnecte";
+        return "PagesAccueilNonConnecte";
     }
 
 
@@ -73,7 +73,7 @@ public class IndexController {
         model.addAttribute("categorieSelectionnee", categorie);
         model.addAttribute("nomArticle", nomArticle);
 
-        return "PagesAcceuilNonConnecte";
+        return "PagesAccueilNonConnecte";
     }
 
 
