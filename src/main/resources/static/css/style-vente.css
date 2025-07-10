@@ -137,3 +137,32 @@ button:hover {
     justify-content: space-between;
     margin: auto;
 }
+
+/*gestion des messages de succès et de blocage fonctionnel utilisateur*/
+.erreur-message {
+    position: relative;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: rgba(244, 67, 54, 0.15); /* rouge transparent */
+    border-left: 6px solid #f44336;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-size: 1rem;
+    color: #c62828;
+    text-align: center;
+    font-weight: 500;
+}
+
+.succes-message {
+    position: relative;
+    margin-top: 20px; /* espace sous l'en-tête */
+    margin-bottom: 20px;
+    background-color: rgba(76, 175, 80, 0.2); /* vert transparent */
+    border-left: 6px solid #4caf50;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-size: 1rem;
+    color: #2e7d32;
+    text-align: center;
+    font-weight: 500;
+}

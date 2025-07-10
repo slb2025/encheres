@@ -22,12 +22,14 @@
 
 <h1>Liste des enchères</h1>
 
-<div th:if="${error}" class="error-message">
-	<p th:text="${error}" style="color: red;"></p>
+<!--  Affichage d'erreur -->
+<div th:if="${error}" class="erreur-message">
+    <p th:text="${error}"></p>
 </div>
 
-<div th:if="${message}" class="message">
-	<p th:text="${message}" style="color: #10ff00;"></p>
+<!-- Affichage de succès -->
+<div th:if="${message}" class="succes-message">
+    <p th:text="${message}"></p>
 </div>
 
 <div class="main-wrapper">
