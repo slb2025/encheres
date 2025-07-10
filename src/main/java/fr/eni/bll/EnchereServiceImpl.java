@@ -23,7 +23,7 @@ public class EnchereServiceImpl implements EnchereService {
     public void creerVente(ArticleVendu articleVendu) {
         enchereDAO.create(articleVendu);
     }
-
+    @Override
     public boolean verifUtilisateurEnchere(int id) {
         return enchereDAO.noEnchere(id);
     }
