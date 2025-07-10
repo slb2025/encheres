@@ -9,6 +9,7 @@ public interface ArticleService {
     ArticleVendu getArticleById(int idArticle);
     List<ArticleVendu> findAll();
     List<ArticleVendu> getArticleAcceuilDeco();
+    List<ArticleVendu> getArticleAcceuilConn();
 
     boolean verifUtilisateurProduit(int id);
 

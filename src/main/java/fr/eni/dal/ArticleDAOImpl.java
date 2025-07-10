@@ -53,6 +53,11 @@ public class ArticleDAOImpl implements ArticleDAO {
     }
 
     @Override
+    public List<ArticleVendu> findArticleAccueilCon() {
+        return jdbcTemplate.query(FIND_ARTICLE, new ArticleRowMapper());
+    }
+
+    @Override
     public List<ArticleVendu> findByCategorie(String libelleCategorie, String nomArticle) {
         MapSqlParameterSource map = new MapSqlParameterSource();
 

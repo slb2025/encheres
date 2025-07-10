@@ -41,6 +41,10 @@ public class ArticleServiceImpl implements ArticleService {
     public List<ArticleVendu> getArticleAcceuilDeco() {
         return articleDAO.findArticleAccueilDeco();
     }
+    public List<ArticleVendu> getArticleAcceuilConn() {
+        return articleDAO.findArticleAccueilCon();
+    }
+
 
     @Override
     public List<ArticleVendu> findAll() {

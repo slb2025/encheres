@@ -1,6 +1,8 @@
 package fr.eni.controller;
 
+import fr.eni.bll.ArticleService;
 import fr.eni.bll.UtilisateurService;
+import fr.eni.bo.ArticleVendu;
 import fr.eni.bo.Enchere;
 import fr.eni.bo.Utilisateur;
 //Ajout SLB 03/07 pour que la pageListeenchereConnecte renvoie vers modifier le profil
@@ -17,13 +19,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 public class UtilisateurController {
 
     private UtilisateurService utilisateurService;
+    private ArticleService articleService;
 
-    public UtilisateurController(UtilisateurService utilisateurService) {
+
+    public UtilisateurController(UtilisateurService utilisateurService, ArticleService articleService) {
         this.utilisateurService = utilisateurService;
+        this.articleService = articleService;
+
     }
 
     /**
@@ -73,6 +81,8 @@ public class UtilisateurController {
         }
 
         // Utilisateur connecté, on peut ajouter ses infos au modèle si nécessaire
+        List<ArticleVendu> article = articleService.getArticleAcceuilDeco();
+        model.addAttribute("articleVendu", article);
         model.addAttribute("utilisateur", utilisateur);
         return "PagesListeEncheresConnecte";
     }

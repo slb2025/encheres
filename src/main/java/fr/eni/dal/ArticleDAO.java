@@ -11,6 +11,6 @@ public interface ArticleDAO {
     ArticleVendu getArticleById(int idArticle);
     boolean noArticle(int id);
     List<ArticleVendu> findArticleAccueilDeco();
+    List<ArticleVendu> findArticleAccueilCon();
         List<ArticleVendu> findByCategorie(String libelleCategorie, String nomArticle);
-
 }
