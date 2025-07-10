@@ -81,7 +81,7 @@ public class UtilisateurController {
         }
 
         // Utilisateur connecté, on peut ajouter ses infos au modèle si nécessaire
-        List<ArticleVendu> article = articleService.getArticleAcceuilDeco();
+        List<ArticleVendu> article = articleService.getArticleAcceuilConn();
         model.addAttribute("articleVendu", article);
         model.addAttribute("utilisateur", utilisateur);
         return "PagesListeEncheresConnecte";
@@ -342,5 +342,26 @@ public class UtilisateurController {
             model.addAttribute("utilisateur", sessionUser);
             return "PageModifierProfil";
         }
+    }
+
+    @PostMapping("/PagesListeEncheresConnecte")
+    public String filtrerParCategorie(
+            @RequestParam(required = false) String categorie,
+            @RequestParam(required = false) String nomArticle,
+            Model model) {
+
+        List<ArticleVendu> articles;
+
+        if (categorie != null && !categorie.isEmpty() || nomArticle != null && !nomArticle.isEmpty()) {
+            articles = articleService.getArticlesParCategorie(categorie, nomArticle);
+        } else {
+            articles = articleService.getArticleAcceuilConn();
+        }
+
+        model.addAttribute("articleVendu", articles);
+        model.addAttribute("categorieSelectionnee", categorie);
+        model.addAttribute("nomArticle", nomArticle);
+
+        return "PagesListeEncheresConnecte";
     }
 }
