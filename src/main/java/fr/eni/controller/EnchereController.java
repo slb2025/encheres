@@ -66,7 +66,7 @@ public class EnchereController {
         return "PageEnchereNonCommencee";
     }
 
-    @GetMapping("/enchere/{id}")
+    @GetMapping("/encheres/detail/{id}")
     public String afficherEnchere(@PathVariable("id") int id, Model model, @ModelAttribute("utilisateurConnecte") Utilisateur utilisateur) {
         ArticleVendu article = articleService.getArticleById(id);
         model.addAttribute("article", article);

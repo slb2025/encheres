@@ -89,7 +89,7 @@
 
         <div class="Article-vente-container">
             <!-- Lien vers le détail de l'article -->
-            <a th:text="${a.nomArticle}" th:href="@{/encheres/detail(id=${a.idArticle})}"></a>
+            <a th:text="${a.nomArticle}" th:href="@{/encheres/detail/{id}(id=${a.idArticle})}"></a>
 
             <ul>
                 <!-- Affichage des vraies données de l'article -->

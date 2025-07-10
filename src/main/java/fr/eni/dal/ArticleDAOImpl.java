@@ -25,8 +25,11 @@ public class ArticleDAOImpl implements ArticleDAO {
 
     private final String FIND_ARTICLE2 = "SELECT nom, miseAPrix, dateFinEncheres FROM ArticeVendu";
     private static final String SELECT_BY_ID = "SELECT idCategorie, prixVente, id, nom, descriptionArticle, dateDebut, dateFin, miseAPrix, prixVente, idUtilisateur FROM article WHERE id = :id";
-    private final String FIND_ARTICLE = "SELECT Article.nom, Article.miseAPrix, Article.dateFin, Utilisateur.pseudo FROM Article\n" +
+    /*private final String FIND_ARTICLE = "SELECT Article.nom, Article.miseAPrix, Article.dateFin, Utilisateur.pseudo FROM Article\n" +
+            "JOIN Utilisateur ON Article.idUtilisateur = Utilisateur.id;\n";*/
+    private final String FIND_ARTICLE = "SELECT Article.id, Article.nom, Article.miseAPrix, Article.dateFin, Utilisateur.pseudo FROM Article\n" +
             "JOIN Utilisateur ON Article.idUtilisateur = Utilisateur.id;\n";
+
 
 
 
@@ -115,6 +118,9 @@ public class ArticleDAOImpl implements ArticleDAO {
         public ArticleVendu mapRow(ResultSet rs, int rowNum) throws SQLException {
             ArticleVendu article = new ArticleVendu();
             article.setNomArticle(rs.getString("nom"));
+            /*Ajout Eric*/
+            article.setIdArticle(rs.getInt("id"));
+            /*Ajout Eric*/
             article.setMiseAPrix(rs.getInt("miseAPrix"));
             article.setDateFinEncheres(LocalDate.from(rs.getTimestamp("dateFin").toLocalDateTime()));
 
