@@ -47,10 +47,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="creer-compte">
-                        <button type="submit">Créer un compte</button>
-                    </div>
                 </form>
+                <div class="creer-compte button-form button-profil">
+                    <form th:action="@{/PageCreerCompte}" method="get">
+                        <button type="submit">Créer un compte</button>
+                    </form>
+                </div>
             </div>
 
         </main>
