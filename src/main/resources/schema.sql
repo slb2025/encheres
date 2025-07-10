@@ -2,22 +2,21 @@
 
 -- IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = 'Enchere')
 --
--- CREATE DATABASE Enchere;
---
--- GO
---
--- USE Enchere;
---
--- GO
---
--- -- Table Utilisateur
+CREATE DATABASE Enchere;
 
-DROP TABLE IF EXISTS RetraitArticle;
-DROP TABLE IF EXISTS Retrait;
-DROP TABLE IF EXISTS Enchere;
-DROP TABLE IF EXISTS Article;
-DROP TABLE IF EXISTS Categorie;
-DROP TABLE IF EXISTS Utilisateur;
+GO
+
+USE Enchere;
+
+GO
+Table Utilisateur
+
+--DROP TABLE IF EXISTS RetraitArticle;
+--DROP TABLE IF EXISTS Retrait;
+--DROP TABLE IF EXISTS Enchere;
+--DROP TABLE IF EXISTS Article;
+--DROP TABLE IF EXISTS Categorie;
+--DROP TABLE IF EXISTS Utilisateur;
 
 CREATE TABLE Utilisateur (
 
