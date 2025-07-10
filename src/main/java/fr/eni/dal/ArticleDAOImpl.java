@@ -30,10 +30,14 @@ public class ArticleDAOImpl implements ArticleDAO {
 
 
 
-    private static final String FIND_BY_CATEGORIE = " SELECT a.nom, a.miseAPrix, a.dateFin, u.pseudo, c.libelle FROM Article a\n" +
-            "JOIN Utilisateur u ON a.idUtilisateur = u.id\n" +
-            "JOIN Categorie c ON a.idCategorie = c.id\n" +
-            "WHERE c.libelle = :libelleCategorie\n";
+    private static final String FIND_BY_CATEGORIE =
+            "SELECT a.nom, a.miseAPrix, a.dateFin, u.pseudo, c.libelle " +
+                    "FROM Article a " +
+                    "JOIN Utilisateur u ON a.idUtilisateur = u.id " +
+                    "JOIN Categorie c ON a.idCategorie = c.id " +
+                    "WHERE (:libelleCategorie IS NULL OR c.libelle = :libelleCategorie) " +
+                    "AND (:nomArticle IS NULL OR a.nom LIKE '%' + :nomArticle + '%')";
+
 
     private final String CHECK_ARTICLES_EN_COURS = "SELECT COUNT(*) FROM Article INNER JOIN Utilisateur ON Utilisateur.id = Article.idUtilisateur WHERE idUtilisateur = :id AND Article.dateFin > GETDATE() AND Utilisateur.isDeleted = 0\n ";
 
@@ -52,7 +56,7 @@ public class ArticleDAOImpl implements ArticleDAO {
     public List<ArticleVendu> findByCategorie(String libelleCategorie, String nomArticle) {
         MapSqlParameterSource map = new MapSqlParameterSource();
 
-        map.addValue("categorie", (libelleCategorie == null || libelleCategorie.isEmpty()) ? null : libelleCategorie);
+        map.addValue("libelleCategorie", (libelleCategorie == null || libelleCategorie.isEmpty()) ? null : libelleCategorie);
         map.addValue("nomArticle", (nomArticle == null || nomArticle.isEmpty()) ? null : nomArticle);
 
 
