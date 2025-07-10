@@ -100,9 +100,9 @@ public class UtilisateurController {
     }
 
 
-    @GetMapping("/PagesAcceuilNonConnecte")
+    @GetMapping("/PagesAccueilNonConnecte")
     public String AfficherAccueilInscription() {
-        return "PagesAcceuilNonConnecte";
+        return "PagesAccueilNonConnecte";
 
     }
 

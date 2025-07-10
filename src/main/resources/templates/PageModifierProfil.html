@@ -12,6 +12,16 @@
   </head>
 
   <body>
+
+<!--  Affichage d'erreur -->
+  <div th:if="${error}" class="erreur-message">
+    <p th:text="${error}"></p>
+  </div>
+<!-- Affichage de succès -->
+<div th:if="${message}" class="succes-message">
+  <p th:text="${message}"></p>
+</div>
+
     <div class="container">
       <header>
         <nav>
