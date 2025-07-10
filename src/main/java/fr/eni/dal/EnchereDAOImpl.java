@@ -20,7 +20,7 @@ public class EnchereDAOImpl implements EnchereDAO {
     private final String INSERT_ARTICLE = "INSERT INTO Article (idUtilisateur, nom, descriptionArticle, idCategorie, miseAPrix, dateDebut, dateFin)"
             + " VALUES (:idUtilisateur, :nomArticle, :description, :categorieArticle, :miseAprix, :dateDebutEncheres, :dateFinEncheres)";
 
-    private static final String AJOUT_ENCHERE = "INSERT INTO ENCHERE (idUtilisateur, idArticle, dateEnchere, montantEnchere) VALUES (:userId, :idArticle, GETDATE(), :montant)";
+    private static final String AJOUT_ENCHERE = "INSERT INTO ENCHERE (idUtilisateur, idArticle, dateEnchere, montantEnchere) VALUES (:idUtilisateur, :idArticle, GETDATE(), :montant)";
     private static final String MAJ_PRIX_VENTE = "UPDATE ARTICLE SET prixVente = :prixVente WHERE id = :idArticle";
 
 
@@ -61,9 +61,9 @@ public class EnchereDAOImpl implements EnchereDAO {
     }
 
     @Override
-    public void creerEnchere(int montant, ArticleVendu article, Utilisateur userSession) {
+    public void creerEnchere(int montant, ArticleVendu article, Utilisateur utilisateur) {
         MapSqlParameterSource map = new MapSqlParameterSource();
-        map.addValue("userId", userSession.getId());
+        map.addValue("idUtilisateur", "6");
         map.addValue("idArticle", article.getIdArticle());
         map.addValue("montant", montant);
 

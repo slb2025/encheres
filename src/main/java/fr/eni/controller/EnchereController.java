@@ -36,7 +36,7 @@ public class EnchereController {
         return "PagesListeEncheresConnecte"; // nom de la vue à afficher
     }
 
-    @GetMapping("encheres/creerEnchere")
+    @GetMapping("encheres/creerVente")
     public String getCreerVente(Model model, @ModelAttribute("utilisateurConnecte") Utilisateur utilisateur) {
 
         ArticleVendu article = new ArticleVendu();
@@ -54,7 +54,7 @@ public class EnchereController {
         return "PageVendreUnArticle";
     }
 
-    @PostMapping("encheres/creerEnchere")
+    @PostMapping("encheres/creerVente")
     public String postCreerVente(@ModelAttribute("articleVendu") ArticleVendu article) {
 
         enchereService.creerVente(article);
@@ -74,13 +74,13 @@ public class EnchereController {
         return "PageEncherir";
     }
 
-    @PostMapping("enchere/créer")
+    @PostMapping("enchere/creer")
 
-    public String postCreerEnchere(@RequestParam(name = "montant") int montant, @RequestParam("id") int idArticle,
+    public String postCreerEnchere(@RequestParam(name = "montant") int montant, @RequestParam("idArticle") int idArticle,
                                    @ModelAttribute("userSession") Utilisateur utilisateur) {
 
         this.enchereService.creerEnchere(utilisateur, montant, idArticle);
-        return "redirect:/encheres/detail?id=" + idArticle;
+        return "redirect:/encheres/detail/" + idArticle;
 
     }
 

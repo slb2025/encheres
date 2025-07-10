@@ -21,7 +21,7 @@
                 <a th:href="@{/}">Enchères</a>
             </div>
             <div class="button-nav">
-                <a th:href="@{'/encheres/creerEnchere'}">Vente article</a>
+                <a th:href="@{'/encheres/creerVente'}">Vente article</a>
             </div>
             <div class="button-nav">
                 <a th:href="@{'/btnPageMonProfil'}">Mon profil</a>
@@ -94,7 +94,7 @@
             <ul>
                 <!-- Affichage des vraies données de l'article -->
                 <li th:text="${a.nomArticle}">Nom Article</li>
-                <li th:text="${a.miseAPrix} + ' €'">Prix Article</li>
+                <li th:text="${a.miseAPrix} + ' points'">Mise à prix</li>
                 <li th:text="${#temporals.format(a.dateFinEncheres, 'dd/MM/yyyy')}">Fin Enchères</li>
                 <li>
                     Vendeur :

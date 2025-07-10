@@ -10,15 +10,11 @@
 <div class="container">
     <header>
         <nav>
-            <div class="titre-entete">
-                <a th:if="${session.utilisateurConnecte != null}" th:href="@{/PagesListeEncheresConnecte}">ENI-Enchères</a>
-                <span th:unless="${session.utilisateurConnecte != null}">ENI-Enchères</span>
-            </div>
             <div class="buttons-nav">
-                <div class="button-nav"><a href="">Enchères</a></div>
-                <div class="button-nav"><a href="">Vente article</a></div>
-                <div class="button-nav"><a href="">Mon profil</a></div>
-                <div class="button-nav"><a href="">Deconnexion</a></div>
+                <div class="button-nav"><a th:href="@{/}">Enchères</a></div>
+                <div class="button-nav"><a th:href="@{'/encheres/creerVente'}">Vente article</a></div>
+                <div class="button-nav"><a th:href="@{'/btnPageMonProfil'}">Mon profil</a></div>
+                <div class="button-nav"><a th:href="@{'/logout'}">Deconnexion</a></div>
             </div>
         </nav>
     </header>
@@ -30,7 +26,7 @@
     <main class="main">
         <h1 class="titre">Nouvelle Vente</h1>
         <!--<form th:action="@{/encheres/creerEnchere}" method="post" th:object="${articleVendu}">-->
-        <form action="/encheres/creerEnchere" method="post" th:object="${articleVendu}">
+        <form action="/encheres/creerVente" method="post" th:object="${articleVendu}">
             <div class="form-group">
                 <label for="article"> Article :</label>
                 <input type="text" id="article" th:field="*{nomArticle}"/>

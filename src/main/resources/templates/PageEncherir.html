@@ -16,15 +16,12 @@
 
     <header>
         <nav>
-            <div class="titre-entete">
-                <!--<a th:if="${session.utilisateurConnecte != null}" th:href="@{/PagesListeEncheresConnecte}">ENI-Enchères</a>
-                <span th:unless="${session.utilisateurConnecte != null}">ENI-Enchères</span>-->
-            </div>
+            <div class="titre-entete">ENI-Enchères</div>
             <div class="buttons-nav">
-                <div class="button-nav"><a href="">Enchères</a></div>
-                <div class="button-nav"><a href="">Vente article</a></div>
-                <div class="button-nav"><a href="">Mon profil</a></div>
-                <div class="button-nav"><a href="">Deconnexion</a></div>
+                <div class="button-nav"><a th:href="@{/}">Enchères</a></div>
+                <div class="button-nav"><a th:href="@{'/encheres/creerVente'}">Vente article</a></div>
+                <div class="button-nav"><a th:href="@{'/btnPageMonProfil'}">Mon profil</a></div>
+                <div class="button-nav"><a th:href="@{'/logout'}">Deconnexion</a></div>
             </div>
         </nav>
     </header>
@@ -40,7 +37,7 @@
             </div>
 
             <form class="form-profil" th:action="@{/enchere/creer}" method="POST">
-
+                <input type="hidden" name="idArticle" th:value="${article.idArticle}" />
                 <div class="colonne-formulaire">
                     <div class="ligne-info">
                         <span class="intitule">Article : </span>
@@ -61,7 +58,9 @@
 
                     <div class="ligne-info">
                         <span class="intitule">Meilleure offre :</span>
-                        <span class="contenu meilleure offre">210 points par Bob</span>
+                        <p th:text="${article.prixVente}+' '+'pts par &nbsp;'"></p>
+                        <!--<p th:text="${article.prixVente}+' '+'pts par'"></p>-->
+                        <!--<a th:text="${article.acheteur.pseudo}"></a>-->
                     </div>
 
                     <div class="ligne-info">
@@ -93,13 +92,6 @@
                         <input type="number" id="montant" name="montant" value="0" min="0" max="100000" step="5">
                         <button type="submit" class="btn-encherir">Enchérir</button>
                     </div>
-                    <!--
-                    <div class="inblockMargin" th:if="${article.etatVente} == 'EC' and (${article.vendeur.noUtilisateur} != ${userSession.noUtilisateur})">
-                        <label for="idProposition">Ma proposition : </label>
-                        <input id="idProposition" type="number" name="proposition"/>
-                        <button type="submit">Enchérir</button>
-                    </div>
-                    -->
                 </div>
             </form>
         </div>

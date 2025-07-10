@@ -20,10 +20,10 @@
             <span th:unless="${session.utilisateurConnecte != null}">ENI-Enchères</span>
           </div>
           <div class="buttons-nav">
-            <div class="button-nav"><a href="">Enchères</a></div>
-            <div class="button-nav"><a href="">Vente article</a></div>
-            <div class="button-nav"><a href="">Mon profil</a></div>
-            <div class="button-nav"><a href="">Deconnexion</a></div>
+            <div class="button-nav"><a th:href="@{/}">Enchères</a></div>
+            <div class="button-nav"><a th:href="@{'/encheres/creerVente'}">Vente article</a></div>
+            <div class="button-nav"><a th:href="@{'/btnPageMonProfil'}">Mon profil</a></div>
+            <div class="button-nav"><a th:href="@{'/logout'}">Deconnexion</a></div>
           </div>
         </nav>
       </header>
