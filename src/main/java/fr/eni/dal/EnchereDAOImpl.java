@@ -1,9 +1,11 @@
 package fr.eni.dal;
 
 import fr.eni.bo.ArticleVendu;
+import fr.eni.bo.Enchere;
 import fr.eni.bo.Utilisateur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -85,5 +87,38 @@ public class EnchereDAOImpl implements EnchereDAO {
             return false;
         }
     }
+
+    /*
+    class EnchèreRowMapper implements RowMapper<Enchere> {
+
+        /**
+         * Méthode rowmapper d'enchère, ajoutant un utilisateur avec un id et un article
+         * avec un id
+         */
+    /*
+        @Override
+        public Enchère mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            // implementation enchère
+
+            Enchère e = new Enchère();
+            e.setMontant_enchere(rs.getInt("MONTANT_ENCHERE"));
+            e.setDateEnchère(rs.getTimestamp("DATE_ENCHERE").toLocalDateTime());
+
+            // implementation utilisateur
+
+            Utilisateur u = new Utilisateur();
+            u.setNoUtilisateur(rs.getInt("NO_UTILISATEUR"));
+            e.setUtilisateur(u);
+
+            // implementation article
+
+            ArticleVendu a = new ArticleVendu();
+            a.setNoArticle(rs.getInt("NO_ARTICLE"));
+            e.setArtcicleVendu(a);
+
+            return e;
+        }
+        */
 }
 

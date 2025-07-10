@@ -52,7 +52,7 @@ public class ArticleDAOImpl implements ArticleDAO {
     public List<ArticleVendu> findByCategorie(String libelleCategorie, String nomArticle) {
         MapSqlParameterSource map = new MapSqlParameterSource();
 
-        map.addValue("categorie", (libelleCategorie == null || libelleCategorie.isEmpty()) ? null : libelleCategorie);
+        map.addValue("libelleCategorie", (libelleCategorie == null || libelleCategorie.isEmpty()) ? null : libelleCategorie);
         map.addValue("nomArticle", (nomArticle == null || nomArticle.isEmpty()) ? null : nomArticle);
 
 
