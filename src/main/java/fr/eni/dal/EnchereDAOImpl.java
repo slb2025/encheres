@@ -88,37 +88,5 @@ public class EnchereDAOImpl implements EnchereDAO {
         }
     }
 
-    /*
-    class EnchèreRowMapper implements RowMapper<Enchere> {
-
-        /**
-         * Méthode rowmapper d'enchère, ajoutant un utilisateur avec un id et un article
-         * avec un id
-         */
-    /*
-        @Override
-        public Enchère mapRow(ResultSet rs, int rowNum) throws SQLException {
-
-            // implementation enchère
-
-            Enchère e = new Enchère();
-            e.setMontant_enchere(rs.getInt("MONTANT_ENCHERE"));
-            e.setDateEnchère(rs.getTimestamp("DATE_ENCHERE").toLocalDateTime());
-
-            // implementation utilisateur
-
-            Utilisateur u = new Utilisateur();
-            u.setNoUtilisateur(rs.getInt("NO_UTILISATEUR"));
-            e.setUtilisateur(u);
-
-            // implementation article
-
-            ArticleVendu a = new ArticleVendu();
-            a.setNoArticle(rs.getInt("NO_ARTICLE"));
-            e.setArtcicleVendu(a);
-
-            return e;
-        }
-        */
 }
 

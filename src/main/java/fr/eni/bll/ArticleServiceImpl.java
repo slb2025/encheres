@@ -60,17 +60,6 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
 
-
-        /*
-        Utilisateur vendeur = this.utilisateurDAO.findById(article.getVendeur().getId());
-        Retrait lieuRetrait = this.retraitDAO.getRetraitByIdArticle(id);
-        String libelle = this.categorieDAO.getCategorie(article.getCategorieArticle().getIdCategorie())
-                .getLibelle();
-        article.setLieuRetrait(lieuRetrait);
-        article.getCategorieArticle().setLibelle(libelle);
-        article.setVendeur(vendeur);*/
-
-
     public List<ArticleVendu> getArticleAcceuilDeco() {
         return articleDAO.findArticleAccueilDeco();
     }
